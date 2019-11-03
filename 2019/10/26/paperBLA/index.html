@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>论文解读（1）BLA——基于区块链的认证 | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="本篇博文分享来自期刊《IEEE INTERNET OF THINGS JOURNAL》中的一篇论文《BLA: Blockchain-Assisted Lightweight Anonymous Authentication for Distributed Vehicular Fog Services》 针对分布式车辆雾服务的区块链辅助的轻量级匿名认证一.背景1. 概念车载自治网络（VANET）">
+<meta name="keywords" content="区块链,车联网,认证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文解读（1）BLA——基于区块链的认证">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2019/10/26/paperBLA/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="本篇博文分享来自期刊《IEEE INTERNET OF THINGS JOURNAL》中的一篇论文《BLA: Blockchain-Assisted Lightweight Anonymous Authentication for Distributed Vehicular Fog Services》 针对分布式车辆雾服务的区块链辅助的轻量级匿名认证一.背景1. 概念车载自治网络（VANET）">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/show.jpg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/system_model.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/2.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/3.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/workflow1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/workflow23.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/5.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/6.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/7.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/8.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/9.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/10.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/11.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/12.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/workflow4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/env.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/at.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/ct.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/exp3.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/exp4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/exp5.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/exp6.png">
+<meta property="og:updated_time" content="2019-10-28T06:54:12.829Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="论文解读（1）BLA——基于区块链的认证">
+<meta name="twitter:description" content="本篇博文分享来自期刊《IEEE INTERNET OF THINGS JOURNAL》中的一篇论文《BLA: Blockchain-Assisted Lightweight Anonymous Authentication for Distributed Vehicular Fog Services》 针对分布式车辆雾服务的区块链辅助的轻量级匿名认证一.背景1. 概念车载自治网络（VANET）">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/paper/BLA/show.jpg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-paperBLA" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      论文解读（1）BLA——基于区块链的认证
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/论文/">论文</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-26
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/paper/BLA/show.jpg" alt="vfc"></p>
+<hr>
+<p>本篇博文分享来自期刊《IEEE INTERNET OF THINGS JOURNAL》中的一篇论文《BLA: Blockchain-Assisted Lightweight Anonymous Authentication for Distributed Vehicular Fog Services》</p>
+<h2 id="针对分布式车辆雾服务的区块链辅助的轻量级匿名认证"><a href="#针对分布式车辆雾服务的区块链辅助的轻量级匿名认证" class="headerlink" title="针对分布式车辆雾服务的区块链辅助的轻量级匿名认证"></a>针对分布式车辆雾服务的区块链辅助的轻量级匿名认证</h2><h3 id="一-背景"><a href="#一-背景" class="headerlink" title="一.背景"></a>一.背景</h3><h4 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h4><p>车载自治网络（VANET）是移动自治网络（MABET）的一部分，包括移动车辆和路边单元（RSUs）。每辆车都配置了一个车载单元（OBU）和一组传感器。</p>
+<h4 id="2-问题及可采取方式"><a href="#2-问题及可采取方式" class="headerlink" title="2.问题及可采取方式"></a>2.问题及可采取方式</h4><p>由于车辆的移动性，所以对于车辆雾服务（VFSs）来说需要跨分布式的数据中心，这样跨数据中心的认证也是在这个过程中不可避免的问题。</p>
+<p>VAENTs依赖于云计算服务来进行通信，计算以及存储。而联网的车辆逐渐增多且不断增长的移动性要求服务的低延时和不可中断。这给当前云计算带来很大挑战。因此，车辆雾计算（VFC）被提出来提高通信效率和计算能力以适应最新的车辆应用。</p>
+<h4 id="3-现状"><a href="#3-现状" class="headerlink" title="3. 现状"></a>3. 现状</h4><p>VFC被认为是对延迟敏感的应用来说是非常有益的技术之一，是对于高速移动车辆的一种理想的技术。</p>
+<p>VFS基本安全和性能要求：</p>
+<ul>
+<li>1）车辆身份认证与隐私 </li>
+</ul>
+<p>每辆车访问VFS必需经过认证，是后面授权决策的基础。同时必须保证在认证过程车辆的身份不会被暴露，确保车辆用户的隐私。</p>
+<ul>
+<li>2）实时限制</li>
+</ul>
+<p>另一方面，为了适应车辆的快速移动，要求认证是轻量级的。</p>
+<p>现有的认证机制及缺点：</p>
+<ul>
+<li>应用技术： 对称加密、PKI、基于身份的签名（IBS）、无证书签名、群签名；</li>
+<li>缺点： 依赖于管理中心来提前创建与车辆间的信任关系，当车辆移动到新数据中心的时候，信任关系将会失效。</li>
+</ul>
+<p>解决存在缺点的方式： 提出跨数据中心、跨地区、跨域的认证机制，存在以下问题：</p>
+<ul>
+<li>要求在<code>OBUs</code>、<code>RSUs</code>和信任机构之间多次交互，造成高通信延时</li>
+<li>数据库由单个管理员管理，无法抵抗篡改攻击</li>
+</ul>
+<h3 id="二-解决方案（论文贡献）"><a href="#二-解决方案（论文贡献）" class="headerlink" title="二. 解决方案（论文贡献）"></a>二. 解决方案（论文贡献）</h3><ol>
+<li><p>实现灵活的跨数据中心认证。这里的灵活指的是车辆在移动到一个新的数据中心时，自身可以决定是否重新认证或者只是直接发送一个<code>VFS</code>请求。</p>
+</li>
+<li><p>为了保护车辆隐私实现匿名。车辆可以自主决定更换自己伪名的时间和频率。</p>
+</li>
+<li><p>提出的认证机制<code>BLA</code>是轻量级的。将密码和区块链技术结合起来，以消除车辆和服务管理器(SMS)之间的交互性。在访问VFS之前，驾驶着的车辆只需要发送一个消息，该消息可以是认证消息或VFS请求消息。这可以显著缩短认证的时间。此外，应用区块链技术还消除了在用户认证过程中<code>SMs</code>之间的通信。因为所有<code>SMs</code>的记录被同步地更新。</p>
+</li>
+<li>由于公共账本是由所有的SMs所维护，所以<code>BLA</code>可以有效抵抗数据库篡改攻击。</li>
+</ol>
+<h3 id="三-方案实现"><a href="#三-方案实现" class="headerlink" title="三. 方案实现"></a>三. 方案实现</h3><h4 id="3-1-系统模型"><a href="#3-1-系统模型" class="headerlink" title="3.1 系统模型"></a>3.1 系统模型</h4><p><img src="/blog/images/paper/BLA/system_model.png" alt="系统模型"></p>
+<table>
+<thead>
+<tr>
+<th>全称</th>
+<th>缩写</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audit Department</td>
+<td>AD</td>
+<td>审计机构</td>
+</tr>
+<tr>
+<td>service manager</td>
+<td>SM</td>
+<td>服务管理</td>
+</tr>
+<tr>
+<td>on-board unit</td>
+<td>OBU</td>
+<td>车子啊单元</td>
+</tr>
+<tr>
+<td>roadside unit</td>
+<td>RSU</td>
+<td>路边单元</td>
+</tr>
+<tr>
+<td>vehicular fog computing</td>
+<td>VFC</td>
+<td>车辆雾计算</td>
+</tr>
+<tr>
+<td>vehicular fog services</td>
+<td>VFS</td>
+<td>车辆雾服务</td>
+</tr>
+<tr>
+<td>vehicular fog datacenter</td>
+<td>VFD</td>
+<td>车辆雾数据中心</td>
+</tr>
+<tr>
+<td>Witness Peer</td>
+<td>WP</td>
+<td>见证节点</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>AD (Audit Department):<br>作为一个完全可信的机构，负责OBUs（车载单元）和SMs（服务管理）的注册，并追溯违法车辆</li>
+<li>SM：一个区域的服务管理者需要在搭建系统之前就在AD处进行注册，SM主要负责管理所有的VFDs并对其管理区域的OBUs进行认证。每个SM维护一个包含所有车辆访问记录的公共账本。公共账本智能由AD、SMs和WPs所访问。</li>
+<li>WP(Witness Peer): WP负责通过共识算法把认证结果写入公共账本的节点，所有的WPs和SMs共同组成了联盟区块链</li>
+<li>RSU： 是VFD的管理者并为合法的OBUs提供VFS服务。只属于由一个SM所管理的地区。</li>
+<li>OBU： OBU是VFS的用户，配置有计算和通信功能，包括内嵌的计算机、无线网络接口、GPS接收器、导航系统、数字地图等等。在访问VFS之前需要先在AD处注册。</li>
+<li>联盟区块链网络（CBN）：由所有地区的SMs和WPs组成。</li>
+</ul>
+<h4 id="3-2-目标"><a href="#3-2-目标" class="headerlink" title="3.2 目标"></a>3.2 目标</h4><ol>
+<li>保密性： 确保传输的数据无法被敌手解密</li>
+<li>完整性： 确保传输的数据无法被敌手篡改</li>
+<li>匿名性： 允许所有车辆使用自己定义的伪名并且在访问VFS的过程中，车辆可以通过重新认证自己来改变自己的伪名。使得敌手无法追踪或者计算车辆。</li>
+<li>非交互性： 车辆只需要在访问VFS之前发出一个认证或者访问VFS的信息即可，无需其它信息。</li>
+<li>可追踪性： 保证AD可以追踪非法车辆并拒绝它们对VFS的访问。</li>
+<li>无法抵赖性： 当一辆违法车辆被报告是，则该车辆无法抵赖其错误行为。</li>
+<li>轻量性：确保计算与通信开销较低。</li>
+</ol>
+<h4 id="3-3-具体实现步骤"><a href="#3-3-具体实现步骤" class="headerlink" title="3.3　具体实现步骤"></a>3.3　具体实现步骤</h4><h5 id="3-3-1-初始化"><a href="#3-3-1-初始化" class="headerlink" title="3.3.1 初始化"></a>3.3.1 初始化</h5><p>设置系统参数，包括决定系统安全的大素数、哈希算法、AD的公私钥对。最后保留AD私钥。</p>
+<h5 id="3-3-2-注册"><a href="#3-3-2-注册" class="headerlink" title="3.3.2 注册"></a>3.3.2 注册</h5><p>注册阶段包括SM和OBU的注册</p>
+<ul>
+<li>SM注册</li>
+</ul>
+<ol>
+<li>随机选择一个整数sk1作为私钥的第一部分，根据这部分私钥计算出公钥pk1。然后把pk1和自己身份id用AD公钥加密发送给AD<br><img src="/blog/images/paper/BLA/1.png" alt="步骤1"></li>
+<li>AD将从SM收到的加密信息用自身私钥解密，在身份检查过后，随机选择一个整数d，并根据这个整数计算出一对公私钥对pk2和sk2，然后通过安全通道发送给SM<br><img src="/blog/images/paper/BLA/2.png" alt="步骤2"></li>
+<li>SM收到AD发来的pk2和sk2，将sk2提取出来与sk1组成完整的私钥，将pk2提取出与pk1组成完整的公钥，同时SM能够通过计算获取sk2是否可靠。<br><img src="/blog/images/paper/BLA/3.png" alt="步骤3"></li>
+</ol>
+<ul>
+<li>OBU注册：与SM注册过程类似，在此不再赘述<br><img src="/blog/images/paper/BLA/workflow1.png" alt="注册阶段"></li>
+</ul>
+<h5 id="3-3-3-认证"><a href="#3-3-3-认证" class="headerlink" title="3.3.3 认证"></a>3.3.3 认证</h5><p><img src="/blog/images/paper/BLA/workflow23.png" alt="阶段2&amp;3"></p>
+<p>这个阶段只要通过SMs来认证OBUs。在认证之后，SMs将认证结果广播出去，认证结果会在共识阶段由WP利用共识机制写入公共账本（区块链）中，当一个行驶着的OBU首次访问VFS时，需要执行以下步骤：</p>
+<ol>
+<li>计算s：<br><img src="/blog/images/paper/BLA/4.png" alt="步骤2.1"></li>
+<li>计算hi R C<br><img src="/blog/images/paper/BLA/5.png" alt="步骤2.1.2"></li>
+<li>计算xi 和 k个系数<br><img src="/blog/images/paper/BLA/6.png" alt="步骤2.1.3"></li>
+<li>计算Yi和Vi<br><img src="/blog/images/paper/BLA/7.png" alt="步骤2.1.4"></li>
+<li>OBUa将密文发送给离它最近的RSU，假设为RSUm<br><img src="/blog/images/paper/BLA/8.png" alt="步骤2.1.5"></li>
+<li>RSUm接收到密文然后转发个区域管理者，假设为SMn</li>
+</ol>
+<p>在接收到密文之后SMn进行以下操作：</p>
+<ol>
+<li>根据自己身份计算以下数值：<br><img src="/blog/images/paper/BLA/9.png" alt="步骤2.2.1"></li>
+<li>计算R’并恢复原始数据和签名<br><img src="/blog/images/paper/BLA/10.png" alt="步骤2.2.2"></li>
+<li>从恢复出来的数据中获取OBUa的身份，如果对应公钥没在撤销列表，则进行以下计算：<br><img src="/blog/images/paper/BLA/11.png" alt="步骤1"></li>
+<li>验证以下等式是否成立：<br><img src="/blog/images/paper/BLA/12.png" alt="步骤1"></li>
+</ol>
+<h5 id="3-3-4-共识"><a href="#3-3-4-共识" class="headerlink" title="3.3.4 共识"></a>3.3.4 共识</h5><ol>
+<li>通过x=(heightmodk)+1来决定消息发送者(speaker)，其中height代表当前区块高度。由于选择是消息发送者不会影响共识结果，所以允许同一个消息发送者主持几轮共识过程来节约选择消息发送者的时间。</li>
+<li>任何SM可以广播经过签名的认证结果给所有的WPs。</li>
+<li>所有的WPs着上一步发送出来的认证结果数据并存在各自的内存中。</li>
+<li>经过结块周期t时间之后，已经广播的认证结果组成一个新的区块，由消息发送者发送给其它WPs，要求WPs进行投票并签名。</li>
+<li>接收到消息发送者发出的提案请求之后，WPs进行签名并回复。</li>
+<li>任何WP在接收到至少(k−f)节点的签名区块时，都会达到共识并发布完整的块。如果签名的区块的数目达不到(k−f)，则将执行下一轮共识。这里，f=(k−1)/3表示系统中允许的最大错误WP数，例如，WP有网络故障。</li>
+<li>任何WP在接收到完整的区块之后，从自身内存中删除包含在该区块中的认证结果并开始下一轮的共识。</li>
+</ol>
+<h5 id="3-3-5-服务交付"><a href="#3-3-5-服务交付" class="headerlink" title="3.3.5 服务交付"></a>3.3.5 服务交付</h5><p>在这一个阶段，当一个OBU移动到一个新的RSU的VFD时，可以选择不进行重新认证，过程如下：</p>
+<ol>
+<li>当OBU驶入另一个RSU的服务范围时，会提交它的访问请求给RSU，请求包括伪名和时间戳的签名，伪名，时间戳。</li>
+<li>同样，RSU会将访问请求转发给它的区域管理者SM</li>
+<li>SM首先查找自身的本地数据库看是否存在OBU的公钥，如果不存在，则到公共账本中去寻找对应信息。如果OBU的公钥没有在撤销列表当中的话，SM会验证OBU请求中的签名信息，如果认证通过且时间戳有效，SM会直接通知RSU响应OBU的服务请求。否则，SM会拒绝提供服务。</li>
+</ol>
+<p>在这整个过程中如果非法车辆被AD所记录，AD会到公共账本中寻找该车辆的身份并通知所有SMs该非法车辆的公钥是无效的并将其添加到撤销列表中。<br><img src="/blog/images/paper/BLA/workflow4.png" alt="阶段4"></p>
+<h3 id="四-模拟实验结果"><a href="#四-模拟实验结果" class="headerlink" title="四. 模拟实验结果"></a>四. 模拟实验结果</h3><h4 id="4-1-实验环境"><a href="#4-1-实验环境" class="headerlink" title="4.1 实验环境"></a>4.1 实验环境</h4><p><img src="/blog/images/paper/BLA/env.png" alt="实验环境"></p>
+<h4 id="4-2-时间开销"><a href="#4-2-时间开销" class="headerlink" title="4.2 时间开销"></a>4.2 时间开销</h4><ul>
+<li>认证阶段<br><img src="/blog/images/paper/BLA/at.png" alt="认证阶段time"></li>
+<li>共识阶段<br><img src="/blog/images/paper/BLA/ct.png" alt="共识阶段"><h4 id="4-3-在4-7-10个SM的基础下，认证一个请求所需平均时间：RSU逐渐增加和车辆到达时间间隔逐渐增加"><a href="#4-3-在4-7-10个SM的基础下，认证一个请求所需平均时间：RSU逐渐增加和车辆到达时间间隔逐渐增加" class="headerlink" title="4.3 在4,7,10个SM的基础下，认证一个请求所需平均时间：RSU逐渐增加和车辆到达时间间隔逐渐增加"></a>4.3 在4,7,10个SM的基础下，认证一个请求所需平均时间：RSU逐渐增加和车辆到达时间间隔逐渐增加</h4><img src="/blog/images/paper/BLA/exp3.png" alt="exp3"><br><img src="/blog/images/paper/BLA/exp4.png" alt="exp4"><br><img src="/blog/images/paper/BLA/exp5.png" alt="exp5"><br><img src="/blog/images/paper/BLA/exp6.png" alt="exp6"></li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月28日 14:54</p>
+        <p>原始链接： <a class="post-url" href="/blog/2019/10/26/paperBLA/" title="论文解读（1）BLA——基于区块链的认证">https://silence-linhl.github.io/blog/2019/10/26/paperBLA/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2019/10/26/paperBLA/&title=《论文解读（1）BLA——基于区块链的认证》 — Harlan's Blog&pic=images/paper/BLA/system_model.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2019/10/26/paperBLA/&title=《论文解读（1）BLA——基于区块链的认证》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2019/10/26/paperBLA/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《论文解读（1）BLA——基于区块链的认证》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2019/10/26/paperBLA/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2019/10/26/paperBLA/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2019/10/26/paperBLA/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/区块链/" class="color4">区块链</a>
+      
+    <a href="/blog/tags/车联网/" class="color4">车联网</a>
+      
+    <a href="/blog/tags/认证/" class="color3">认证</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#针对分布式车辆雾服务的区块链辅助的轻量级匿名认证"><span class="post-toc-text">针对分布式车辆雾服务的区块链辅助的轻量级匿名认证</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一-背景"><span class="post-toc-text">一.背景</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-概念"><span class="post-toc-text">1. 概念</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-问题及可采取方式"><span class="post-toc-text">2.问题及可采取方式</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-现状"><span class="post-toc-text">3. 现状</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二-解决方案（论文贡献）"><span class="post-toc-text">二. 解决方案（论文贡献）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三-方案实现"><span class="post-toc-text">三. 方案实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-系统模型"><span class="post-toc-text">3.1 系统模型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-目标"><span class="post-toc-text">3.2 目标</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-3-具体实现步骤"><span class="post-toc-text">3.3　具体实现步骤</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-3-1-初始化"><span class="post-toc-text">3.3.1 初始化</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-3-2-注册"><span class="post-toc-text">3.3.2 注册</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-3-3-认证"><span class="post-toc-text">3.3.3 认证</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-3-4-共识"><span class="post-toc-text">3.3.4 共识</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-3-5-服务交付"><span class="post-toc-text">3.3.5 服务交付</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四-模拟实验结果"><span class="post-toc-text">四. 模拟实验结果</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-1-实验环境"><span class="post-toc-text">4.1 实验环境</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-2-时间开销"><span class="post-toc-text">4.2 时间开销</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-3-在4-7-10个SM的基础下，认证一个请求所需平均时间：RSU逐渐增加和车辆到达时间间隔逐渐增加"><span class="post-toc-text">4.3 在4,7,10个SM的基础下，认证一个请求所需平均时间：RSU逐渐增加和车辆到达时间间隔逐渐增加</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/blog/2019/11/02/softEther/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          利用softEther VPN远程访问内部网络
+        
+      </span>
+    </a>
+  
+  
+    <a href="/blog/2019/10/24/addorg2/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">为通道添加新的组织（续）</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

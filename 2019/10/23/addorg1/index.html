@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>为通道添加新的组织 | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="1. 切换路径并关闭已存在网络1cd /opt/gopath/src/github.com/hyperledger/fabric-samples/first-network/ 执行通道配置更新并不是必需要关闭已有的网络。本次教程只是为了从初始状态开始才将原有网络关闭。1./byfn.sh down 2.生成新的网络12./byfn.sh generate./byfn.sh up 3.添加新组织O">
+<meta name="keywords" content="Hyperledger,Fabric1.4,超级账本">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为通道添加新的组织">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2019/10/23/addorg1/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="1. 切换路径并关闭已存在网络1cd /opt/gopath/src/github.com/hyperledger/fabric-samples/first-network/ 执行通道配置更新并不是必需要关闭已有的网络。本次教程只是为了从初始状态开始才将原有网络关闭。1./byfn.sh down 2.生成新的网络12./byfn.sh generate./byfn.sh up 3.添加新组织O">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/fabric1.4/addorg1.jpg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/fabric1.4/addorg.jpg">
+<meta property="og:updated_time" content="2019-10-23T03:23:00.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为通道添加新的组织">
+<meta name="twitter:description" content="1. 切换路径并关闭已存在网络1cd /opt/gopath/src/github.com/hyperledger/fabric-samples/first-network/ 执行通道配置更新并不是必需要关闭已有的网络。本次教程只是为了从初始状态开始才将原有网络关闭。1./byfn.sh down 2.生成新的网络12./byfn.sh generate./byfn.sh up 3.添加新组织O">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/fabric1.4/addorg1.jpg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-addorg1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      为通道添加新的组织
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/超级账本/">超级账本</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-10-23
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/fabric1.4/addorg1.jpg" alt="hyperledger-fabric1.4"></p>
+<h3 id="1-切换路径并关闭已存在网络"><a href="#1-切换路径并关闭已存在网络" class="headerlink" title="1. 切换路径并关闭已存在网络"></a>1. 切换路径并关闭已存在网络</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /opt/gopath/src/github.com/hyperledger/fabric-samples/first-network/</span><br></pre></td></tr></table></figure>
+<p>执行通道配置更新并不是必需要关闭已有的网络。本次教程只是为了从初始状态开始才将原有网络关闭。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./byfn.sh down</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-生成新的网络"><a href="#2-生成新的网络" class="headerlink" title="2.生成新的网络"></a>2.生成新的网络</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./byfn.sh generate</span><br><span class="line">./byfn.sh up</span><br></pre></td></tr></table></figure>
+<h3 id="3-添加新组织Org3"><a href="#3-添加新组织Org3" class="headerlink" title="3.添加新组织Org3"></a>3.添加新组织Org3</h3><h4 id="3-1-利用脚本添加新组织Org3"><a href="#3-1-利用脚本添加新组织Org3" class="headerlink" title="3.1 利用脚本添加新组织Org3"></a>3.1 利用脚本添加新组织Org3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./eyfn.sh up</span><br></pre></td></tr></table></figure>
+<p>如果顺利运行，你可以看到以下内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">========= All GOOD, EYFN test execution completed =========== </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> _____   _   _   ____   </span><br><span class="line">| ____| | \ | | |  _ \  </span><br><span class="line">|  _|   |  \| | | | | | </span><br><span class="line">| |___  | |\  | | |_| | </span><br><span class="line">|_____| |_| \_| |____/</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-2-手动添加新组织Org3"><a href="#3-2-手动添加新组织Org3" class="headerlink" title="3.2 手动添加新组织Org3"></a>3.2 手动添加新组织Org3</h4><p>因为上面步骤已经使用了eyfn.sh脚本，因此需要关闭网络，删除所有容器，并撤销添加Org3的操作。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./eyfn.sh down</span><br></pre></td></tr></table></figure></p>
+<p>网络关闭之后，再次将其恢复<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./byfn.sh generate</span><br><span class="line">./byfn.sh up</span><br></pre></td></tr></table></figure></p>
+<p>此时网络恢复到执行eyfn.sh脚本之前的状态</p>
+<h5 id="3-2-1-生成Org3的加密材料"><a href="#3-2-1-生成Org3的加密材料" class="headerlink" title="3.2.1 生成Org3的加密材料"></a>3.2.1 生成Org3的加密材料</h5><p>进入org3-artifacts目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd org3-artifacts/</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost first-network]# cd org3-artifacts/</span><br><span class="line">[root@localhost org3-artifacts]# ls</span><br><span class="line">configtx.yaml  org3-crypto.yaml</span><br></pre></td></tr></table></figure>
+<p>生成加密材料<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cryptogen generate --config=./org3-crypto.yaml</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost org3-artifacts]# cryptogen generate --config=./org3-crypto.yaml</span><br><span class="line">org3.example.com</span><br></pre></td></tr></table></figure>
+<p>该命令读取加密材料生成所需要的yaml文件，并利用cryptogen工具为Org3的一个CA和两个与之绑定的peer节点生成密钥和证书。生成的材料放在当前目录的crypto-config文件夹中.</p>
+<p>利用configtxgen来以JSON的格式打印Org3指定配置材料，配置让configtxgen在当前目录寻找configtx.yaml文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export FABRIC_CFG_PATH=$PWD &amp;&amp; configtxgen -printOrg Org3MSP &gt; ../channel-artifacts/org3.json</span><br></pre></td></tr></table></figure></p>
+<p>该命令生成一个org3.json文件，存放在first-network目录下的channel-artifacts文件夹中。该文件包含Org3的策略定义和三个base64格式的证书：管理员用户证书，CA根证书和TLS根证书。该json文件会在后面的步骤中加入到通道配置中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost first-network]# cd channel-artifacts/</span><br><span class="line">[root@localhost channel-artifacts]# ls</span><br><span class="line">channel.tx  genesis.block  Org1MSPanchors.tx  Org2MSPanchors.tx  org3.json</span><br></pre></td></tr></table></figure></p>
+<p>最后将orderer的MSP材料复制到Org3的crypto-config目录下。orderer的TLS根证书允许Org3和网络排序节点的安全通信。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ../ &amp;&amp; cp -r crypto-config/ordererOrganizations org3-artifacts/crypto-config/</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> cp -r 代表拷贝文件夹</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost first-network]# cd org3-artifacts/crypto-config/</span><br><span class="line">[root@localhost crypto-config]# ls</span><br><span class="line">ordererOrganizations  peerOrganizations</span><br></pre></td></tr></table></figure>
+<p>可以看到已经将orderer的MSP材料复制到对应位置。</p>
+<h5 id="3-2-2-CLI环境准备"><a href="#3-2-2-CLI环境准备" class="headerlink" title="3.2.2 CLI环境准备"></a>3.2.2 CLI环境准备</h5><p>更新过程利用配置转换工具：configtxlator。该工具提供独立于SDK的无状态REST API。同时提供了CLI来简化Fabric网路中的配置工作。该工具作用是在不同等效数据表示形式/格式之间轻松转换（在本例子中，在protobufs和json格式之间转换）。另外，该工具可以基于两个通道配置之间的差异来计算配置更新事务。</p>
+<p>进入容器并配置<code>ORDERER_CA</code> 和 <code>CHANNEL_NAME</code>的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it cli bash</span><br><span class="line">export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem  &amp;&amp; export CHANNEL_NAME=mychannel</span><br></pre></td></tr></table></figure></p>
+<p>查看是否正确设置对应变量值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $ORDERER_CA &amp;&amp; echo $CHANNEL_NAME</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# echo $ORDERER_CA &amp;&amp; echo $CHANNEL_NAME</span><br><span class="line">/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem</span><br><span class="line">mychannel</span><br></pre></td></tr></table></figure>
+<p>这样的变量设置方式是临时的，一旦退出cli容器，重新进入时就需要再次重新设置。</p>
+<h5 id="3-2-3-获取配置"><a href="#3-2-3-获取配置" class="headerlink" title="3.2.3 获取配置"></a>3.2.3 获取配置</h5><p>获取通道<code>mychannel</code>最新的配置区块。之所以要获取最新的配置区块是因为配置元素是版本化的。<br>可以避免重复的配置更改，同时有助于确保并发性（当需要从通道删除一个组织的时候，例如在一个新组织被添加到通道中之后，版本控制有助于防止同时将两个组织都删除了，而是保证仅仅删除想要删除的组织）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel fetch config config_block.pb -o orderer.example.com:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA</span><br></pre></td></tr></table></figure></p>
+<p>该命令保存二进制<code>protobuf</code>通道配置块到<code>config_block.pb</code>。注意此处的名称和文件后缀选择是随意的，但是建议遵循一个约定，该约定既能表示对象类型也能体现对象的编码（protobuf 或者 json）格式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer channel fetch config config_block.pb -o orderer.example.com:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA</span><br><span class="line">2019-10-22 11:17:44.424 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2019-10-22 11:17:44.436 UTC [cli.common] readBlock -&gt; INFO 002 Received block: 4</span><br><span class="line">2019-10-22 11:17:44.438 UTC [cli.common] readBlock -&gt; INFO 003 Received block: 2</span><br><span class="line">2019-10-22 11:17:44.438 UTC [channelCmd] fetch -&gt; INFO 004 Retrieving last config block: 2</span><br></pre></td></tr></table></figure></p>
+<p>从日志最后一行可以看出通道mychannel最近的配置块实际上是区块2，并不是创世区块。默认情况下该命令返回目标通道的最新区块，在本次示例中最新区块为第三个区块。因为脚本为两个组织在两个独立的通道更新交易中定义了锚节点。所以配置序列如下：</p>
+<ul>
+<li>区块0：创世区块</li>
+<li>区块1：Org1锚节点更新</li>
+<li>区块2：Org2锚节点更新</li>
+</ul>
+<h5 id="3-2-3-配置文件格式转换与修改"><a href="#3-2-3-配置文件格式转换与修改" class="headerlink" title="3.2.3 配置文件格式转换与修改"></a>3.2.3 配置文件格式转换与修改</h5><p>使用configtxlator工具将通道配置块解码为JSON格式（人类可读取和修改）。 同时必须将所有与我们要进行的更改无关的标题，元数据，创建者签名等剥离。 通过使用<code>jq</code>工具完成此任务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxlator proto_decode --input config_block.pb --type common.Block | jq .data.data[0].payload.data.config &gt; config.json</span><br></pre></td></tr></table></figure></p>
+<p>执行完毕生成一个简洁的JSON对象config.json作为后续配置更新的基准文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.json  config_block.pb  crypto  log.txt  mychannel.block  scripts</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-4-添加Org3加密材料"><a href="#3-2-4-添加Org3加密材料" class="headerlink" title="3.2.4 添加Org3加密材料"></a>3.2.4 添加Org3加密材料</h5><p>再次使用<code>jq</code>工具追加Org3的配置定义<code>Org3.json</code>到通道的应用组字段中并将输出命名为<code>modified_config.json</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq -s &apos;.[0] * &#123;&quot;channel_group&quot;:&#123;&quot;groups&quot;:&#123;&quot;Application&quot;:&#123;&quot;groups&quot;: &#123;&quot;Org3MSP&quot;:.[1]&#125;&#125;&#125;&#125;&#125;&apos; config.json ./channel-artifacts/org3.json &gt; modified_config.json</span><br></pre></td></tr></table></figure></p>
+<p>可以看到已经生成modified_config.json文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.json  config_block.pb  crypto  log.txt  modified_config.json  mychannel.block  scripts</span><br></pre></td></tr></table></figure></p>
+<p>此时。已经有两个JSON文件，分别是<code>config.json</code>和<code>modified_config.json</code>。初始文件只包含Org1和Org2的信息，而修改后的文件包含了三个组织的信息。此时，只需重新编码这两个JSON文件并计算增量即可。</p>
+<p>将<code>config.json</code>转回protobuf格式，命名为<code>config.pb</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxlator proto_encode --input config.json --type common.Config --output config.pb</span><br></pre></td></tr></table></figure></p>
+<p>将<code>modified_config.json</code>转回protobuf格式，命名为<code>modified_config.pb</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxlator proto_encode --input modified_config.json --type common.Config --output modified_config.pb</span><br></pre></td></tr></table></figure></p>
+<p>查看对应文件是否生成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.json  config.pb  config_block.pb  crypto  log.txt  modified_config.json  modified_config.pb  mychannel.block  scripts</span><br></pre></td></tr></table></figure></p>
+<p>利用<code>configtxlator</code>计算两个配置protobufs的增量，以下命令会输出一个新的protobuf名为<code>org3_update.pb</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxlator compute_update --channel_id $CHANNEL_NAME --original config.pb --updated modified_config.pb --output org3_update.pb</span><br></pre></td></tr></table></figure></p>
+<p>可以看到所需要文件已经生成<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.json  config.pb  config_block.pb  crypto  log.txt  modified_config.json  modified_config.pb  mychannel.block  org3_update.pb  scripts</span><br></pre></td></tr></table></figure></p>
+<p>新生成的<code>org3_update.pb</code> 包含Org3的定义和指向Org1和Org2的高级指针。</p>
+<p>在提交通道更新之前，我们需要执行最后的几步。</p>
+<p>首先将 <code>org3_update.pb</code> 解码为可编辑的JSON格式，命名为<code>org3_update.json</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configtxlator proto_decode --input org3_update.pb --type common.ConfigUpdate | jq . &gt; org3_update.json</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.json  config.pb  config_block.pb  crypto  log.txt  modified_config.json  modified_config.pb  mychannel.block  org3_update.json  org3_update.pb  scripts</span><br></pre></td></tr></table></figure>
+<p>在有解码后的<code>org3_update.json</code>文件之后，需要将其封装在信封消息之中。这一步会将我们先前删除的头部数据添加回来，封装完的文件命名为<code>org3_update_in_envelope.json</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &apos;&#123;&quot;payload&quot;:&#123;&quot;header&quot;:&#123;&quot;channel_header&quot;:&#123;&quot;channel_id&quot;:&quot;mychannel&quot;, &quot;type&quot;:2&#125;&#125;,&quot;data&quot;:&#123;&quot;config_update&quot;:&apos;$(cat org3_update.json)&apos;&#125;&#125;&#125;&apos; | jq . &gt; org3_update_in_envelope.json</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.pb        crypto   modified_config.json  mychannel.block   org3_update.pb                scripts</span><br><span class="line">config.json        config_block.pb  log.txt  modified_config.pb    org3_update.json  org3_update_in_envelope.json</span><br></pre></td></tr></table></figure>
+<p>最后再次利用<code>configtxlator</code>工具将<code>org3_update_in_envelope.json</code>转化为Fabric所需要的完整protobuf格式，命名为<code>org3_update_in_envelope.pb</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">onfigtxlator proto_encode --input org3_update_in_envelope.json --type common.Envelope --output org3_update_in_envelope.pb</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# ls</span><br><span class="line">channel-artifacts  config.pb        crypto   modified_config.json  mychannel.block   org3_update.pb                org3_update_in_envelope.pb</span><br><span class="line">config.json        config_block.pb  log.txt  modified_config.pb    org3_update.json  org3_update_in_envelope.json  scripts</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-5-签名并提交配置更新"><a href="#3-2-5-签名并提交配置更新" class="headerlink" title="3.2.5 签名并提交配置更新"></a>3.2.5 签名并提交配置更新</h5><p>现在在CLI容器中已经有了<code>org3_update_in_envelope.pb</code>。但是在配置写入账本之前，必需要有来自Admin用户的签名，在已有通道应用组中修改策略设置为默认“MAJORITY”，即需要大多数现有的组织管理员的签名。因为目前只有Org1和Org2两个组织，所以需要这两个组织的签名。如果没有这两个签名，排序服务交易未能满足策略而拒绝交易。</p>
+<p>Org1 Admin签名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel signconfigtx -f org3_update_in_envelope.pb</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer channel signconfigtx -f org3_update_in_envelope.pb</span><br><span class="line">2019-10-22 14:03:32.763 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 在组织之间切换以签署配置事务（或执行其他任何操作）并不能反映真实的Fabric操作。单个容器永远不会安装整个网络的加密材料。而是需要将配置更新安全地带外传递给Org2管理员进行检查和批准。</li>
+</ul>
+<p>切换到Org2环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export CORE_PEER_LOCALMSPID=&quot;Org2MSP&quot;</span><br><span class="line"></span><br><span class="line">export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt</span><br><span class="line"></span><br><span class="line">export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp</span><br><span class="line"></span><br><span class="line">export CORE_PEER_ADDRESS=peer0.org2.example.com:9051</span><br></pre></td></tr></table></figure></p>
+<p>发出更新命令，此时Org2 Admin的签名将会附加到此调用中。因此不需手动再次为protobuf签名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel update -f org3_update_in_envelope.pb -c $CHANNEL_NAME -o orderer.example.com:7050 --tls --cafile $ORDERER_CA</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2019-10-22 14:06:55.118 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2019-10-22 14:06:55.164 UTC [channelCmd] update -&gt; INFO 002 Successfully submitted channel update</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-6-选择配置"><a href="#3-2-6-选择配置" class="headerlink" title="3.2.6 选择配置"></a>3.2.6 选择配置</h5><p>新加入的节点通过创世块进行引导，但是创世块中不包含通道配置更新中被新添加进去的组织。因此新节点无法利用<code>gossip</code>，因为在新节点获得添加组织到通道的配置交易前，无法验证其它节点从自己组织中转发过来的区块。新添加的节点必须进行以下配置（二选一）使得新的节点能够从排序服务中接收区块。</p>
+<ol>
+<li><p>利用静态选举模式，将节点配置为组织领导</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> CORE_PEER_GOSSIP_USELEADERELECTION=false</span><br><span class="line">CORE_PEER_GOSSIP_ORGLEADER=true</span><br></pre></td></tr></table></figure>
+<p>所有添加到通道中的新节点配置必须相同</p>
+</li>
+<li>利用动态领导选举模式，配置节点使用领导选举<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CORE_PEER_GOSSIP_USELEADERELECTION=true</span><br><span class="line">CORE_PEER_GOSSIP_ORGLEADER=false</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>由于新添加组织中的节点无法形成成员视图，因此该配置是与静态模式相似的。因为每个节点在一开始的时候都会宣称自己是领导者。但是一旦它们获得添加组织到通道的配置交易更新，则组织只会有一个领导节点。所以如果最后希望组织节点利用领导选举则建议使用这种模式。</p>
+<p>以上两种模式配置都是在first-network目录中的base文件夹下的peer-base.yaml文件中进行。以下截取可以配置部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">peer-base:</span><br><span class="line">   image: hyperledger/fabric-peer:$IMAGE_TAG</span><br><span class="line">   environment:</span><br><span class="line">     - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock</span><br><span class="line">     # the following setting starts chaincode containers on the same</span><br><span class="line">     # bridge network as the peers</span><br><span class="line">     # https://docs.docker.com/compose/networking/</span><br><span class="line">     - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=$&#123;COMPOSE_PROJECT_NAME&#125;_byfn</span><br><span class="line">     - FABRIC_LOGGING_SPEC=INFO</span><br><span class="line">     #- FABRIC_LOGGING_SPEC=DEBUG</span><br><span class="line">     - CORE_PEER_TLS_ENABLED=true</span><br><span class="line">     - CORE_PEER_GOSSIP_USELEADERELECTION=true</span><br><span class="line">     - CORE_PEER_GOSSIP_ORGLEADER=false</span><br><span class="line">     - CORE_PEER_PROFILE_ENABLED=true</span><br><span class="line">     - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt</span><br><span class="line">     - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key</span><br><span class="line">     - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt</span><br><span class="line">   working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer</span><br><span class="line">   command: peer node start</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-7-将Org3加入通道"><a href="#3-2-7-将Org3加入通道" class="headerlink" title="3.2.7 将Org3加入通道"></a>3.2.7 将Org3加入通道</h5><p>以上步骤只是将Org3添加到Fabric网络中，但是此时Org3还没有进入任何通道</p>
+<p>首先，启动Org3 的节点容器和一个Org3对应的CLI容器<br>在first-network目录下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose -f docker-compose-org3.yaml up -d</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost first-network]# docker-compose -f docker-compose-org3.yaml up -d</span><br><span class="line">Creating volume &quot;net_peer0.org3.example.com&quot; with default driver</span><br><span class="line">Creating volume &quot;net_peer1.org3.example.com&quot; with default driver</span><br><span class="line">WARNING: Found orphan containers (cli, peer0.org2.example.com, orderer.example.com, peer1.org2.example.com, peer1.org1.example.com, peer0.org1.example.com) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.</span><br><span class="line">Creating peer1.org3.example.com ... done</span><br><span class="line">Creating peer0.org3.example.com ... done</span><br><span class="line">Creating Org3cli                ... done</span><br></pre></td></tr></table></figure>
+<p>compose文件已经配置了初始网络连接，所以两个peer节点和CLI容器能够与现有的peer和排序节点连接。进入Org3-CLI容器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it Org3cli bash</span><br></pre></td></tr></table></figure></p>
+<p>设置两个关键环境变量<code>ORDERER_CA</code> 和 <code>CHANNEL_NAME</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem &amp;&amp; export CHANNEL_NAME=mychannel</span><br></pre></td></tr></table></figure></p>
+<p>确认变量正确设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $ORDERER_CA &amp;&amp; echo $CHANNEL_NAME</span><br></pre></td></tr></table></figure></p>
+<p>发送一个调用给排序服务请求<code>mychannel</code>通道的创世区块。以为上述步骤中通道已经成功更新，因此排序服务可以验证调用中附带的Org3签名。如果Org3没有成功添加到通道配置，则该请求将会被排序服务拒绝。</p>
+<p>使用<code>peer channel fetch</code>命令检索区块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel fetch 0 mychannel.block -o orderer.example.com:7050 -c $CHANNEL_NAME --tls --cafile $ORDERER_CA</span><br></pre></td></tr></table></figure></p>
+<p>将<code>0</code>作为参数表明希望得到的是通道账本中的第一个块（即创世块）。如果使用<code>peer channel fetch config</code>命令，返回的是第五个区块——Org3定义的配置更新，但新加入通道必需从创世区块0开始。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2019-10-23 01:56:32.458 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2019-10-23 01:56:32.498 UTC [cli.common] readBlock -&gt; INFO 002 Received block: 0</span><br></pre></td></tr></table></figure></p>
+<p>利用创世块<code>mychannel.block</code>加入通道<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@e6a67979d990:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer channel join -b mychannel.block</span><br><span class="line">2019-10-23 01:59:59.244 UTC [channelCmd] InitCmdFactory -&gt; INFO 001 Endorser and orderer connections initialized</span><br><span class="line">2019-10-23 01:59:59.307 UTC [channelCmd] executeJoin -&gt; INFO 002 Successfully submitted proposal to join channel</span><br></pre></td></tr></table></figure>
+<p>如果需要将Org3的第二个peer也加入通道，只需要设置<code>TLS</code>和<code>ADDRESS</code>的值后再次执行上述命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls/ca.crt &amp;&amp; export CORE_PEER_ADDRESS=peer1.org3.example.com:12051</span><br><span class="line"></span><br><span class="line">peer channel join -b mychannel.block</span><br></pre></td></tr></table></figure></p>
+<h5 id="3-2-8-升级并调用链码"><a href="#3-2-8-升级并调用链码" class="headerlink" title="3.2.8 升级并调用链码"></a>3.2.8 升级并调用链码</h5><p>升级链码版本同时更新背书策略来包含Org3。在Org3-CLI容器执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@e6a67979d990:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line">2019-10-23 02:14:13.535 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2019-10-23 02:14:13.535 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2019-10-23 02:14:13.918 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure>
+<p>回到原本的CLI容器，在Org1和Org2的peer上安装新版本的链码，以为上次执行通道更新调用使用Org2 管理员身份，所以当前容器代表身份仍然是<code>peer0.org2</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line">2019-10-23 02:18:08.241 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2019-10-23 02:18:08.241 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2019-10-23 02:18:08.548 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure>
+<p>将容器环境切换为Org1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">export CORE_PEER_LOCALMSPID=&quot;Org1MSP&quot;</span><br><span class="line"></span><br><span class="line">export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt</span><br><span class="line"></span><br><span class="line">export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp</span><br><span class="line"></span><br><span class="line">export CORE_PEER_ADDRESS=peer0.org1.example.com:7051</span><br></pre></td></tr></table></figure></p>
+<p>再次执行链码安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode install -n mycc -v 2.0 -p github.com/chaincode/chaincode_example02/go/</span><br><span class="line">2019-10-23 02:19:40.763 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2019-10-23 02:19:40.763 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br><span class="line">2019-10-23 02:19:40.920 UTC [chaincodeCmd] install -&gt; INFO 003 Installed remotely response:&lt;status:200 payload:&quot;OK&quot; &gt;</span><br></pre></td></tr></table></figure>
+<p>直至目前，链码升级已经准备完毕，这次升级并没有修改底层源代码，只是为通道<code>mychannel</code>中的<code>mycc</code>链码简单添加<code>Org3</code>到背书策略中。</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 任何满足链码实例化策略的身份都可以发布更新调用。默认情况下，该身份是通道管理员。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;,&quot;90&quot;,&quot;b&quot;,&quot;210&quot;]&#125;&apos; -P &quot;OR (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;,&apos;Org3MSP.peer&apos;)&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-v标志指明新版本</li>
+<li>-P可以看到已经将Org3添加到策略中去</li>
+<li>与实例化调用一样，链码更新也需要调用<code>init</code>方法，如果链码中init需要参数，则更新时同样需要。</li>
+<li>更新调用添加了一个新的区块——区块6.同时允许Org3 peer在背书阶段执行交易。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@f7d186065b85:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode upgrade -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 2.0 -c &apos;&#123;&quot;Args&quot;:[&quot;init&quot;,&quot;a&quot;,&quot;90&quot;,&quot;b&quot;,&quot;210&quot;]&#125;&apos; -P &quot;OR (&apos;Org1MSP.peer&apos;,&apos;Org2MSP.peer&apos;,&apos;Org3MSP.peer&apos;)&quot;</span><br><span class="line">2019-10-23 02:25:18.999 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 001 Using default escc</span><br><span class="line">2019-10-23 02:25:18.999 UTC [chaincodeCmd] checkChaincodeCmdParams -&gt; INFO 002 Using default vscc</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>回到Org3-CLI容器并查询<code>a</code>的值，这个过程需要耗费一些时间，因为对应peer需要构建并启动链码镜像：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@e6a67979d990:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">90</span><br></pre></td></tr></table></figure></p>
+<p>调用链码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@e6a67979d990:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;invoke&quot;,&quot;a&quot;,&quot;b&quot;,&quot;10&quot;]&#125;&apos;</span><br><span class="line">2019-10-23 02:45:08.595 UTC [chaincodeCmd] chaincodeInvokeOrQuery -&gt; INFO 001 Chaincode invoke successful. result: status:200</span><br></pre></td></tr></table></figure>
+<p>最后查询：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@e6a67979d990:/opt/gopath/src/github.com/hyperledger/fabric/peer# peer chaincode query -C $CHANNEL_NAME -n mycc -c &apos;&#123;&quot;Args&quot;:[&quot;query&quot;,&quot;a&quot;]&#125;&apos;</span><br><span class="line">80</span><br></pre></td></tr></table></figure>
+<h5 id="3-2-9-结论"><a href="#3-2-9-结论" class="headerlink" title="3.2.9 结论"></a>3.2.9 结论</h5><p>通道配置更新过程确实涉及很多，但是各个步骤都有一个逻辑方法。 最终的结果是形成一个以protobuf二进制格式表示的增量交易对象，然后获取必要数量的管理员签名，以便通道配置更新交易满足通道的修改政策。主要涉及各种文件的转换与获取，如下流程图所示：</p>
+<ul>
+<li>附：文件转化过程：<br><img src="/blog/images/fabric1.4/addorg.jpg" alt="文件转化流程"></li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年10月23日 11:23</p>
+        <p>原始链接： <a class="post-url" href="/blog/2019/10/23/addorg1/" title="为通道添加新的组织">https://silence-linhl.github.io/blog/2019/10/23/addorg1/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2019/10/23/addorg1/&title=《为通道添加新的组织》 — Harlan's Blog&pic=images/fabric1.4/addorg1.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2019/10/23/addorg1/&title=《为通道添加新的组织》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2019/10/23/addorg1/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《为通道添加新的组织》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2019/10/23/addorg1/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2019/10/23/addorg1/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2019/10/23/addorg1/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/Hyperledger/" class="color2">Hyperledger</a>
+      
+    <a href="/blog/tags/Fabric1.4/" class="color5">Fabric1.4</a>
+      
+    <a href="/blog/tags/超级账本/" class="color5">超级账本</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-切换路径并关闭已存在网络"><span class="post-toc-text">1. 切换路径并关闭已存在网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-生成新的网络"><span class="post-toc-text">2.生成新的网络</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-添加新组织Org3"><span class="post-toc-text">3.添加新组织Org3</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-1-利用脚本添加新组织Org3"><span class="post-toc-text">3.1 利用脚本添加新组织Org3</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-2-手动添加新组织Org3"><span class="post-toc-text">3.2 手动添加新组织Org3</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-1-生成Org3的加密材料"><span class="post-toc-text">3.2.1 生成Org3的加密材料</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-2-CLI环境准备"><span class="post-toc-text">3.2.2 CLI环境准备</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-3-获取配置"><span class="post-toc-text">3.2.3 获取配置</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-3-配置文件格式转换与修改"><span class="post-toc-text">3.2.3 配置文件格式转换与修改</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-4-添加Org3加密材料"><span class="post-toc-text">3.2.4 添加Org3加密材料</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-5-签名并提交配置更新"><span class="post-toc-text">3.2.5 签名并提交配置更新</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-6-选择配置"><span class="post-toc-text">3.2.6 选择配置</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-7-将Org3加入通道"><span class="post-toc-text">3.2.7 将Org3加入通道</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-8-升级并调用链码"><span class="post-toc-text">3.2.8 升级并调用链码</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-2-9-结论"><span class="post-toc-text">3.2.9 结论</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/blog/2019/10/24/addorg2/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          为通道添加新的组织（续）
+        
+      </span>
+    </a>
+  
+  
+    <a href="/blog/2019/10/22/couchdb/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">couchdb</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

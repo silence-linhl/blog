@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>IPv6-packet | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="1、IPv6报文一般格式 1.1 IPv6与IPv4报文比较 报头变化： IPv4最小报头：20字节 IPv6固定报头：40字节   修改项 地址：32位——&amp;gt; 128位 TTL ——&amp;gt; 跳数限制 协议 ——&amp;gt; 下一报头 服务质量 ——&amp;gt; 流量类型  删除的项 分片域 IP选项 校验和 HL 数据报长度  增加的项 流标签  1.2 IPv6扩展报头主要的扩展报头： 逐跳">
+<meta name="keywords" content="IPv6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IPv6-packet">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="1、IPv6报文一般格式 1.1 IPv6与IPv4报文比较 报头变化： IPv4最小报头：20字节 IPv6固定报头：40字节   修改项 地址：32位——&amp;gt; 128位 TTL ——&amp;gt; 跳数限制 协议 ——&amp;gt; 下一报头 服务质量 ——&amp;gt; 流量类型  删除的项 分片域 IP选项 校验和 HL 数据报长度  增加的项 流标签  1.2 IPv6扩展报头主要的扩展报头： 逐跳">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://5b0988e595225.cdn.sohucs.com/images/20171201/32688b6d97914591927aff2c54a424e7.jpeg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv618.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv619.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv620.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv621.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv622.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv623.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv624.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv625.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv626.png">
+<meta property="og:updated_time" content="2018-11-09T11:58:46.053Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IPv6-packet">
+<meta name="twitter:description" content="1、IPv6报文一般格式 1.1 IPv6与IPv4报文比较 报头变化： IPv4最小报头：20字节 IPv6固定报头：40字节   修改项 地址：32位——&amp;gt; 128位 TTL ——&amp;gt; 跳数限制 协议 ——&amp;gt; 下一报头 服务质量 ——&amp;gt; 流量类型  删除的项 分片域 IP选项 校验和 HL 数据报长度  增加的项 流标签  1.2 IPv6扩展报头主要的扩展报头： 逐跳">
+<meta name="twitter:image" content="https://5b0988e595225.cdn.sohucs.com/images/20171201/32688b6d97914591927aff2c54a424e7.jpeg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-IPv6-packet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      IPv6-packet
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/计算机网络/">计算机网络</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-11-09
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="https://5b0988e595225.cdn.sohucs.com/images/20171201/32688b6d97914591927aff2c54a424e7.jpeg" alt="ipv6"></p>
+<h4 id="1、IPv6报文一般格式"><a href="#1、IPv6报文一般格式" class="headerlink" title="1、IPv6报文一般格式"></a>1、IPv6报文一般格式</h4><p><img src="/blog/images/ipv6/ipv618.png" alt="image"></p>
+<h5 id="1-1-IPv6与IPv4报文比较"><a href="#1-1-IPv6与IPv4报文比较" class="headerlink" title="1.1 IPv6与IPv4报文比较"></a>1.1 IPv6与IPv4报文比较</h5><p><img src="/blog/images/ipv6/ipv619.png" alt="image"></p>
+<p>报头变化：</p>
+<p>IPv4最小报头：20字节</p>
+<p>IPv6固定报头：40字节</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 修改项</li>
+<li>地址：32位——&gt; 128位</li>
+<li>TTL ——&gt; 跳数限制</li>
+<li>协议 ——&gt; 下一报头</li>
+<li>服务质量 ——&gt; 流量类型</li>
+<li style="list-style: none"><input type="checkbox"> 删除的项</li>
+<li>分片域</li>
+<li>IP选项</li>
+<li>校验和</li>
+<li>HL</li>
+<li>数据报长度</li>
+<li style="list-style: none"><input type="checkbox"> 增加的项</li>
+<li>流标签</li>
+</ul>
+<h5 id="1-2-IPv6扩展报头"><a href="#1-2-IPv6扩展报头" class="headerlink" title="1.2 IPv6扩展报头"></a>1.2 IPv6扩展报头</h5><p><strong>主要的扩展报头：</strong></p>
+<p>逐跳选项<br>路由报头<br>分段报头<br>认证报头<br>封装安全有效载荷报头<br>目标选项</p>
+<table>
+<thead>
+<tr>
+<th>扩展报头</th>
+<th>next header value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>逐跳扩展头</td>
+<td>0</td>
+</tr>
+<tr>
+<td>ICMPv4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>TCP</td>
+<td>6</td>
+</tr>
+<tr>
+<td>UDP</td>
+<td>17</td>
+</tr>
+<tr>
+<td>路由扩展头</td>
+<td>43</td>
+</tr>
+<tr>
+<td>ICMPv6</td>
+<td>58</td>
+</tr>
+<tr>
+<td>OSPF</td>
+<td>89</td>
+</tr>
+<tr>
+<td>没有下一个报头</td>
+<td>59</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/blog/images/ipv6/ipv620.png" alt="image"></p>
+<p><strong>扩展头顺序</strong></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 逐跳选项报头</li>
+<li style="list-style: none"><input type="checkbox"> 目标选项报头1（当存在路由报头时，用于中间目标）</li>
+<li style="list-style: none"><input type="checkbox"> 路由报头</li>
+<li style="list-style: none"><input type="checkbox"> 分片段报头</li>
+<li style="list-style: none"><input type="checkbox"> 身份验证报头</li>
+<li style="list-style: none"><input type="checkbox"> 封装安全有效载荷报头</li>
+<li style="list-style: none"><input type="checkbox"> 目标选项报头2（用于最终目标）</li>
+</ul>
+<h6 id="1-2-1-逐跳选项报头"><a href="#1-2-1-逐跳选项报头" class="headerlink" title="1.2.1 逐跳选项报头"></a>1.2.1 逐跳选项报头</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 存放沿途所有路由器必须检查的信息！</li>
+<li style="list-style: none"><input type="checkbox"> 定义一些选项：eg：巨形数据报</li>
+<li style="list-style: none"><input type="checkbox"> 选项按照类型、长度、值出现</li>
+</ul>
+<p><img src="/blog/images/ipv6/ipv621.png" alt="image"></p>
+<p>选项字段最高两位含义如下：</p>
+<p>00 ：跳过该选项</p>
+<p>01 ：丢弃数据包，不通知发送方</p>
+<p>10 ：丢弃数据包，无论数据包目标地址是否为一个组播地址，都向发送方发出ICMPv6参数问题的报文</p>
+<p>11 ：丢弃数据包，如果数据包的目标地址不是一个组播地址，就向发送方发出一个ICMPv6参数问题的报文</p>
+<p>选项字段最高第三位表示在通向目标的路径中，选项数据是否可以改变</p>
+<p>0 ：选项数据不能改变</p>
+<p>1 ：选项数据可以改变</p>
+<p><img src="/blog/images/ipv6/ipv622.png" alt="image"></p>
+<p>当路由器识别不出对应类型的时候，执行相应动作。</p>
+<h6 id="1-2-2-路由报头"><a href="#1-2-2-路由报头" class="headerlink" title="1.2.2 路由报头"></a>1.2.2 路由报头</h6><p>使数据分组经过指定的中间节点到达目的地。</p>
+<p><img src="/blog/images/ipv6/ipv623.png" alt="image"></p>
+<p>剩余分段：表示地址表中还有多少个地址未被访问！每过一个列表中的地址 -1</p>
+<p>当数据到达每个中间目标地址的时候，执行动作如下：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 当前目标地址与第（n-段剩余值+1）个地址交换；（n是地址总数）</li>
+<li style="list-style: none"><input type="checkbox"> 段剩余值减1</li>
+<li style="list-style: none"><input type="checkbox"> 转发</li>
+</ul>
+<p><img src="/blog/images/ipv6/ipv624.png" alt="image"></p>
+<h4 id="2-ICMPv6协议"><a href="#2-ICMPv6协议" class="headerlink" title="2.ICMPv6协议"></a>2.ICMPv6协议</h4><p>ICMPv6报文类型</p>
+<p><strong>差错报文：通告IPv6分组传输中出现的错误</strong></p>
+<ul>
+<li>目标不可达  </li>
+<li>数据包超长  </li>
+<li>超时</li>
+<li>参数问题</li>
+</ul>
+<p><strong>信息报文：提供诊断和附加的主机功能</strong></p>
+<ul>
+<li>MLD</li>
+<li>ND(ARP,redirect)</li>
+<li>回声请求和应答</li>
+</ul>
+<h5 id="2-1-ICMPv6报文的一般格式"><a href="#2-1-ICMPv6报文的一般格式" class="headerlink" title="2.1 ICMPv6报文的一般格式"></a>2.1 ICMPv6报文的一般格式</h5><p><img src="/blog/images/ipv6/ipv625.png" alt="image"></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 差错报文：类型=0 xxxxxxx =0 ~ 127</li>
+<li style="list-style: none"><input type="checkbox"> 信息报文：类型=1 xxxxxxx =128 ~255</li>
+<li style="list-style: none"><input type="checkbox"> 128: 回声请求  129：回声应答</li>
+</ul>
+<h5 id="2-2-ICMPv6的三个应用"><a href="#2-2-ICMPv6的三个应用" class="headerlink" title="2.2 ICMPv6的三个应用"></a>2.2 ICMPv6的三个应用</h5><ul>
+<li style="list-style: none"><input type="checkbox" checked> ping</li>
+<li style="list-style: none"><input type="checkbox" checked> tracert</li>
+<li>第一个请求：HopLim=1(TTL=1)</li>
+<li>第一跳路由器收到，发送超时消息</li>
+<li>得到第一跳路由器信息</li>
+<li>第二个请求：HopLim=2(TTL=2)</li>
+<li>第二跳路由器收到，发送超时消息</li>
+<li>得到第二跳路由器信息</li>
+<li>……</li>
+<li>指导目的地，目的机通常发送端口不可达报文</li>
+<li style="list-style: none"><input type="checkbox" checked> PMTU发现</li>
+<li>MTU：最大传输单元，在IPv4网络中可能由路由器承担分段，容易遭受分片型攻击，在IPv6中规定分段不能由路由器承担，只能由发送方分段（切割数据来适应载重能力），因此在IPv6中，要求源节点（发送方）必须在发送数据之前知道整个传输路径的最小MTU</li>
+<li>PMTU发现原理（试探）</li>
+</ul>
+<p><img src="/blog/images/ipv6/ipv626.png" alt="image"></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 源机向目的机发送MTU=1500字节的IPv6数据包</li>
+<li style="list-style: none"><input type="checkbox"> 路由器B向源发送超长信息，指定MTU=1400字节</li>
+<li style="list-style: none"><input type="checkbox"> 源机向目的机发送MTU=1400字节的IPv6数据包</li>
+<li style="list-style: none"><input type="checkbox"> 路由器C向源发送超长消息，指定MTU=1300字节</li>
+<li style="list-style: none"><input type="checkbox"> 源机向目的机发送MTU=1300字节的IPv6数据包</li>
+<li style="list-style: none"><input type="checkbox"> 此后，该路径的MTU都使用1300字节</li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年11月09日 19:58</p>
+        <p>原始链接： <a class="post-url" href="/blog/2018/11/09/IPv6-packet/" title="IPv6-packet">https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/&title=《IPv6-packet》 — Harlan's Blog&pic=https://5b0988e595225.cdn.sohucs.com/images/20171201/32688b6d97914591927aff2c54a424e7.jpeg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/&title=《IPv6-packet》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IPv6-packet》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2018/11/09/IPv6-packet/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/IPv6/" class="color5">IPv6</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、IPv6报文一般格式"><span class="post-toc-text">1、IPv6报文一般格式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-1-IPv6与IPv4报文比较"><span class="post-toc-text">1.1 IPv6与IPv4报文比较</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-2-IPv6扩展报头"><span class="post-toc-text">1.2 IPv6扩展报头</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-2-1-逐跳选项报头"><span class="post-toc-text">1.2.1 逐跳选项报头</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#1-2-2-路由报头"><span class="post-toc-text">1.2.2 路由报头</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-ICMPv6协议"><span class="post-toc-text">2.ICMPv6协议</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1-ICMPv6报文的一般格式"><span class="post-toc-text">2.1 ICMPv6报文的一般格式</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-ICMPv6的三个应用"><span class="post-toc-text">2.2 ICMPv6的三个应用</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/blog/2018/11/10/IPv6-router/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          IPv6-router
+        
+      </span>
+    </a>
+  
+  
+    <a href="/blog/2018/10/25/IPv6-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">IPv6(2)</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

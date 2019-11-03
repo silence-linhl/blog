@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>docker +calico网络部署 | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="环境   IP 节点 环境 系统     192.168.15.33 node1 docker+etcd+calicoctl CentOS 7   192.168.15.34 node2 docker+etcd+calicoctl CentOS 7    步骤1）环境准备 修改主机名称  node112[root@localhost ~]# hostnamectl --static set-ho">
+<meta name="keywords" content="超级账本,calico,docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker +calico网络部署">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2019/03/16/calico/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="环境   IP 节点 环境 系统     192.168.15.33 node1 docker+etcd+calicoctl CentOS 7   192.168.15.34 node2 docker+etcd+calicoctl CentOS 7    步骤1）环境准备 修改主机名称  node112[root@localhost ~]# hostnamectl --static set-ho">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/calico/calico.jpg">
+<meta property="og:updated_time" content="2019-05-14T08:18:05.424Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker +calico网络部署">
+<meta name="twitter:description" content="环境   IP 节点 环境 系统     192.168.15.33 node1 docker+etcd+calicoctl CentOS 7   192.168.15.34 node2 docker+etcd+calicoctl CentOS 7    步骤1）环境准备 修改主机名称  node112[root@localhost ~]# hostnamectl --static set-ho">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/calico/calico.jpg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-calico" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      docker +calico网络部署
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/计算机网络/">计算机网络</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-03-16
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/calico/calico.jpg" alt="calico"></p>
+<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><table>
+<thead>
+<tr>
+<th>IP</th>
+<th>节点</th>
+<th>环境</th>
+<th>系统</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>192.168.15.33</td>
+<td>node1</td>
+<td>docker+etcd+calicoctl</td>
+<td>CentOS 7</td>
+</tr>
+<tr>
+<td>192.168.15.34</td>
+<td>node2</td>
+<td>docker+etcd+calicoctl</td>
+<td>CentOS 7</td>
+</tr>
+</tbody>
+</table>
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1）环境准备"><a href="#1）环境准备" class="headerlink" title="1）环境准备"></a>1）环境准备</h4><ol>
+<li>修改主机名称</li>
+</ol>
+<p><strong>node1</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# hostnamectl --static set-hostname node1</span><br><span class="line">[root@localhost ~]# echo &quot;node1&quot; &gt; /etc/hostname</span><br></pre></td></tr></table></figure></p>
+<p><strong>node2</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# hostnamectl --static set-hostname node2</span><br><span class="line">[root@localhost ~]# echo &quot;node2&quot; &gt; /etc/hostname</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>关闭两台主机防火墙，若开启iptables防火墙，则打开2380端口</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl disable firewalld.service</span><br><span class="line">[root@localhost ~]# systemctl stop firewalld.service</span><br><span class="line">[root@localhost ~]# iptables -F</span><br><span class="line">[root@localhost ~]# firewall-cmd --state</span><br><span class="line">not running</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>两台主机均设置hosts，都执行以下命令</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# vim /etc/hosts</span><br><span class="line"></span><br><span class="line">192.168.15.133   node1</span><br><span class="line">192.168.15.134   node2</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>将机器上的ip转发功能打开</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">[root@localhost ~]# sysctl -p</span><br></pre></td></tr></table></figure>
+<h4 id="2）安装docker【两台机器上均安装】"><a href="#2）安装docker【两台机器上均安装】" class="headerlink" title="2）安装docker【两台机器上均安装】"></a>2）安装docker【两台机器上均安装】</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install -y docker</span><br><span class="line">[root@localhost ~]# systemctl start docker</span><br><span class="line">[root@localhost ~]# systemctl enable docker</span><br></pre></td></tr></table></figure>
+<h4 id="3）安装etcd【两台机器上均安装】"><a href="#3）安装etcd【两台机器上均安装】" class="headerlink" title="3）安装etcd【两台机器上均安装】"></a>3）安装etcd【两台机器上均安装】</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# yum install etcd -y</span><br></pre></td></tr></table></figure>
+<h4 id="4）配置etcd集群"><a href="#4）配置etcd集群" class="headerlink" title="4）配置etcd集群"></a>4）配置etcd集群</h4><p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cp /etc/etcd/etcd.conf /etc/etcd/etcd.conf.bak</span><br><span class="line">[root@localhost ~]#cat &gt; /etc/etcd/etcd.conf &lt;&lt;EOF</span><br><span class="line">#[Member]</span><br><span class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</span><br><span class="line">ETCD_LISTEN_PEER_URLS=&quot;http://0.0.0.0:2380&quot;</span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</span><br><span class="line"></span><br><span class="line">ETCD_NAME=&quot;node1&quot;</span><br><span class="line"></span><br><span class="line">#[Clustering]</span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://192.168.15.133:2380&quot;</span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://192.168.15.133:2379&quot;</span><br><span class="line">ETCD_INITIAL_CLUSTER=&quot;node1=http://192.168.15.133:2380,node2=http://192.168.15.134:2380&quot;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p><strong>node2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cp /etc/etcd/etcd.conf /etc/etcd/etcd.conf.bak</span><br><span class="line">[root@localhost ~]# cat &gt; /etc/etcd/etcd.conf &lt;&lt;EOF</span><br><span class="line">#[Member]</span><br><span class="line">ETCD_DATA_DIR=&quot;/var/lib/etcd/default.etcd&quot;</span><br><span class="line">ETCD_LISTEN_PEER_URLS=&quot;http://0.0.0.0:2380&quot;</span><br><span class="line">ETCD_LISTEN_CLIENT_URLS=&quot;http://0.0.0.0:2379&quot;</span><br><span class="line"></span><br><span class="line">ETCD_NAME=&quot;node2&quot;</span><br><span class="line"></span><br><span class="line">#[Clustering]</span><br><span class="line">ETCD_INITIAL_ADVERTISE_PEER_URLS=&quot;http://192.168.15.134:2380&quot;</span><br><span class="line">ETCD_ADVERTISE_CLIENT_URLS=&quot;http://192.168.15.134:2379&quot;</span><br><span class="line">ETCD_INITIAL_CLUSTER=&quot;node1=http://192.168.15.133:2380,node2=http://192.168.15.134:2380&quot;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p>启动两个节点的etcd服务，以node1为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# systemctl enable etcd</span><br><span class="line">[root@localhost ~]# systemctl start etcd</span><br></pre></td></tr></table></figure>
+<p>查看集群成员</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# etcdctl member list</span><br><span class="line">8e92f64982d9786c: name=node2 peerURLs=http://192.168.15.134:2380 clientURLs=http://192.168.15.134:2379 isLeader=false</span><br><span class="line">d3e45f62ae9d5a52: name=node1 peerURLs=http://192.168.15.133:2380 clientURLs=http://192.168.15.133:2379 isLeader=true</span><br><span class="line">[root@localhost ~]# etcdctl cluster-health</span><br><span class="line">member 8e92f64982d9786c is healthy: got healthy result from http://192.168.15.134:2379</span><br><span class="line">member d3e45f62ae9d5a52 is healthy: got healthy result from http://192.168.15.133:2379</span><br><span class="line">cluster is healthy</span><br></pre></td></tr></table></figure>
+<h4 id="5）修改docker启动文件以支持etcd"><a href="#5）修改docker启动文件以支持etcd" class="headerlink" title="5）修改docker启动文件以支持etcd"></a>5）修改docker启动文件以支持etcd</h4><p><strong>node1</strong></p>
+<p>在ExecStart区域内添加 (在–seccomp-profile 这一行的下面一行添加–cluster-store=etcd://192.168.15.133:2379 \ )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cp /usr/lib/systemd/system/docker.service /usr/lib/systemd/system/docker.service.bak</span><br><span class="line">[root@localhost ~]# vim /usr/lib/systemd/system/docker.service</span><br><span class="line">........</span><br><span class="line">--seccomp-profile=/etc/docker/seccomp.json \</span><br><span class="line">--cluster-store=etcd://192.168.15.133:2379 \</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# systemctl daemon-reload</span><br><span class="line">[root@localhost ~]# systemctl restart docker</span><br></pre></td></tr></table></figure>
+<p><strong>node2</strong></p>
+<p>在ExecStart区域内添加 (在–seccomp-profile 这一行的下面一行添加–cluster-store=etcd://192.168.15.134:2379 \ )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cp /usr/lib/systemd/system/docker.service /usr/lib/systemd/system/docker.service.bak</span><br><span class="line">[root@localhost ~]# vim /usr/lib/systemd/system/docker.service</span><br><span class="line">........</span><br><span class="line">--seccomp-profile=/etc/docker/seccomp.json \</span><br><span class="line">--cluster-store=etcd://192.168.15.134:2379 \</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# systemctl daemon-reload</span><br><span class="line">[root@localhost ~]# systemctl restart docker</span><br></pre></td></tr></table></figure>
+<p><strong>结果</strong></p>
+<p>发现当前docker支持了etcd，且由于etcd服务已经启动，所以可以看到etcd进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# ps -ef|grep etcd</span><br><span class="line">etcd      10293      1  0 19:47 ?        00:00:33 /usr/bin/etcd --name=node1 --data-dir=/var/lib/etcd/default.etcd --listen-client-urls=http://0.0.0.0:2379</span><br><span class="line">root      10426      1  0 19:54 ?        00:00:07 /usr/bin/dockerd-current --add-runtime docker-runc=/usr/libexec/docker/docker-runc-current --default-runtime=docker-runc --exec-opt native.cgroupdriver=systemd --userland-proxy-path=/usr/libexec/docker/docker-proxy-current --init-path=/usr/libexec/docker/docker-init-current --seccomp-profile=/etc/docker/seccomp.json --cluster-store=etcd://192.168.15.133:2379 --selinux-enabled --log-driver=journald --signature-verification=false --storage-driver overlay2</span><br><span class="line">root      13333   1279  0 21:34 pts/0    00:00:00 grep --color=auto etcd</span><br></pre></td></tr></table></figure></p>
+<h4 id="6）安装calico网络通信环境"><a href="#6）安装calico网络通信环境" class="headerlink" title="6）安装calico网络通信环境"></a>6）安装calico网络通信环境</h4><p>节点上先下载calico容器镜像</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker pull quay.io/calico/node:v2.6.10</span><br></pre></td></tr></table></figure>
+<p>安装calicoctl【所有节点都需要安装】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# wget https://github.com/projectcalico/calicoctl/releases/download/v1.1.0/calicoctl</span><br><span class="line">[root@localhost ~]# chmod 755 calicoctl</span><br><span class="line">[root@localhost ~]# mv calicoctl /usr/local/bin/</span><br><span class="line">[root@localhost ~]# calicoctl --version</span><br><span class="line">calicoctl version v1.1.0, build 882dd008</span><br></pre></td></tr></table></figure>
+<p>分别在两个节点上创建calico容器</p>
+<p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker run --net=host --privileged --name=calico-node -d --restart=always -e NODENAME=node1  -e CALICO_NETWORKING_BACKEND=bird -e CALICO_LIBNETWORK_ENABLED=true -e IP=192.168.15.133 -e ETCD_ENDPOINTS=http://127.0.0.1:2379 -v /var/log/calico:/var/log/calico -v /var/run/calico:/var/run/calico -v /lib/modules:/lib/modules -v /run:/run -v /run/docker/plugins:/run/docker/plugins -v /var/run/docker.sock:/var/run/docker.sock quay.io/calico/node:v2.6.10</span><br></pre></td></tr></table></figure>
+<p><strong>node2</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]#  -e CALICO_NETWORKING_BACKEND=bird -e CALICO_LIBNETWORK_ENABLED=true -e IP=192.168.15.134 -e ETCD_ENDPOINTS=http://127.0.0.1:2379 -v /var/log/calico:/var/log/calico -v /var/run/calico:/var/run/calico -v /lib/modules:/lib/modules -v /run:/run -v /run/docker/plugins:/run/docker/plugins -v /var/run/docker.sock:/var/run/docker.sock quay.io/calico/node:v2.6.10</span><br></pre></td></tr></table></figure></p>
+<p>查看calico容器创建情况（以node1为例）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker ps</span><br><span class="line">CONTAINER ID        IMAGE                         COMMAND             CREATED             STATUS              PORTS               NAMES</span><br><span class="line">2d9f4e006b37        quay.io/calico/node:v2.6.10   &quot;start_runit&quot;       About an hour ago   Up About an hour                        calico-node</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# ps -ef|grep calico</span><br><span class="line">root      11112  11109  0 20:24 ?        00:00:00 svlogd -tt /var/log/calico/bird6</span><br><span class="line">root      11113  11109  0 20:24 ?        00:00:00 bird6 -R -s /var/run/calico/bird6.ctl -d -c /etc/calico/confd/config/bird6.cfg</span><br><span class="line">root      11114  11110  0 20:24 ?        00:00:00 svlogd /var/log/calico/confd</span><br><span class="line">root      11115  11110  0 20:24 ?        00:00:00 confd -confdir=/etc/calico/confd -interval=5 -watch --log-level=info -node=http://127.0.0.1:2379 -client-key= -client-cert= -client-ca-keys=</span><br><span class="line">root      11116  11111  0 20:24 ?        00:00:00 svlogd /var/log/calico/libnetwork</span><br><span class="line">root      11118  11107  0 20:24 ?        00:00:00 svlogd /var/log/calico/felix</span><br><span class="line">root      11120  11108  0 20:24 ?        00:00:00 svlogd -tt /var/log/calico/bird</span><br><span class="line">root      11121  11108  0 20:24 ?        00:00:00 bird -R -s /var/run/calico/bird.ctl -d -c /etc/calico/confd/config/bird.cfg</span><br><span class="line">root      11455  11107  0 20:34 ?        00:00:28 calico-felix</span><br><span class="line">root      13771   1279  0 21:49 pts/0    00:00:00 grep --color=auto calico</span><br></pre></td></tr></table></figure>
+<p>查看calico状态</p>
+<p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# calicoctl node status</span><br><span class="line">Calico process is running.</span><br><span class="line"></span><br><span class="line">IPv4 BGP status</span><br><span class="line">+----------------+-------------------+-------+----------+-------------+</span><br><span class="line">|  PEER ADDRESS  |     PEER TYPE     | STATE |  SINCE   |    INFO     |</span><br><span class="line">+----------------+-------------------+-------+----------+-------------+</span><br><span class="line">| 192.168.15.134 | node-to-node mesh | up    | 12:24:19 | Established |</span><br><span class="line">+----------------+-------------------+-------+----------+-------------+</span><br><span class="line"></span><br><span class="line">IPv6 BGP status</span><br><span class="line">No IPv6 peers found.</span><br></pre></td></tr></table></figure>
+<p><strong>node2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# calicoctl node status</span><br><span class="line">Calico process is running.</span><br><span class="line"></span><br><span class="line">IPv4 BGP status</span><br><span class="line">+----------------+-------------------+-------+----------+-------------+</span><br><span class="line">|  PEER ADDRESS  |     PEER TYPE     | STATE |  SINCE   |    INFO     |</span><br><span class="line">+----------------+-------------------+-------+----------+-------------+</span><br><span class="line">| 192.168.15.133 | node-to-node mesh | up    | 12:24:21 | Established |</span><br><span class="line">+----------------+-------------------+-------+----------+-------------+</span><br><span class="line"></span><br><span class="line">IPv6 BGP status</span><br><span class="line">No IPv6 peers found.</span><br></pre></td></tr></table></figure>
+<h4 id="7）添加calico网络"><a href="#7）添加calico网络" class="headerlink" title="7）添加calico网络"></a>7）添加calico网络</h4><p>注：只需要在一个节点配置添加即可</p>
+<p><strong>node1</strong></p>
+<p>创建ip pool<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# cat &gt;ipPool.yaml &lt;&lt;EOF</span><br><span class="line">- apiVersion: v1</span><br><span class="line">  kind: ipPool</span><br><span class="line">  metadata:</span><br><span class="line">    cidr: 10.20.0.0/24</span><br><span class="line">  spec:</span><br><span class="line">    ipip:</span><br><span class="line">      enabled: true</span><br><span class="line">    nat-outgoing: true</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">[root@localhost ~]# calicoctl create -f ipPool.yaml</span><br></pre></td></tr></table></figure></p>
+<p>在任意节点查看添加ip pool情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# calicoctl get ipPool</span><br><span class="line">CIDR                       </span><br><span class="line">10.20.0.0/24               </span><br><span class="line">192.168.0.0/16             </span><br><span class="line">fd80:24e2:f998:72d6::/64</span><br></pre></td></tr></table></figure>
+<p>在上面创建的ip pool(10.20.0.0/24)里创建子网络</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker network create --driver calico --ipam-driver calico-ipam  --subnet 10.20.0.0/24 net1</span><br><span class="line">[root@localhost ~]# docker network create --driver calico --ipam-driver calico-ipam  --subnet 10.20.0.0/24 net2</span><br></pre></td></tr></table></figure>
+<p>查看网络创建情况，可以看到net1、net2的网络已经存在</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker network ls</span><br><span class="line">NETWORK ID          NAME                DRIVER              SCOPE</span><br><span class="line">dd3ae1400375        bridge              bridge              local</span><br><span class="line">b87973f6e3da        host                host                local</span><br><span class="line">aaea1c24a3d6        net1                calico              global</span><br><span class="line">efebcca875b3        net2                calico              global</span><br><span class="line">0fd941dfe66b        none                null                local</span><br></pre></td></tr></table></figure>
+<p>在node1和node2上创建容器来测试下容器网络的连通性</p>
+<p><strong>下载busybox工具，方便测试使用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker pull busybox</span><br></pre></td></tr></table></figure>
+<p><strong>node1</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker run --net net1 --name workload-A -tid busybox</span><br><span class="line">[root@localhost ~]# docker run --net net2 --name workload-B -tid busybox</span><br></pre></td></tr></table></figure>
+<p><strong>node2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker run --net net1 --name workload-E -tid busybox</span><br></pre></td></tr></table></figure>
+<p>同一网络内的容器（即使不在同一节点主机上）可以使用容器名来访问</p>
+<p><strong>node1</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker exec workload-A ping -c 4 workload-E.net1</span><br><span class="line">PING workload-E.net1 (10.20.0.1): 56 data bytes</span><br><span class="line">64 bytes from 10.20.0.1: seq=0 ttl=62 time=0.811 ms</span><br><span class="line">64 bytes from 10.20.0.1: seq=1 ttl=62 time=0.220 ms</span><br><span class="line">64 bytes from 10.20.0.1: seq=2 ttl=62 time=0.157 ms</span><br><span class="line">64 bytes from 10.20.0.1: seq=3 ttl=62 time=0.231 ms</span><br><span class="line"></span><br><span class="line">--- workload-E.net1 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 packets received, 0% packet loss</span><br><span class="line">round-trip min/avg/max = 0.157/0.354/0.811 ms</span><br></pre></td></tr></table></figure></p>
+<p><strong>node2</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker exec workload-E ping -c 4 workload-A.net1</span><br><span class="line">PING workload-A.net1 (10.20.0.129): 56 data bytes</span><br><span class="line">64 bytes from 10.20.0.129: seq=0 ttl=62 time=1.964 ms</span><br><span class="line">64 bytes from 10.20.0.129: seq=1 ttl=62 time=1.152 ms</span><br><span class="line">64 bytes from 10.20.0.129: seq=2 ttl=62 time=0.521 ms</span><br><span class="line">64 bytes from 10.20.0.129: seq=3 ttl=62 time=0.503 ms</span><br><span class="line"></span><br><span class="line">--- workload-A.net1 ping statistics ---</span><br><span class="line">4 packets transmitted, 4 packets received, 0% packet loss</span><br><span class="line">round-trip min/avg/max = 0.503/1.035/1.964 ms</span><br></pre></td></tr></table></figure>
+<p>不同网络内的容器需要使用容器ip来访问</p>
+<p><strong>使用容器名会报：bad address</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# docker exec workload-A ping -c 4 workload-B.net2</span><br><span class="line">ping: bad address &apos;workload-B.net2&apos;</span><br></pre></td></tr></table></figure>
+<p><strong>使用容器ip</strong>（这个还没尝试成功）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec workload-A ping -c 2  `docker inspect --format &quot;&#123;&#123; .NetworkSettings.Networks.net2.IPAddress &#125;&#125;&quot; workload-B`</span><br></pre></td></tr></table></figure>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年05月14日 16:18</p>
+        <p>原始链接： <a class="post-url" href="/blog/2019/03/16/calico/" title="docker +calico网络部署">https://silence-linhl.github.io/blog/2019/03/16/calico/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2019/03/16/calico/&title=《docker +calico网络部署》 — Harlan's Blog&pic=images/calico/calico.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2019/03/16/calico/&title=《docker +calico网络部署》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2019/03/16/calico/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《docker +calico网络部署》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2019/03/16/calico/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2019/03/16/calico/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2019/03/16/calico/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/超级账本/" class="color5">超级账本</a>
+      
+    <a href="/blog/tags/calico/" class="color2">calico</a>
+      
+    <a href="/blog/tags/docker/" class="color2">docker</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#环境"><span class="post-toc-text">环境</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#步骤"><span class="post-toc-text">步骤</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1）环境准备"><span class="post-toc-text">1）环境准备</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2）安装docker【两台机器上均安装】"><span class="post-toc-text">2）安装docker【两台机器上均安装】</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3）安装etcd【两台机器上均安装】"><span class="post-toc-text">3）安装etcd【两台机器上均安装】</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4）配置etcd集群"><span class="post-toc-text">4）配置etcd集群</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5）修改docker启动文件以支持etcd"><span class="post-toc-text">5）修改docker启动文件以支持etcd</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6）安装calico网络通信环境"><span class="post-toc-text">6）安装calico网络通信环境</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7）添加calico网络"><span class="post-toc-text">7）添加calico网络</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/blog/2019/03/31/fabric-distribute-config/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          fabric分布式部署方案
+        
+      </span>
+    </a>
+  
+  
+    <a href="/blog/2018/11/10/IPv6-router/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">IPv6-router</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

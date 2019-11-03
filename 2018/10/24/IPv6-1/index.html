@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>IPv6(1) | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="1.四层TCP/IPv6参考模型Application Layer  ——HTTP,FTP,SMTP,SIP,RTP,DNS,DHCPv6，etc. Transport Layer    ——TCPv6，UDPv6，SCTP Internet Layer —— IPv6，ICMPv6，IPsec Link Layer —— ND,OSPFv3,L2TP,PPP,Ethernet,DSL,MPLS">
+<meta name="keywords" content="IPv6">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IPv6(1)">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="1.四层TCP/IPv6参考模型Application Layer  ——HTTP,FTP,SMTP,SIP,RTP,DNS,DHCPv6，etc. Transport Layer    ——TCPv6，UDPv6，SCTP Internet Layer —— IPv6，ICMPv6，IPsec Link Layer —— ND,OSPFv3,L2TP,PPP,Ethernet,DSL,MPLS">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv62.jpg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv64.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv63.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv64.png">
+<meta property="og:updated_time" content="2018-10-25T02:33:31.742Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IPv6(1)">
+<meta name="twitter:description" content="1.四层TCP/IPv6参考模型Application Layer  ——HTTP,FTP,SMTP,SIP,RTP,DNS,DHCPv6，etc. Transport Layer    ——TCPv6，UDPv6，SCTP Internet Layer —— IPv6，ICMPv6，IPsec Link Layer —— ND,OSPFv3,L2TP,PPP,Ethernet,DSL,MPLS">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv62.jpg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-IPv6-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      IPv6(1)
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/计算机网络/">计算机网络</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-10-24
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/ipv6/ipv62.jpg" alt="ipv6"></p>
+<h4 id="1-四层TCP-IPv6参考模型"><a href="#1-四层TCP-IPv6参考模型" class="headerlink" title="1.四层TCP/IPv6参考模型"></a>1.四层TCP/IPv6参考模型</h4><p>Application Layer  ——HTTP,FTP,SMTP,SIP,RTP,DNS,DHCPv6，etc.</p>
+<p>Transport Layer    ——TCPv6，UDPv6，SCTP</p>
+<p>Internet Layer —— IPv6，ICMPv6，IPsec</p>
+<p>Link Layer —— ND,OSPFv3,L2TP,PPP,Ethernet,DSL,MPLS,etc.</p>
+<h4 id="2-IPv6基本术语"><a href="#2-IPv6基本术语" class="headerlink" title="2.IPv6基本术语"></a>2.IPv6基本术语</h4><p><img src="/blog/images/ipv6/ipv64.png" alt="image"></p>
+<p>局域网段：位于内部交换机下的网段</p>
+<p>链路：内部子网路由器下</p>
+<p>子网：多个链路可以组成子网</p>
+<p>网络：不同子网可构成网络</p>
+<h4 id="3-IPv6地址为128位"><a href="#3-IPv6地址为128位" class="headerlink" title="3.IPv6地址为128位"></a>3.IPv6地址为128位</h4><p>地址空间非常大，可以夸张地说，世界上每一粒沙子都可以有对应的IPv6地址。</p>
+<h4 id="4-IPv6地址表示格式：冒分十六进制"><a href="#4-IPv6地址表示格式：冒分十六进制" class="headerlink" title="4.IPv6地址表示格式：冒分十六进制"></a>4.IPv6地址表示格式：冒分十六进制</h4><p>128位IPv6地址如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0010000000000001000001000001000000000000000000000000000000000001</span><br><span class="line">0000000000000000000000000000000000000000000000000100010111111111</span><br></pre></td></tr></table></figure></p>
+<p>每16位一组，分为8组如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0010000000000001 0000010000010000 0000000000000000 0000000000000001</span><br><span class="line">0000000000000000 0000000000000000 0000000000000000 0100010111111111</span><br></pre></td></tr></table></figure></p>
+<p>每一组中，每4为单位以16进制表示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">0010 0000 0000 0001  2001</span><br><span class="line">0000 0100 0001 0000  0410</span><br><span class="line">0000 0000 0000 0000  0000</span><br><span class="line">0000 0000 0000 0001  0001</span><br><span class="line">0000 0000 0000 0000  0000</span><br><span class="line">0000 0000 0000 0000  0000</span><br><span class="line">0000 0000 0000 0000  0000</span><br><span class="line">0100 0101 1111 1111  45ff</span><br></pre></td></tr></table></figure>
+<p>将8组16进制数用冒号连接如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2001:0410:0000:0001:0000:0000:0000:45ff</span><br></pre></td></tr></table></figure>
+<p>为了简洁表示，IPv6冒分十六进制有以下规则</p>
+<p><strong>规则1：</strong> 省略前导0，如果每组16进制数中存在前导0，则省略</p>
+<p>2001:<del>0</del>410:<del>000</del>0:<del>000</del>1:<del>000</del>0:<del>000</del>0:<del>000</del>0:45ff</p>
+<p>省略前导0，结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2001:410:0:1:0:0:0:45ff</span><br></pre></td></tr></table></figure>
+<p><strong>规则2：</strong> 忽略全0</p>
+<p>2001:410:0:1:<del>0:0:0</del>:45ff</p>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2001:410:0:1::45ff</span><br></pre></td></tr></table></figure>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> 注意：如果有多个部分有全0部分只能忽略一个部分的全0，如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2001:0:0:1:0:0:0:45ff</span><br></pre></td></tr></table></figure>
+<p>只能写成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2001::1:0:0:0:45ff</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">2001:0:0:1::45ff</span><br></pre></td></tr></table></figure>
+<p>以下写法为错误写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2001::1::45ff</span><br></pre></td></tr></table></figure>
+<p>因为这样写无法确定省略了0的个数</p>
+<h4 id="5-IPv6地址分类"><a href="#5-IPv6地址分类" class="headerlink" title="5.IPv6地址分类"></a>5.IPv6地址分类</h4><p>与IPv4地址相比少了广播地址</p>
+<h5 id="5-1-单播地址（Unicast-Address"><a href="#5-1-单播地址（Unicast-Address" class="headerlink" title="5.1 单播地址（Unicast Address)"></a>5.1 单播地址（Unicast Address)</h5><p>IPv6单播地址用于唯一标识支持IPv6的设备上的接口，源IPv6地址必须为单播地址</p>
+<table>
+<thead>
+<tr>
+<th>本地链路地址</th>
+<th>全局单播地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>环回地址</td>
+<td>唯一本地地址</td>
+</tr>
+<tr>
+<td>嵌入式IPv4地址</td>
+<td>未指定地址</td>
+</tr>
+</tbody>
+</table>
+<h6 id="5-1-1本地链路地址"><a href="#5-1-1本地链路地址" class="headerlink" title="5.1.1本地链路地址"></a>5.1.1本地链路地址</h6><p><strong>目的</strong>：用于与统一链路中的其他设备通信</p>
+<p><strong>注意</strong>：路由器不会转发具有本地链路源地址或目的地址的数据包，每个支持IPv6的网络接口一定有本地链路地址。</p>
+<p>支持IPv6的主机会创建IPv6本地链路地址，而IPv4的本地链路地址不会自动生成。</p>
+<p><strong>1. 链路本地地址的构成</strong></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 应用范围：只能在同一本地链路节点之间使用，FE80::/64</li>
+<li style="list-style: none"><input type="checkbox"> 节点启动时会自动配置一个本地链路地址。</li>
+</ul>
+<p><strong>2.链路本地地址的一种生成方法</strong></p>
+<p>前64位：FE80：0：0：0</p>
+<p>后64位：EUI-64地址</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> <strong>EUI-64地址生成</strong></li>
+</ul>
+<p>MAC地址为48位，从中间切分为两部分各24位；</p>
+<p>在这两部分之间插入16位数：11111111 11111110 组成64位地址；</p>
+<p>将从头开始数的第7位取反，得到最终EUI-64地址</p>
+<p><strong><em>例：一台主机的MAC地址是： 0012:3400:ABCD， 试求其生成的链路本地地址</em></strong></p>
+<p>MAC地址写成二进制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000000 00010010 00110100 00000000 10101011 11001101</span><br></pre></td></tr></table></figure>
+<p>中间插入 11111111 11111110</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000000 00010010 00110100 11111111 11111110 00000000 10101011 11001101</span><br></pre></td></tr></table></figure>
+<p>第7位取反</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">00000010 00010010 00110100 11111111 11111110 00000000 10101011 11001101</span><br></pre></td></tr></table></figure>
+<p>得到EUI-64地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0212:34FF:FE00:ABCD</span><br></pre></td></tr></table></figure>
+<p>与前64位组合生成本地链路地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FE80::0212:34FF:FE00:ABCD</span><br></pre></td></tr></table></figure>
+<p><strong>3.本地链路地址用途</strong></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 主机使用本地路由器的本地链路地址作为默认网关IPv6地址</li>
+<li style="list-style: none"><input type="checkbox"> 路由器使用本地链路地址交换动态路由协议消息</li>
+<li style="list-style: none"><input type="checkbox"> 转发 IPv6 数据包时， 路由器的路由表使用本地链路地址确定下一跳路由器</li>
+</ul>
+<h6 id="5-1-2-环回地址"><a href="#5-1-2-环回地址" class="headerlink" title="5.1.2 环回地址"></a>5.1.2 环回地址</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 环回地址除最后一位外全为0，压缩格式表示为::1/128</li>
+<li style="list-style: none"><input type="checkbox"> 主机使用环回地址发送数据包到其自身，环回地址不能分配给物理接口</li>
+</ul>
+<h6 id="5-1-3-未指定地址"><a href="#5-1-3-未指定地址" class="headerlink" title="5.1.3 未指定地址"></a>5.1.3 未指定地址</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 未指定地址为全0地址，压缩格式表示为::/128或::</li>
+<li style="list-style: none"><input type="checkbox"> 不能分配给接口。仅作为IPv6数据包源地址，在设备尚无永久IPv6地址时，未指定地址可作为源地址，不能作为目的地址。</li>
+</ul>
+<h6 id="5-1-4-唯一本地地址"><a href="#5-1-4-唯一本地地址" class="headerlink" title="5.1.4 唯一本地地址"></a>5.1.4 唯一本地地址</h6><ul>
+<li style="list-style: none"><input type="checkbox"> 类似于IPv4的私有地址，但也有重大差异，范围从FC00::/7到FDFF::/7</li>
+<li style="list-style: none"><input type="checkbox"> 唯一本地地址在一个站点内或有限站点数之间用作本地地址，在全局IPv6中不具有可路由性</li>
+</ul>
+<h6 id="5-1-5-可聚合全球单播地址"><a href="#5-1-5-可聚合全球单播地址" class="headerlink" title="5.1.5 可聚合全球单播地址"></a>5.1.5 可聚合全球单播地址</h6><p><img src="/blog/images/ipv6/ipv63.png" alt="image"></p>
+<ul>
+<li style="list-style: none"><input type="checkbox"> 由格式前缀001标识，ISP商分配的前缀：/48，全球路由前缀</li>
+<li style="list-style: none"><input type="checkbox"> Site拓扑：由组织机构划分子网，子网ID</li>
+<li style="list-style: none"><input type="checkbox"> 接口ID：64</li>
+</ul>
+<p><img src="/blog/images/ipv6/ipv64.png" alt="image"></p>
+<p>接口ID生成方法：</p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> EUI-64（MAC地址生成）</li>
+<li style="list-style: none"><input type="checkbox" checked> 随机生成（RFC3041）</li>
+<li style="list-style: none"><input type="checkbox" checked> 手工设置</li>
+</ul>
+<h6 id="5-1-5-特殊单播地址"><a href="#5-1-5-特殊单播地址" class="headerlink" title="5.1.5 特殊单播地址"></a>5.1.5 特殊单播地址</h6><ul>
+<li style="list-style: none"><input type="checkbox"> IPv6兼容地址：0：0：0：0：0：0：w:x:y:z 或 ::w.x.y.z</li>
+<li style="list-style: none"><input type="checkbox"> IPv4映射地址：0：0：0：0：0：FFFF:w.x.y.z或::FFFF:w.x.y.z</li>
+<li style="list-style: none"><input type="checkbox"> 6to4地址</li>
+</ul>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年10月25日 10:33</p>
+        <p>原始链接： <a class="post-url" href="/blog/2018/10/24/IPv6-1/" title="IPv6(1)">https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/&title=《IPv6(1)》 — Harlan's Blog&pic=https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1540396150981&di=cf636309a83bd93a2da7a217b957a3d2&imgtype=0&src=http%3A%2F%2Fs4.sinaimg.cn%2Fmw690%2F006xuMxHzy74tRk8TC3b3" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/&title=《IPv6(1)》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IPv6(1)》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2018/10/24/IPv6-1/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/IPv6/" class="color5">IPv6</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-四层TCP-IPv6参考模型"><span class="post-toc-text">1.四层TCP/IPv6参考模型</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-IPv6基本术语"><span class="post-toc-text">2.IPv6基本术语</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-IPv6地址为128位"><span class="post-toc-text">3.IPv6地址为128位</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-IPv6地址表示格式：冒分十六进制"><span class="post-toc-text">4.IPv6地址表示格式：冒分十六进制</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-IPv6地址分类"><span class="post-toc-text">5.IPv6地址分类</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-1-单播地址（Unicast-Address"><span class="post-toc-text">5.1 单播地址（Unicast Address)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-1-1本地链路地址"><span class="post-toc-text">5.1.1本地链路地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-1-2-环回地址"><span class="post-toc-text">5.1.2 环回地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-1-3-未指定地址"><span class="post-toc-text">5.1.3 未指定地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-1-4-唯一本地地址"><span class="post-toc-text">5.1.4 唯一本地地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-1-5-可聚合全球单播地址"><span class="post-toc-text">5.1.5 可聚合全球单播地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-1-5-特殊单播地址"><span class="post-toc-text">5.1.5 特殊单播地址</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/blog/2018/10/25/IPv6-2/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          IPv6(2)
+        
+      </span>
+    </a>
+  
+  
+    <a href="/blog/2018/10/02/centos-ethereum-establish/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">CentOS以太坊私链搭建</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

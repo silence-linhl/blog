@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>利用softEther VPN远程访问内部网络 | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="利用 softEther VPN 进行远程访问使用场景和前提条件 内部网络受到保护，无法直接在内部网络中的主机中直接部署VPN server（搭建完无法连接到该server） 用户需要从外部网络远程访问内部网络中的资源，如主机或打印机等等 对内部网络中的某台主机拥有管理权限 有一台暴露在互联网中的主机 内部网络中的主机可以直接访问互联网   比如   学生于校外访问校园网资源 远程办公 管理家庭">
+<meta name="keywords" content="softEther,VPN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用softEther VPN远程访问内部网络">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2019/11/02/softEther/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="利用 softEther VPN 进行远程访问使用场景和前提条件 内部网络受到保护，无法直接在内部网络中的主机中直接部署VPN server（搭建完无法连接到该server） 用户需要从外部网络远程访问内部网络中的资源，如主机或打印机等等 对内部网络中的某台主机拥有管理权限 有一台暴露在互联网中的主机 内部网络中的主机可以直接访问互联网   比如   学生于校外访问校园网资源 远程办公 管理家庭">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/SoftEther-VPN-server.jpg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/使用场景.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/解决方案1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/各位置组件.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/installvpnserver/getdownloadlink.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/installvpnserver/1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/installvpnserver/3.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/installvpnserver/4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/installvpnserver/5.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/2.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/6.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/7.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/8.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/9.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/10.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/11.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/12.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/13.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/14.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/15.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/16.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/17.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/18.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnserver/19.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/2.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/3.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/5.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/6.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/configvpnbridge/7.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/l2tp/ios.jpg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/l2tp/android.jpg">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/softEther/l2tp/windows.png">
+<meta property="og:updated_time" content="2019-11-03T01:26:37.557Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用softEther VPN远程访问内部网络">
+<meta name="twitter:description" content="利用 softEther VPN 进行远程访问使用场景和前提条件 内部网络受到保护，无法直接在内部网络中的主机中直接部署VPN server（搭建完无法连接到该server） 用户需要从外部网络远程访问内部网络中的资源，如主机或打印机等等 对内部网络中的某台主机拥有管理权限 有一台暴露在互联网中的主机 内部网络中的主机可以直接访问互联网   比如   学生于校外访问校园网资源 远程办公 管理家庭">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/softEther/SoftEther-VPN-server.jpg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-softEther" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      利用softEther VPN远程访问内部网络
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/VPN/">VPN</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-02
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/softEther/SoftEther-VPN-server.jpg" alt="softEther"></p>
+<h1 id="利用-softEther-VPN-进行远程访问"><a href="#利用-softEther-VPN-进行远程访问" class="headerlink" title="利用 softEther VPN 进行远程访问"></a>利用 softEther VPN 进行远程访问</h1><h2 id="使用场景和前提条件"><a href="#使用场景和前提条件" class="headerlink" title="使用场景和前提条件"></a>使用场景和前提条件</h2><ul>
+<li>内部网络受到保护，无法直接在内部网络中的主机中直接部署VPN server（搭建完无法连接到该server）</li>
+<li>用户需要从外部网络远程访问内部网络中的资源，如主机或打印机等等</li>
+<li>对内部网络中的某台主机拥有管理权限</li>
+<li>有一台暴露在互联网中的主机</li>
+<li>内部网络中的主机可以直接访问互联网</li>
+</ul>
+<blockquote>
+<p>比如</p>
+</blockquote>
+<ol>
+<li>学生于校外访问校园网资源</li>
+<li>远程办公</li>
+<li>管理家庭局域网设备</li>
+</ol>
+<h2 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h2><p>这里通过一个例子，描述如何通过一步步的操作，利用softEther VPN 套件实现远程访问。<br><img src="/blog/images/softEther/使用场景.png" alt="场景"></p>
+<blockquote>
+<p>一个安全的网络（192.168.1.0/24），它受到防火墙和NAT的保护，无法从Internet访问，但是可以通过防火墙或NAT代理访问Internet上的网站。<br>该网络中， IP地址为 192.168.1.111 的一台打印机，IP地址为 192.186.1.222 的一台主机H。<br>一台暴露在Internet的主机S，IP地址为 125.111.111.111。</p>
+</blockquote>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p><img src="/blog/images/softEther/解决方案1.png" alt="场景"></p>
+<blockquote>
+<p>通过构建主机S和主机H所在内部网络的级联网络，用户可以通过连接主机S所创建的VPN，实现对内部网络（192.168.1.0/24）中的资源的访问。</p>
+</blockquote>
+<h2 id="开始你的表演"><a href="#开始你的表演" class="headerlink" title="开始你的表演"></a>开始你的表演</h2><p>总体上整个任务的关键位置所运行的SoftEther VPN组件如下图所示</p>
+<p><img src="/blog/images/softEther/各位置组件.png" alt="场景"></p>
+<h3 id="1、在主机S上安装搭建VPN-server"><a href="#1、在主机S上安装搭建VPN-server" class="headerlink" title="1、在主机S上安装搭建VPN server"></a>1、在主机S上安装搭建VPN server</h3><p>连接到 主机S ，将<strong>SoftEther VPN Server</strong> 组件下载到本地。<a href="https://www.softether-download.com/cn.aspx?product=softether" target="_blank" rel="noopener">组件选择地址</a><br><img src="/blog/images/softEther/installvpnserver/getdownloadlink.png" alt="获取xia下载链接"><br>根据实际运行环境，选择适当的版本。这里我选择的是<strong>Linux</strong> 系统，CPU选择的是<strong>Intel x64 / AMD64 (64bit)</strong>。</p>
+<p>拿到下载地址后，使用wget命令进行下载，：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 下载softether-vpnserver到本地</span></span><br><span class="line">wget https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.30-9696-beta/softether-vpnserver-v4.30-9696-beta-2019.07.08-linux-x64-64bit.tar.gz</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">tar zxvf softether-*server*.tar.gz</span><br><span class="line"><span class="built_in">cd</span> vpnserver/</span><br><span class="line"><span class="comment"># 这里面有一个隐藏的文件.install.sh，运行它。</span></span><br><span class="line">[vpnserver]<span class="comment"># ./.install.sh</span></span><br><span class="line"><span class="comment"># 一路Yes，Agree默认即可</span></span><br></pre></td></tr></table></figure>
+<p> 查看下载的文件<br><img src="/blog/images/softEther/installvpnserver/1.png" alt="查看下载的文件"><br>进入对应文件夹<br><img src="/blog/images/softEther/installvpnserver/3.png" alt="进入对应文件夹"><br>运行安装脚本<br><img src="/blog/images/softEther/installvpnserver/4.png" alt="运行安装脚本"><br>进行默认配置<br><img src="/blog/images/softEther/installvpnserver/5.png" alt="默认配置"></p>
+<p>安装完成后进入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 启动vpnserver</span></span><br><span class="line">[vpnserver]<span class="comment"># ./vpnserver start</span></span><br><span class="line"><span class="comment"># 进行vpn的初始配置</span></span><br><span class="line">[vpnserver]<span class="comment"># ./ vpncmd</span></span><br><span class="line"></span><br><span class="line">By using vpncmd program, the following can be achieved.</span><br><span class="line"></span><br><span class="line">1. Management of VPN Server or VPN Bridge</span><br><span class="line">2. Management of VPN Client</span><br><span class="line">3. Use of VPN Tools (certificate creation and Network Traffic Speed Test Tool)</span><br><span class="line"></span><br><span class="line">Select 1, 2 or 3:</span><br><span class="line"><span class="comment"># 选择1 回车</span></span><br><span class="line">Hostname of IP Address of Destination:</span><br><span class="line"><span class="comment"># 回车</span></span><br><span class="line">If connecting to the server by Virtual Hub Admin Mode, please input the Virtual Hub name.</span><br><span class="line">If connecting by server admin mode, please press Enter without inputting anything.</span><br><span class="line">Specify Virtual Hub Name:</span><br><span class="line"><span class="comment"># 回车</span></span><br><span class="line">Password:</span><br><span class="line"><span class="comment"># 回车</span></span><br><span class="line"></span><br><span class="line">VPN Server&gt;ServerPasswordSet</span><br><span class="line"><span class="comment"># 输入 ServerPasswordSet</span></span><br><span class="line">ServerPasswordSet <span class="built_in">command</span> - Set VPN Server Administrator Password</span><br><span class="line">Please enter the password. To cancel press the Ctrl+D key.</span><br><span class="line"><span class="comment"># 设置你的服务器管理密码</span></span><br><span class="line">Password: ******<span class="comment">#这里输入管理密码</span></span><br><span class="line">Confirm input: ******<span class="comment">#确认密码</span></span><br></pre></td></tr></table></figure>
+<p>至此，主机S上的vpnserver的安装和初步的配置就完成了，后面将介绍使用SoftEther VPN Server Manager 对其进行进一步的配置。</p>
+<h3 id="2、在主机H上安装搭建VPN-Bridge"><a href="#2、在主机H上安装搭建VPN-Bridge" class="headerlink" title="2、在主机H上安装搭建VPN Bridge"></a>2、在主机H上安装搭建VPN Bridge</h3><p>连接到 <strong>主机H </strong>，将<strong>SoftEther VPN Bridge</strong> 组件下载到本地。这里就不贴图了，具体和下载vpnserver一样，换成vpnbridge。<a href="https://www.softether-download.com/cn.aspx?product=softether" target="_blank" rel="noopener">下载地址</a></p>
+<p>根据实际运行环境，选择适当的版本。这里我选择的是<strong>Linux</strong> 系统，CPU选择的是<strong>Intel x64 / AMD64 (64bit)</strong>。<br>使用wget 命令进行下载，安装，初步配置也都相近：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载softether-vpnbridge到本地</span></span><br><span class="line">wget https://github.com/SoftEtherVPN/SoftEtherVPN_Stable/releases/download/v4.30-9696-beta/softether-vpnbridge-v4.30-9696-beta-2019.07.08-linux-x64-64bit.tar.gz</span><br><span class="line"><span class="comment">#解压</span></span><br><span class="line">tar zxvf softether-*bridge*.tar.gz</span><br><span class="line"><span class="built_in">cd</span> vpnserver/</span><br><span class="line"><span class="comment"># 这里面有一个隐藏的文件.install.sh，运行它。</span></span><br><span class="line">[vpnbridge]<span class="comment"># ./.install.sh</span></span><br><span class="line"><span class="comment"># 一路Yes，Agree默认即可</span></span><br><span class="line"></span><br><span class="line">[vpnbridge]<span class="comment"># ./vpnbridge  start</span></span><br><span class="line">[vpnbridge]<span class="comment"># ./vpncmd</span></span><br><span class="line">...</span><br><span class="line">By using vpncmd program, the following can be achieved.</span><br><span class="line"></span><br><span class="line">1. Management of VPN Server or VPN Bridge</span><br><span class="line">2. Management of VPN Client</span><br><span class="line">3. Use of VPN Tools (certificate creation and Network Traffic Speed Test Tool)</span><br><span class="line"></span><br><span class="line">Select 1, 2 or 3: 1<span class="comment"># 输入1</span></span><br><span class="line">Specify the host name or IP address of the computer that the destination VPN Server or VPN Bridge is operating on.</span><br><span class="line">By specifying according to the format <span class="string">'host name:port number'</span>, you can also specify the port number.</span><br><span class="line">(When the port number is unspecified, 443 is used.)</span><br><span class="line">If nothing is input and the Enter key is pressed, the connection will be made to the port number 8888 of localhost (this computer).</span><br><span class="line">Hostname of IP Address of Destination:<span class="comment">#回车</span></span><br><span class="line"></span><br><span class="line">If connecting to the server by Virtual Hub Admin Mode, please input the Virtual Hub name.</span><br><span class="line">If connecting by server admin mode, please press Enter without inputting anything.</span><br><span class="line">Specify Virtual Hub Name:<span class="comment">#回车</span></span><br><span class="line">Connection has been established with VPN Server <span class="string">"localhost"</span> (port 443).</span><br><span class="line"></span><br><span class="line">You have administrator privileges <span class="keyword">for</span> the entire VPN Server.</span><br><span class="line">VPN Server&gt;ServerPasswordSet</span><br><span class="line">ServerPasswordSet <span class="built_in">command</span> - Set VPN Server Administrator Password</span><br><span class="line">Please enter the password. To cancel press the Ctrl+D key.</span><br><span class="line"></span><br><span class="line">Password: ******<span class="comment">#这里输入管理密码</span></span><br><span class="line">Confirm input: ******<span class="comment">#确认密码</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">The <span class="built_in">command</span> completed successfully.</span><br></pre></td></tr></table></figure>
+<h3 id="3、配置主机S上的vpnserver"><a href="#3、配置主机S上的vpnserver" class="headerlink" title="3、配置主机S上的vpnserver"></a>3、配置主机S上的vpnserver</h3><p>这里需要找了一台windows的机子，因为SoftEther提供了一款SoftEther VPN Server Manager的图形管理器，进行蛇者比较方便。要求就是最好在内网中，方便连接主机H，同时也能连接主机S。将<strong>SoftEther VPN Server Manager for Windows</strong> 图形组件下载到本地。<a href="https://www.softether-download.com/cn.aspx?product=softether" target="_blank" rel="noopener">下载地址</a></p>
+<ol>
+<li>运行SoftEther VPN Server Manager，点击设置<br><img src="/blog/images/softEther/configvpnserver/1.png" alt="sss"></li>
+<li>填入设置名（这个随意），主机名填入<strong>主机S的IP地址</strong>，端口采用默认的<strong>443</strong>，代理类型选择<strong>直接TCP/IP连接（无代理）</strong>，选中<strong>服务端管理模式</strong>并填入前面设置的vpnserver<strong>管理密码</strong>，点击确定。如果你在前面没有设置管理密码，在连接的时候将也提示你设置密码。<br><img src="/blog/images/softEther/configvpnserver/2.png" alt="sss"></li>
+<li>勾选远程访问VPN Server (R)，点击下一步后提示确认初始化，选择 是。<br><img src="/blog/images/softEther/configvpnserver/6.png" alt="sss"></li>
+<li>为你的vpnserver设置一个名字，这里输入VPN，点击确定。<br><img src="/blog/images/softEther/configvpnserver/7.png" alt="sss"></li>
+<li>动态DNS功能，不用管，直接无视选择<strong>退出</strong>。<br><img src="/blog/images/softEther/configvpnserver/8.png" alt="sss"></li>
+<li>IPsec/L2TP 设置，勾选<strong>启用L2TP服务器功能</strong>，并设置<strong>IPsec预共享秘钥</strong>。这一步是为了后面我们可以用手机或者PC自带的VPN工具进行连接。<br><img src="/blog/images/softEther/configvpnserver/9.png" alt="sss"></li>
+<li>VPN Azure 云，勾选禁用，点击确定。<br><img src="/blog/images/softEther/configvpnserver/10.png" alt="sss"></li>
+<li>创建一个用户来接受VPN连接，点击创建用户。<br><img src="/blog/images/softEther/configvpnserver/11.png" alt="sss"></li>
+<li>填入相关信息，验证类型选择密码验证，并在密码验证设置中填入密码。<br><img src="/blog/images/softEther/configvpnserver/12.png" alt="sss"></li>
+<li>我们这里需要创建两个账号，分别为user1和user2，一个用于主机H上的VPN bridge，一个用于用户在外网的状态下登录VPN。<br><img src="/blog/images/softEther/configvpnserver/13.png" alt="sss"></li>
+<li>点击关闭进入下一步。<br><img src="/blog/images/softEther/configvpnserver/14.png" alt="sss"></li>
+<li>点击管理HUB。<br><img src="/blog/images/softEther/configvpnserver/15.png" alt="sss"></li>
+<li>点击<strong>虚拟NAT和虚拟DHCP服务器</strong>。<br><img src="/blog/images/softEther/configvpnserver/16.png" alt="sss"></li>
+<li>点击启用<strong>SecureNAT</strong>，这一步很关键。<br><img src="/blog/images/softEther/configvpnserver/17.png" alt="sss"></li>
+<li>确定启用SecureNAT。<br><img src="/blog/images/softEther/configvpnserver/18.png" alt="sss"></li>
+<li>点击关闭。<br><img src="/blog/images/softEther/configvpnserver/19.png" alt="sss"></li>
+</ol>
+<blockquote>
+<p>至此，我们对于主机S上的VPN server的配置就完成了，接下来连接到主机H上的vpn bridge进行配置。</p>
+</blockquote>
+<h3 id="4、配置主机H上的vpnbridge"><a href="#4、配置主机H上的vpnbridge" class="headerlink" title="4、配置主机H上的vpnbridge"></a>4、配置主机H上的vpnbridge</h3><p>同样是回到SoftEther VPN Server Manager主界面，点击新设置，填入VPN bridge的IP地址，这里是 192.168.1.222，如果前面在初步配置的时候选择默认的话，端口选择5555，如果前面在初步配置的时候选择默认的话。并填入管理密码。（参考3-1,3-2）</p>
+<ol>
+<li>勾选站到站 VPN Server 或 VPN Bridge，选择下一步。<br><img src="/blog/images/softEther/configvpnbridge/1.png" alt="sss"></li>
+<li>设置本地网桥。这里如果你有多张网卡的话，要选择你想级联出去网段所在的网卡。这里我想级联192.168.1.0/24网段，我选择配置为该网段地址的网卡，eth0。不清楚对应网卡的可以在控制台运行<code>ifconfig</code>命令查看。<br><img src="/blog/images/softEther/configvpnbridge/2.png" alt="sss"></li>
+<li>回到管理器面板，点击管理虚拟HUB，点击<strong>虚拟NAT和虚拟DHCP服务器</strong>，启用 SecureNAT。<br><img src="/blog/images/softEther/configvpnbridge/3.png" alt="sss"></li>
+<li>回到管理器面板，点击管理虚拟HUB，选择<strong>管理级联连接</strong>。<br><img src="/blog/images/softEther/configvpnbridge/4.png" alt="sss"></li>
+<li>填写连接设置名(自由设置)，填写vpnserver的地址，即主机S的IP地址，端口号选择443。只要你的地址和端口填写正确，并且前面配置无误，这里虚拟HUB名的下拉列表就能找到我们之前创建的虚拟HUB “VPN”。勾选无代理，选择认证类型为<strong>标准密码验证</strong>，并填写用户名密码。这里使用创建的用户user1。点击确定。<br><img src="/blog/images/softEther/configvpnbridge/5.png" alt="sss"></li>
+<li>进入到级联管理界面，选中我们刚刚创建的连接，点击<strong>在线</strong>。<br><img src="/blog/images/softEther/configvpnbridge/6.png" alt="sss"></li>
+<li><p>发现该装填已由离线变成在线。<br><img src="/blog/images/softEther/configvpnbridge/7.png" alt="sss"></p>
+<blockquote>
+<p>至此，我们在对主机H的vpn bridge的配置也大功告成。此时主机S与主机H逻辑上已经是同属一个网络，主机S可以直接访问内网192.168.1.0/24网络。所以下一步，我们只要连接到主机S的VPN，我们也就可以和主机S一样，直接访问内网192.168.1.0/24网络的资源了。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="5-用户配置L2TP-IPsec-VPN"><a href="#5-用户配置L2TP-IPsec-VPN" class="headerlink" title="5. 用户配置L2TP/IPsec VPN"></a>5. 用户配置L2TP/IPsec VPN</h3><ol>
+<li><p>IOS端设置。<br><img src="/blog/images/softEther/l2tp/ios.jpg" alt="sss"></p>
+<!-- <img src="image\l2tp\Iphone.jpg" width = "400" height = "800" alt="图片名称" align=center> -->
+</li>
+<li><p>Android端设置。<br><img src="/blog/images/softEther/l2tp/android.jpg" alt="sss"></p>
+<!-- <img src="image\l2tp\android.jpg" width = "400" height = "800" alt="图片名称" align=center> -->
+<p>————————————————<br>连接时填入用户名密码即可。</p>
+</li>
+<li><p>Windows端设置。<br><img src="/blog/images/softEther/l2tp/windows.png" alt="sss"></p>
+</li>
+</ol>
+<p>连接有问题的时候请检查一下主机S的防火墙和安全策略设置。请开启L2TP必要的端口：<strong>UDP 500、4500、1701</strong>。</p>
+<h2 id="完结撒花"><a href="#完结撒花" class="headerlink" title="完结撒花"></a>完结撒花</h2>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月03日 09:26</p>
+        <p>原始链接： <a class="post-url" href="/blog/2019/11/02/softEther/" title="利用softEther VPN远程访问内部网络">https://silence-linhl.github.io/blog/2019/11/02/softEther/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2019/11/02/softEther/&title=《利用softEther VPN远程访问内部网络》 — Harlan's Blog&pic=images/softEther/cover.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2019/11/02/softEther/&title=《利用softEther VPN远程访问内部网络》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2019/11/02/softEther/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《利用softEther VPN远程访问内部网络》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2019/11/02/softEther/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2019/11/02/softEther/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2019/11/02/softEther/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/softEther/" class="color5">softEther</a>
+      
+    <a href="/blog/tags/VPN/" class="color4">VPN</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#利用-softEther-VPN-进行远程访问"><span class="post-toc-text">利用 softEther VPN 进行远程访问</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用场景和前提条件"><span class="post-toc-text">使用场景和前提条件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#举个栗子"><span class="post-toc-text">举个栗子</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#目标"><span class="post-toc-text">目标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#开始你的表演"><span class="post-toc-text">开始你的表演</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、在主机S上安装搭建VPN-server"><span class="post-toc-text">1、在主机S上安装搭建VPN server</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、在主机H上安装搭建VPN-Bridge"><span class="post-toc-text">2、在主机H上安装搭建VPN Bridge</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3、配置主机S上的vpnserver"><span class="post-toc-text">3、配置主机S上的vpnserver</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4、配置主机H上的vpnbridge"><span class="post-toc-text">4、配置主机H上的vpnbridge</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-用户配置L2TP-IPsec-VPN"><span class="post-toc-text">5. 用户配置L2TP/IPsec VPN</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#完结撒花"><span class="post-toc-text">完结撒花</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2019/10/26/paperBLA/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">论文解读（1）BLA——基于区块链的认证</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
