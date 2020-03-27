@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>SGX远程认证流程 | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="阅读提示：文章由intel官方文档 翻译而来，其中客户端与服务提供商角色可能有点混乱，所以在阅读过程请参照文中最后的流程图片，这样会有比较清晰的阅读体验。 1. 使用条件   类型 型号/工具     操作系统 Win10, Linux   硬件 6th gen Intel® Core™ 或以上, Intel® Xeon® E3 v6   软件 windows：VS2015专业版或者更新版，In">
+<meta name="keywords" content="TEE,SGX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SGX远程认证流程">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2020/03/27/SGX/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="阅读提示：文章由intel官方文档 翻译而来，其中客户端与服务提供商角色可能有点混乱，所以在阅读过程请参照文中最后的流程图片，这样会有比较清晰的阅读体验。 1. 使用条件   类型 型号/工具     操作系统 Win10, Linux   硬件 6th gen Intel® Core™ 或以上, Intel® Xeon® E3 v6   软件 windows：VS2015专业版或者更新版，In">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/sgx/sgx.jpg">
+<meta property="og:image" content="https://software.intel.com/sites/default/files/managed/38/21/Guard-Extensions-Remote-Attestation-End-to-End-Example-fig1.png">
+<meta property="og:image" content="https://software.intel.com/sites/default/files/managed/13/b8/Guard-Extensions-Remote-Attestation-End-to-End-Example-fig2.png">
+<meta property="og:image" content="https://software.intel.com/sites/default/files/managed/a6/d5/Guard-Extensions-Remote-Attestation-End-to-End-Example-fig3.png">
+<meta property="og:updated_time" content="2020-03-27T15:59:37.050Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SGX远程认证流程">
+<meta name="twitter:description" content="阅读提示：文章由intel官方文档 翻译而来，其中客户端与服务提供商角色可能有点混乱，所以在阅读过程请参照文中最后的流程图片，这样会有比较清晰的阅读体验。 1. 使用条件   类型 型号/工具     操作系统 Win10, Linux   硬件 6th gen Intel® Core™ 或以上, Intel® Xeon® E3 v6   软件 windows：VS2015专业版或者更新版，In">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/sgx/sgx.jpg">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SGX" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SGX远程认证流程
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/TEE/">TEE</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-03-27
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/sgx/sgx.jpg" alt="SGX"></p>
+<p>阅读提示：文章由<a href="https://software.intel.com/en-us/articles/code-sample-intel-software-guard-extensions-remote-attestation-end-to-end-example" target="_blank" rel="noopener">intel官方文档</a> 翻译而来，其中客户端与服务提供商角色可能有点混乱，所以在阅读过程请参照文中最后的流程图片，这样会有比较清晰的阅读体验。</p>
+<h3 id="1-使用条件"><a href="#1-使用条件" class="headerlink" title="1. 使用条件"></a>1. 使用条件</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>型号/工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>操作系统</td>
+<td>Win10, Linux</td>
+</tr>
+<tr>
+<td>硬件</td>
+<td>6th gen Intel® Core™ 或以上, Intel® Xeon® E3 v6</td>
+</tr>
+<tr>
+<td>软件</td>
+<td>windows：VS2015专业版或者更新版，Intel® Software Guard Extensions SDK for Windows<em> (Intel® SGX SDK for Windows</em>)</td>
+</tr>
+<tr>
+<td>要求</td>
+<td>C/C++编程</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-简介"><a href="#2-简介" class="headerlink" title="2. 简介"></a>2. 简介</h3><p>如今，现实世界中的应用程序越来越需要处理敏感数据。 诸如用户的身份验证凭证，机密文件或高价值的知识产权都是必须防止被暴露和泄露给其他未授权的第三方的信息。 由于安全漏洞会给企业造成重大经济损失和声誉损害，因此当前有强烈的需求要求开发能够守卫和保护机密的应用程序。 当前硬件和软件安全性方面的最新进展为开发人员提供了多种工具和技术供您选择，以实现这一目标。</p>
+<h3 id="3-Intel®-SGX的任务"><a href="#3-Intel®-SGX的任务" class="headerlink" title="3. Intel® SGX的任务"></a>3. Intel® SGX的任务</h3><p>根据简介中可以知道当前在需要开发能够守卫并保护机密的应用程序来确保用户数据不会遭受系统或者物理层面的攻击。<br>英特尔®软件防护扩展（Intel®SGX）就是一种这样的技术，随着第六代英特尔®酷睿™处理器的推出而，该技术也开始可用。<br>英特尔SGX允许应用程序通过在应用程序空间内创建不易受到恶意行为者检查的<strong>保护区</strong>（Enclave）来控制自身的安全性-即使当攻击来自特权软件，无论是受威胁的操作系统，虚拟内存管理器还是设备驱动程序。 <img src="https://software.intel.com/sites/default/files/managed/38/21/Guard-Extensions-Remote-Attestation-End-to-End-Example-fig1.png" alt="SGX保护模型"></p>
+<h3 id="4-通过远程证明提供密钥"><a href="#4-通过远程证明提供密钥" class="headerlink" title="4. 通过远程证明提供密钥"></a>4. 通过远程证明提供密钥</h3><p>将Intel SGX与其他现代软件和硬件技术结合使用可以帮助应用程序为现有机密提供最佳保护。 但是这些机密在传输过程中仍然容易受到攻击。因此<strong>应用程序如何首先获取机密</strong>是一个问题。</p>
+<p>在某些情况下，可能会要求用户提供该信息（指密钥等敏感信息），但是在平台上缺少可信输入/输出的情况下，该输入可能会泄露给恶意软件。一些敏感内容，例如受数字版权管理（DRM）保护的媒体，甚至可能根本不是用户生成的，可能源自远程服务器，也可能存在大量漏洞：虽然<strong>客户端</strong>和服务器之间的通信路径可能已加密，但不能保证客户端计算机不会受到恶意软件的破坏。</p>
+<p>这些漏洞使得信任使用敏感数据客户端计算机具有一定危险性。但是，SGX的中的“远程证明”高级功能可以显着提高提供给客户端的信任级别。</p>
+<p>使用远程证明流程，客户端的安全区域（Enclave）可以向远程实体明它是可信的，并与该实体建立经过身份验证的通信通道。作为证明的一部分，客户端安全区证明以下内容：</p>
+<ul>
+<li>它的身份</li>
+<li>它尚未被篡改</li>
+<li>它在启用了Intel SGX的正版平台上运行</li>
+<li>它以最新的安全级别（也称为可信计算库（TCB）级别）运行<br><img src="https://software.intel.com/sites/default/files/managed/13/b8/Guard-Extensions-Remote-Attestation-End-to-End-Example-fig2.png" alt="远程认证"></li>
+</ul>
+<h3 id="5-远程认证流程"><a href="#5-远程认证流程" class="headerlink" title="5.远程认证流程"></a>5.远程认证流程</h3><h4 id="5-1-先决条件"><a href="#5-1-先决条件" class="headerlink" title="5.1 先决条件"></a>5.1 先决条件</h4><ul>
+<li><p>为了利用英特尔认证服务（IAS）进行远程认证，英特尔要求独立软件供应商（ISV）从<a href="https://api.portal.trustedservices.intel.com/" target="_blank" rel="noopener">利用增强的隐私ID（EPID）的英特尔®SGX认证服务</a>获取API密钥。 （生产服务器将继续支持较早的基于证书的身份验证，以最大程度地减少对现有客户的干扰，并且目前没有停产日期。）</p>
+</li>
+<li><p>可以选择使用可链接或不可链接的证明策略。 可链接策略允许ISV确定是否有多个证明请求来自同一平台。 这不会标识个人平台，但允许ISV确定多个请求是否源自同一平台。</p>
+</li>
+<li><p>向ISV分发服务提供商ID（SPID）及其API密钥。服务提供商在与IAS通信时将使用此ID。</p>
+</li>
+</ul>
+<h4 id="5-2-客户端-服务器协议"><a href="#5-2-客户端-服务器协议" class="headerlink" title="5.2 客户端-服务器协议"></a>5.2 客户端-服务器协议</h4><p>远程认证利用修改的Sigma协议来实现客户端与服务器之间的Diffie-Hellman密钥交换（DHKE）。从此交换中获得的共享密钥可由服务提供商用来加密要提供给客户端的密钥。 客户安全区能够导出相同的交换密钥，并使用它来解密密钥。</p>
+<h4 id="5-3-通讯顺序"><a href="#5-3-通讯顺序" class="headerlink" title="5.3 通讯顺序"></a>5.3 通讯顺序</h4><h5 id="5-3-1-供应请求"><a href="#5-3-1-供应请求" class="headerlink" title="5.3.1 供应请求"></a>5.3.1 供应请求</h5><p>远程证明的第一步涉及<strong>客户端要求服务提供商提供密钥</strong>。 这通常是服务提供商应用为发出这样的请求而实现的特定API端点。 服务提供者通过发出质询来请求客户端证明自己，从而对此请求做出响应。</p>
+<h5 id="5-3-2-Msg0-client-to-server"><a href="#5-3-2-Msg0-client-to-server" class="headerlink" title="5.3.2 Msg0 (client to server)"></a>5.3.2 Msg0 (client to server)</h5><p>为了响应质询请求，客户端执行几个步骤来构造“远程证明”流的初始消息。 假设客户端的安全区域（Encalve）已经初始化，则不受信任的代码将执行以下步骤。</p>
+<ol>
+<li>执行一个==ECALL==调用进入安全区域</li>
+<li>在安全区中执行</li>
+</ol>
+<ul>
+<li>调用==sgx_ra_init()==</li>
+<li>将结果和DHKE上下文参数返回到不受信任的应用程序</li>
+</ul>
+<ol start="3">
+<li>调用==sgx_get_extended_epid_group_id()==</li>
+</ol>
+<p>函数sgx_ra_init（）接受服务提供商的公钥作为参数，并为在远程认证期间发生的DHKE返回一个不透明的上下文 使用客户端不透明的上下文可提供重放保护。（这句我也没太懂，原文是‘Using a context that is opaque to the client provides replay protection.’）</p>
+<p>公钥的格式由==sgx_tcrypto.h==中的==sgx_ec25_public_t==数据类型设置。 EC密钥表示为其x坐标和y坐标：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _sgx_ec256_public_t</span><br><span class="line">&#123;</span><br><span class="line">    uint8_t gx[SGX_ECP256_KEY_SIZE];</span><br><span class="line">    uint8_t gy[SGX_ECP256_KEY_SIZE];</span><br><span class="line">&#125; sgx_ec256_public_t;</span><br></pre></td></tr></table></figure></p>
+<p>服务提供商者的公钥应该被硬编码到安全区中，结合安全区的签名确保密钥不会被终端用户修改，使得安全区只能与预期的远程服务通信。</p>
+<p>如果该安全区需要访问平台服务，则必须在证明序列中包括平台服务安全区（Platform Services Enclave，PSE）。 PSE是包含在英特尔SGX软件包中的体系结构安全区，可为受信任的时间和单调计数器提供服务。这些服务可用于在生成随机数期间进行重放保护，并用于安全地计算密钥有效的时间长度。</p>
+<p>如果使用PSE，那么流程将会变成如下：</p>
+<ol>
+<li>执行一个==ECALL==调用进入安全区域</li>
+<li>在安全区中执行</li>
+</ol>
+<ul>
+<li>==sgx_create_pse_session()==</li>
+<li>==sgx_ra_init()==</li>
+<li>==sgx_close_pse_session()==</li>
+<li>将结果和DHKE上下文参数返回到不受信任的应用程序</li>
+</ul>
+<ol start="3">
+<li>调用==sgx_get_extended_epid_group_id()==</li>
+</ol>
+<p>无论安全区是否使用平台服务，安全区编写器都应公开执行ECALL的包装函数sgx_ra_init()。</p>
+<p>从sgx_ra_init()获得成功结果后，客户端接下来将调用sgx_get_extended_epid_group_id()以检索英特尔®增强隐私ID（Intel®EPID）的扩展组ID（GID）。 英特尔EPID是用于验证的匿名签名方案。</p>
+<p>关于EPID的详细资料：<a href="https://software.intel.com/en-us/blogs/2016/03/09/intel-sgx-epid-provisioning-and-attestation-services" target="_blank" rel="noopener">英特尔SGX：EPID设置和证明服</a>。</p>
+<p>扩展的GID作为msg0的主体发送到服务提供商。 msg0的格式和来自服务器的响应的详细信息由服务提供商决定。 但是，服务提供商必须验证其接收的GID是否受支持，如果不支持，则中止认证过程。 英特尔证明服务仅对扩展GID支持零值。？？</p>
+<p>Msg0和Msg1（5.3.3 Msg1）可以选择一起发送。</p>
+<h5 id="5-3-3-Msg1-client-to-server"><a href="#5-3-3-Msg1-client-to-server" class="headerlink" title="5.3.3 Msg1 (client to server)"></a>5.3.3 Msg1 (client to server)</h5><p>给定对msg0的成功响应，或者如果将msg0与msg1一起发送，则客户端调用==sgx_ra_get_msg1()== 函数来构造包含DHKE客户端公共密钥的msg1对象，并将其发送给服务提供商。 此方法的其他参数包括在上一步中获得的==DHKE上下文==和指向==sgx_ra_get_ga()== 存根函数的指针，用于计算客户端DHKE密钥。 </p>
+<p>当安全区开发人员在安全区定义语言（EDL）文件中链接==sgx_tkey_exchange==库中并导入==sgx_tkey_exchange.edl==时，SDK会自动生成此函数。</p>
+<p>msg1结构如下表所示</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ga_x</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>Ga_y</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>Intel® EPID GID</td>
+<td>4 bytes</td>
+</tr>
+</tbody>
+</table>
+<p>SGX SDK 在==sgx_key_exchange.h==中为 msg1 定义的数据结构如下所示:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _ra_msg1_t</span><br><span class="line">&#123;</span><br><span class="line">    sgx_ec256_public_t   g_a;</span><br><span class="line">    sgx_epid_group_id_t  gid;</span><br><span class="line">&#125; sgx_ra_msg1_t;</span><br></pre></td></tr></table></figure>
+<h5 id="5-3-4-Msg2-server-to-client"><a href="#5-3-4-Msg2-server-to-client" class="headerlink" title="5.3.4 Msg2 (server to client)"></a>5.3.4 Msg2 (server to client)</h5><p>从客户端收到msg1时，服务提供商将检查请求中的值，生成其自己的DHKE参数，并发送查询到IAS以获取客户端发送的<em>Intel EPID GID</em>的签名吊销列表（<em>SigRL</em>）。</p>
+<p>为了处理msg1和生成msg2，服务提供者提供一下步骤：</p>
+<ol>
+<li>使用P-256曲线生成随机EC密钥，即密钥G_b。</li>
+<li>从G_a和G_b派生密钥派生密钥（KDK）：</li>
+</ol>
+<ul>
+<li>1) 使用客户端的公共会话密钥G_a和服务提供商的私有会话密钥（从步骤1获得）G_b计算共享密钥。 此操作的结果将是Gab的x坐标，表示为Gab_x</li>
+<li>2) 通过反转Gab_x的字节，将其转换为Little-endian字节顺序。</li>
+<li>3) 使用0x00字节的块作为密钥，以Gabx的小字节序形式执行AES-128 CMAC。</li>
+<li>步骤 ii 和 iii 的结果就是KDK</li>
+</ul>
+<ol start="3">
+<li>通过对如下字节序列执行AES-128 CMAC，从KDK派生SMK：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x01 || SMK || 0x00 || 0x80 || 0x00</span><br></pre></td></tr></table></figure>
+<p>使用KDK作为密钥。 请注意|| 表示连接，“SMK”是文字字符串（不带引号）。</p>
+<ol>
+<li><p>确定应从客户端请求的引用类型（0x0表示不可链接，0x1表示可链接）。 请注意，这是服务提供商的政策决定，并且SPID必须与正确的引用类型相关联。</p>
+</li>
+<li><p>设置KDF_ID。 通常是0x1</p>
+</li>
+<li><p>使用服务提供者的EC秘钥计算以下内容的ECDSA签名：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gbx || Gby || Gax || Gay</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li><p>使用SMK作为秘钥计算一下内容的AES-128 CMAC:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Gb || SPID || Quote_Type || KDF_ID || SigSP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询IAS以获取客户端的Intel EPID GID的对应的SigRL。</p>
+</li>
+</ol>
+<p>msg2结构如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A Gb_x</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>A Gb_y</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>A SPID</td>
+<td>16 bytes</td>
+</tr>
+<tr>
+<td>A Quote_Type</td>
+<td>2 bytes (uint16_t)</td>
+</tr>
+<tr>
+<td>A KDF_ID</td>
+<td>bytes (uint16_t)</td>
+</tr>
+<tr>
+<td>A Sig(Gb_Ga)_x</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>A Sig(Gb_Ga)_y</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>CMAC_SMK(A)</td>
+<td>16 bytes</td>
+</tr>
+<tr>
+<td>SigRL_Size</td>
+<td>4 bytes (uint32_t)</td>
+</tr>
+<tr>
+<td>SigRL_data</td>
+<td>SigRL_Size bytes</td>
+</tr>
+</tbody>
+</table>
+<p>SGX SDK在==sgx_key_exchange.h== 中为msg2定义了数据结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _ra_msg2_t</span><br><span class="line">&#123;</span><br><span class="line">    sgx_ec256_public_t       g_b;</span><br><span class="line">    sgx_spid_t               spid;</span><br><span class="line">    uint16_t                 quote_type;</span><br><span class="line">    uint16_t                 kdf_id;</span><br><span class="line">    sgx_ec256_signature_t    sign_gb_ga;</span><br><span class="line">    sgx_mac_t                mac;</span><br><span class="line">    uint32_t                 sig_rl_size;</span><br><span class="line">    uint8_t                  sig_rl[];</span><br><span class="line">&#125; sgx_ra_msg2_t;</span><br></pre></td></tr></table></figure>
+<p>再次，请参阅Msg0部分中提到的Intel EPID文章资源，以获取有关SigRL的详细说明。 </p>
+<p>该服务提供商的公钥和SigRL信息被打包到msg2中，并响应于msg1请求发送给客户端。</p>
+<h5 id="5-3-5-Msg3-client-to-server"><a href="#5-3-5-Msg3-client-to-server" class="headerlink" title="5.3.5 Msg3 (client to server)"></a>5.3.5 Msg3 (client to server)</h5><p>在客户端，当收到msg2时，应用程序将调用==sgx_ra_proc_msg2()== 函数来生成msg3。 该调用执行以下任务：</p>
+<ul>
+<li>验证服务提供商签名。</li>
+<li>检查SigRL。</li>
+<li>返回msg3，其中包含用于证明特定安全区的引用。</li>
+</ul>
+<p>传递给==sgx_ra_proc_msg2()== 的两个参数是==sgx_ra_proc_msg2_trusted== 和==sgx_ra_get_msg3_trusted==。 这些是edger8r工具自动生成的函数的指针，这意味着安全区必须执行以下操作：</p>
+<p>链接到受信任的服务库（Linux上为==libsgx_tservice.a==，Windows上为==sgx_tservice.lib==）</p>
+<p>在encalve的EDL文件的trust部分中包括以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">include &quot;sgx_tkey_exchange.h&quot;</span><br><span class="line"></span><br><span class="line">from &quot;sgx_tkey_exchange.edl&quot; import *;</span><br></pre></td></tr></table></figure>
+<p>==sgx_ra_get_msg2_trusted()== 进行的部分处理是获取安全区引用。 引用包括使用平台的EPID密钥签名的当前运行安全区的加密哈希或度量。只有英特尔认证服务可以验证此签名。它还包含有关平台上平台服务区域（PSE）的信息，IAS也将对其进行验证。</p>
+<p>msg3的结构如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMAC_SMK(M)</td>
+<td>16 bytes</td>
+</tr>
+<tr>
+<td>Ga_x</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>Ga_y</td>
+<td>32 bytes</td>
+</tr>
+<tr>
+<td>Ps_Security_Prop</td>
+<td>256 bytes</td>
+</tr>
+<tr>
+<td>Quote</td>
+<td>(436 + quote.signature_len) bytes</td>
+</tr>
+</tbody>
+</table>
+<p>SGX SDK在==sgx_key_exchange.h== 定义的msg3的数据结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _ra_msg3_t</span><br><span class="line">&#123;</span><br><span class="line">    sgx_mac_t                mac</span><br><span class="line">    sgx_ec256_public_t       g_a;</span><br><span class="line">    sgx_ps_sec_prop_desc_t   ps_sec_prop;</span><br><span class="line">    uint8_t                  quote[];</span><br><span class="line">&#125; sgx_ra_msg3_t;</span><br></pre></td></tr></table></figure>
+<p>引用的结构定义在==sgx_quote.h==：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _quote_t</span><br><span class="line">&#123;</span><br><span class="line">    uint16_t            version;        /* 0   */</span><br><span class="line">    uint16_t            sign_type;      /* 2   */</span><br><span class="line">    sgx_epid_group_id_t epid_group_id;  /* 4   */</span><br><span class="line">    sgx_isv_svn_t       qe_svn;         /* 8   */</span><br><span class="line">    sgx_isv_svn_t       pce_svn;        /* 10  */</span><br><span class="line">    uint32_t            xeid;           /* 12  */</span><br><span class="line">    sgx_basename_t      basename;       /* 16  */</span><br><span class="line">    sgx_report_body_t   report_body;    /* 48  */</span><br><span class="line">    uint32_t            signature_len;  /* 432 */</span><br><span class="line">    uint8_t             signature[];    /* 436 */</span><br><span class="line">&#125; sgx_quote_t;</span><br></pre></td></tr></table></figure></p>
+<h5 id="5-3-6-Msg4-server-to-client"><a href="#5-3-6-Msg4-server-to-client" class="headerlink" title="5.3.6 Msg4 (server to client)"></a>5.3.6 Msg4 (server to client)</h5><p>在接收到客户端发送的msg3，服务提供者必须按顺序执行一下步骤：</p>
+<ol>
+<li>验证msg3中的Ga与msg1中的Ga是否一致。</li>
+<li>验证CMAC_SMK(M)。</li>
+<li><p>验证报告数据的前32个字节是否与（Ga || Gb || VK）的SHA-256摘要匹配，其中|| 表示串联。 通过使用KDK作为密钥，对以下字节序列执行AES-128 CMAC，可以得出VK：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x01 || &quot;VK&quot; || 0x00 || 0x80 || 0x00</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证客户提供的证明证据。</p>
+</li>
+</ol>
+<ul>
+<li>1) 从msg3中提取引用。</li>
+<li>2) 将引用提交给IAS，调用API函数以验证证明证据。</li>
+<li>3) 验证在报告响应中收到的签名证书。</li>
+<li>4) 使用签名证书验证报告签名。 </li>
+</ul>
+<ol start="5">
+<li>如果在步骤3中成功验证了引用，请执行以下操作：</li>
+</ol>
+<ul>
+<li>1)提取安全区以及PSE（如果提供）的证明状态。</li>
+<li>2) 检查安全区标识（MRSIGNER），安全版本和产品ID。</li>
+<li>3) 检查调试属性，并确保未设置（在生产环境中）。</li>
+<li>4) 决定是否信任安全区以及PSE（如果提供）。</li>
+</ul>
+<ol start="6">
+<li><p>派生会话密钥SK和MK，该密钥将用于在会话期间在客户端和服务器之间传输将来的消息。 客户端可以简单地调用==sgx_ra_get_keys()== ，但是服务器必须使用KDK作为密钥，通过对以下字节序列执行AES-128 CMAC来手动派生它们：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MK: 0x01 || &quot;MK&quot; || 0x00 || 0x80 || 0x00</span><br><span class="line">SK: 0x01 || &quot;SK&quot; || 0x00 || 0x80 || 0x00</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成msg4并发送给客户端。</p>
+</li>
+</ol>
+<p>验证证明证据要求服务提供商将引用提交给IAS并获得证明报告。 该报告由IAS报告签名私钥签名，服务提供商必须使用IAS报告签名公钥验证此签名。</p>
+<p>报告本身包含响应标头和有效负载，有效负载包含安全区和PSE清单的证明状态。 值为“OK”表示该组件可以信任。 任何其他值表示该组件是不可信的，或者如果采取了某些操作（例如软件或BIOS更新），则该组件是可信的。 有关完整的详细信息，请参阅<a href="https://software.intel.com/sites/default/files/managed/3d/c8/IAS_1_0_API_spec_1_1_Final.pdf" target="_blank" rel="noopener">IAS API</a> 文档。 ISV负责将这些状态消息传递给客户端。</p>
+<p>如果证明状态不是“OK”，则IAS可以选择发送Platform Info Blob（PIB），服务提供商可以选择将其转发给客户端。 客户端可以将PIB传递给==sgx_report_attestation_status()== 函数，以获取有关故障的更多详细信息。</p>
+<p>msg4的格式取决于服务提供商。 它至少必须包含：</p>
+<ul>
+<li>飞地是否受信任。</li>
+<li>如果提交了PSE清单，则是否信任PSE清单。</li>
+</ul>
+<p>它可以包含：</p>
+<ul>
+<li>PIB（如果存在）。</li>
+<li>提供给安全区的秘钥。  应该使用从KDK派生的密钥对所有密钥进行加密（请参阅msg2）。</li>
+<li>安全区重新认证超时。</li>
+<li>当前时间。</li>
+<li>客户端需要信任的其他服务器的公钥。</li>
+</ul>
+<p>以上所述的完整流程如下图所示：<br><img src="https://software.intel.com/sites/default/files/managed/a6/d5/Guard-Extensions-Remote-Attestation-End-to-End-Example-fig3.png" alt="image"></p>
+<p>未完待续！！！！</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年03月27日 23:59</p>
+        <p>原始链接： <a class="post-url" href="/blog/2020/03/27/SGX/" title="SGX远程认证流程">https://silence-linhl.github.io/blog/2020/03/27/SGX/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2020/03/27/SGX/&title=《SGX远程认证流程》 — Harlan's Blog&pic=images/sgx/intel.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2020/03/27/SGX/&title=《SGX远程认证流程》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2020/03/27/SGX/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SGX远程认证流程》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2020/03/27/SGX/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2020/03/27/SGX/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2020/03/27/SGX/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/TEE/" class="color4">TEE</a>
+      
+    <a href="/blog/tags/SGX/" class="color4">SGX</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-使用条件"><span class="post-toc-text">1. 使用条件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-简介"><span class="post-toc-text">2. 简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-Intel®-SGX的任务"><span class="post-toc-text">3. Intel® SGX的任务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-通过远程证明提供密钥"><span class="post-toc-text">4. 通过远程证明提供密钥</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-远程认证流程"><span class="post-toc-text">5.远程认证流程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1-先决条件"><span class="post-toc-text">5.1 先决条件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2-客户端-服务器协议"><span class="post-toc-text">5.2 客户端-服务器协议</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-3-通讯顺序"><span class="post-toc-text">5.3 通讯顺序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-1-供应请求"><span class="post-toc-text">5.3.1 供应请求</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-2-Msg0-client-to-server"><span class="post-toc-text">5.3.2 Msg0 (client to server)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-3-Msg1-client-to-server"><span class="post-toc-text">5.3.3 Msg1 (client to server)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-4-Msg2-server-to-client"><span class="post-toc-text">5.3.4 Msg2 (server to client)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-5-Msg3-client-to-server"><span class="post-toc-text">5.3.5 Msg3 (client to server)</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-6-Msg4-server-to-client"><span class="post-toc-text">5.3.6 Msg4 (server to client)</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2019/11/03/fabric-newfeature/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">fabric1.4 新特性</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
