@@ -17,12 +17,25 @@
 <meta property="og:description" content="本文主要目的是对椭圆曲线做一个形象的介绍，比较通俗的可以理解与传统的基于取模运算的加密算法如RSA的区别。没有涉及过多密码学运算和数论知识。如果感兴趣可以参考Elliptic Curve Cryptography: a gentle introduction，比较容易看懂，其中还配置了一个可视化的椭圆曲线工具，本文的配图都是利用该工具生成的。 可视化工具github项目链接 好了，开始进入主题：">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/cover2.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math2.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/1.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/2.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/3.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math3.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math5.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/5.png">
-<meta property="og:updated_time" content="2020-04-01T06:59:48.790Z">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math6.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math7.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math8.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math9.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math10.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math11.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math12.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/math13.png">
+<meta property="og:updated_time" content="2020-04-01T07:33:17.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简述椭圆曲线算法（ECC）">
 <meta name="twitter:description" content="本文主要目的是对椭圆曲线做一个形象的介绍，比较通俗的可以理解与传统的基于取模运算的加密算法如RSA的区别。没有涉及过多密码学运算和数论知识。如果感兴趣可以参考Elliptic Curve Cryptography: a gentle introduction，比较容易看懂，其中还配置了一个可视化的椭圆曲线工具，本文的配图都是利用该工具生成的。 可视化工具github项目链接 好了，开始进入主题：">
@@ -152,8 +165,8 @@
 <p><a href="https://github.com/andreacorbellini/ecc" target="_blank" rel="noopener">可视化工具github项目链接</a></p>
 <h3 id="好了，开始进入主题：Elliptic-Curve-Cryptography-ECC"><a href="#好了，开始进入主题：Elliptic-Curve-Cryptography-ECC" class="headerlink" title="好了，开始进入主题：Elliptic Curve Cryptography (ECC)"></a>好了，开始进入主题：Elliptic Curve Cryptography (ECC)</h3><h2 id="1-简单概念"><a href="#1-简单概念" class="headerlink" title="1. 简单概念"></a>1. 简单概念</h2><p><strong>Elliptic Curve Cryptography</strong> 椭圆加密算法，简称<strong>ECC</strong>，是基于椭圆曲线数学理论的一种非对称加密算法（公钥加密算法）,与RSA这些广为使用的加密算法相比，尽管目前ECC加密算法也应用的很广泛，当其基本的实现原理还是对大多数人来说比较陌生。</p>
 <p>特性：与RSA相比可以使用更短的密钥实现与RSA相当或者更高的安全性。</p>
-<p>一下方程式表示了椭圆曲线，其中a, b, c, d为系数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y^2 = ax^3 + bx^2 + cx + d</span><br></pre></td></tr></table></figure></p>
-<p>当a = 1, b = 0, c = -7, d = 10 时，方程表示如下图所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y^2 = x^3 - 7x + 10</span><br></pre></td></tr></table></figure></p>
+<p>一下方程式表示了椭圆曲线，其中a, b, c, d为系数。<br><img src="/blog/images/ecc/math1.png" alt="math1"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y^2 = ax^3 + bx^2 + cx + d</span><br></pre></td></tr></table></figure></p>
+<p>当a = 1, b = 0, c = -7, d = 10 时，方程表示如下图所示：<br><img src="/blog/images/ecc/math2.png" alt="math2"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y^2 = x^3 - 7x + 10</span><br></pre></td></tr></table></figure></p>
 <p>此时曲线显示如下图蓝线所示：</p>
 <p><img src="/blog/images/ecc/1.png" alt="椭圆曲线"></p>
 <p>可以看出椭圆曲线并不是椭圆形的，形状与名称并没有太大联系。</p>
@@ -170,8 +183,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nG = G + G + ... + G</span><br></pre></td></tr></table></figure>
 <p>看成n个G相加。</p>
 <p>如果按照上面方法应该进行n次加法，这样计算量较大。</p>
-<p>另一种较为快速的方法就是先做倍数再做加法，如下面例子所示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">151P = 2^7P + 2^4P +2^2P + 2^1P + 2^0P</span><br></pre></td></tr></table></figure>
+<p>另一种较为快速的方法就是先做倍数再做加法，如下面例子所示<br><img src="/blog/images/ecc/math3.png" alt="math3"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">151P = 2^7P + 2^4P +2^2P + 2^1P + 2^0P</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>可以先拿到P</li>
 <li>在根据二倍运算获取2P</li>
@@ -183,20 +195,16 @@
 <p>但是当给出的是nG 和G 的时候如何求出n，是一个困难的问题，这也就是椭圆曲线加密背后的数学难题，详细过程可以参考<a href="https://andrea.corbellini.name/2015/05/23/elliptic-curve-cryptography-finite-fields-and-discrete-logarithms/" target="_blank" rel="noopener">Elliptic Curve Cryptography: finite fields and discrete logarithms</a>。从一个方向上进行计算十分简单，当逆过来的时候却十分困难，这于大数分解和离散对数问题是一致的。</p>
 <h2 id="3-有限域上的椭圆曲线"><a href="#3-有限域上的椭圆曲线" class="headerlink" title="3. 有限域上的椭圆曲线"></a>3. 有限域上的椭圆曲线</h2><p>在我们上面描述的椭圆曲线中，可以从给出的示例图看出，对应的椭圆曲线都是光滑的曲线，这是基于实数域上的椭圆曲线。但是在实际上的椭圆曲线加密算法当中，用的不是实数域上的椭圆曲线，而是有限域上的椭圆曲线。</p>
 <p>所谓有限域指的就是具有有限数量元素的集合，其中一个有限域的例子就是一个集合的整数模p，此时的p指的是一个素数，该有限与用GF(p)代表。</p>
-<p>原本实数域上的椭圆曲线定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; (x, y) \in(\mathbb&#123;R_p&#125;)^2 | y^2 = x^3 + ax +b, 4a^3  +27b^2 \neq 0 &#125; \bigcup &#123;0&#125;</span><br><span class="line">(\mathbb&#123;F_p&#125;)^2</span><br></pre></td></tr></table></figure></p>
-<p>有限域上的椭圆曲线定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; (x, y) \in(\mathbb&#123;F_p&#125;)^2 | y^2 \equiv x^3 + ax +b(mod p), 4a^3  +27b^2 !\equiv  0 (mod p)&#125; \bigcup &#123;0&#125;</span><br></pre></td></tr></table></figure>
+<p>原本实数域上的椭圆曲线定义如下：<br><img src="/blog/images/ecc/math4.png" alt="math4"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; (x, y) \in(\mathbb&#123;R_p&#125;)^2 | y^2 = x^3 + ax +b, 4a^3  +27b^2 \neq 0 &#125; \bigcup &#123;0&#125;</span><br><span class="line">(\mathbb&#123;F_p&#125;)^2</span><br></pre></td></tr></table></figure></p>
+<p>有限域上的椭圆曲线定义如下：<br><img src="/blog/images/ecc/math5.png" alt="math5"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; (x, y) \in(\mathbb&#123;F_p&#125;)^2 | y^2 \equiv x^3 + ax +b(mod p), 4a^3  +27b^2 !\equiv  0 (mod p)&#125; \bigcup &#123;0&#125;</span><br></pre></td></tr></table></figure></p>
 <p>其中0代表无穷远点，a和b是<br>此时的椭圆曲线不再是一条光滑的曲线而是一个有限点集。</p>
 <p>当a = 1, b = 1, p = 23的时候，此时有限域上的椭圆曲线如下图所示：</p>
 <p><img src="/blog/images/ecc/5.png" alt="p=23"></p>
 <p>可以看到椭圆曲线不再是“曲线”，而是一堆点集。</p>
-<p>此时有限域中的直线也不同于实数域中的实线。在有限域中直线定义为满足下面等式的点的集合。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax + by + c \equiv 0(mod p)</span><br></pre></td></tr></table></figure>
+<p>此时有限域中的直线也不同于实数域中的实线。在有限域中直线定义为满足下面等式的点的集合。<br><img src="/blog/images/ecc/math6.png" alt="math6"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax + by + c \equiv 0(mod p)</span><br></pre></td></tr></table></figure></p>
 <h2 id="4-有限域上的计算"><a href="#4-有限域上的计算" class="headerlink" title="4.有限域上的计算"></a>4.有限域上的计算</h2><p>在有限域上如何计算 xG：</p>
-<p>在有限域GF(p)中给定椭圆曲线上两点P和Q，计算R = P + Q公式及过程如下： </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">P(x_p,y_p),Q(x_q,y_q), R(x_r,y_r)</span><br><span class="line"></span><br><span class="line">x_r = (m^2 -x_p - x_q) mod p</span><br><span class="line"></span><br><span class="line">y_r = (m(x_p - x_r)-y_p) mod p</span><br><span class="line"></span><br><span class="line">m = (y_q - y_p) \cdot (x_q - x_p)^&#123;-1&#125; mod p</span><br></pre></td></tr></table></figure>
-<p>若 P = Q，则有：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m = (3x_p^2+a) \cdot (2y_p)^&#123;-1&#125; mod p</span><br></pre></td></tr></table></figure>
+<p>在有限域GF(p)中给定椭圆曲线上两点P和Q，计算R = P + Q公式及过程如下：<br><img src="/blog/images/ecc/math7.png" alt="math7"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">P(x_p,y_p),Q(x_q,y_q), R(x_r,y_r)</span><br><span class="line"></span><br><span class="line">x_r = (m^2 -x_p - x_q) mod p</span><br><span class="line"></span><br><span class="line">y_r = (m(x_p - x_r)-y_p) mod p</span><br><span class="line"></span><br><span class="line">m = (y_q - y_p) \cdot (x_q - x_p)^&#123;-1&#125; mod p</span><br></pre></td></tr></table></figure></p>
+<p>若 P = Q，则有：<br><img src="/blog/images/ecc/math8.png" alt="math8"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m = (3x_p^2+a) \cdot (2y_p)^&#123;-1&#125; mod p</span><br></pre></td></tr></table></figure></p>
 <p>根据以上公式仍然可以跟实数域上一般计算出对应2G、3G、…、nG</p>
 <h2 id="5-椭圆曲线使用原理"><a href="#5-椭圆曲线使用原理" class="headerlink" title="5. 椭圆曲线使用原理"></a>5. 椭圆曲线使用原理</h2><p>椭圆曲线加解密也是属于公钥加密体系的内容，也就是说需要跟RSA这种公钥加密算法一样有对应的公钥和私钥，那这里面的公钥和私钥又是如何得到的？</p>
 <p>椭圆曲线加密中需要找到类似于RSA和DH类似的质因子分解或者离散对数求解的数学难题。在前面已经讲到给定椭圆曲线上一点G，那么求出nG是容易的，但是当拥有G和nG的时候计算出n却是困难的，这就是椭圆曲线上的离散对数问题。</p>
@@ -238,24 +246,22 @@
 <p>可以注意到由于随机数的存在，所以对于同一条消息，用同一种算法，生成的签名都是不一样的。</p>
 <h2 id="5-3-椭圆曲线密钥交换-ECDH"><a href="#5-3-椭圆曲线密钥交换-ECDH" class="headerlink" title="5.3 椭圆曲线密钥交换( ECDH )"></a>5.3 椭圆曲线密钥交换( ECDH )</h2><p>当通讯双方需要安全地交换信息且即使第三方拿到交换的信息也无法解码。<br>一般ECDH用来实现交换对称密钥。<br>流程如下，设通信双方是Alice和Bob</p>
 <ul>
-<li>Alice 生成私钥和公钥：</li>
-</ul>
+<li><p>Alice 生成私钥和公钥：<br><img src="/blog/images/ecc/math9.png" alt="math9"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private key : k_A</span><br><span class="line"></span><br><span class="line">public key : P_A = k_AG</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Bob 生成私钥和公钥：</li>
-</ul>
+</li>
+<li><p>Bob 生成私钥和公钥：<br><img src="/blog/images/ecc/math10.png" alt="math10"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private key : k_B</span><br><span class="line"></span><br><span class="line">public key : P_B = k_BG</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Alice和Bob通过非安全通道交换各自的公钥</li>
-<li><p>Alice在收到Bob的公钥后，进行以下计算：</p>
+</li>
+<li><p>Alice和Bob通过非安全通道交换各自的公钥</p>
+</li>
+<li><p>Alice在收到Bob的公钥后，进行以下计算：<br><img src="/blog/images/ecc/math11.png" alt="math11"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_AP_B</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Bob在收到Alice的公钥后，进行以下计算：</p>
+<li><p>Bob在收到Alice的公钥后，进行以下计算：<br><img src="/blog/images/ecc/math12.png" alt="math12"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_BP_A</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>可以看到Alice和Bob计算出来的密钥S是相同的，因为有：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_AP_B = k_A(k_BG) = k_B(k_AG) = k_BP_A</span><br></pre></td></tr></table></figure>
+<p>可以看到Alice和Bob计算出来的密钥S是相同的，因为有：<br><img src="/blog/images/ecc/math13.png" alt="math13"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_AP_B = k_A(k_BG) = k_B(k_AG) = k_BP_A</span><br></pre></td></tr></table></figure></p>
 <p>此时通信双方拥有共享密钥，就可以通过对称加密来安全交换信息。</p>
 <p>有时候会看到<strong>ECDHE</strong>，其中多出来的“E”主要指“Ephemeral”，即临时，短暂的意思，意味着交换的密钥是作为临时密钥，并非用来做长久密钥的，如<strong>TLS</strong></p>
 <h2 id="5-4-比较"><a href="#5-4-比较" class="headerlink" title="5.4 比较"></a>5.4 比较</h2><p>此处比较主要引自<a href="https://blog.csdn.net/AAA123524457/article/details/103066614" target="_blank" rel="noopener">博客</a></p>
@@ -330,7 +336,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年04月01日 14:59</p>
+        <p>最后更新： 2020年04月01日 15:33</p>
         <p>原始链接： <a class="post-url" href="/blog/2020/04/01/ECC/" title="简述椭圆曲线算法（ECC）">https://silence-linhl.github.io/blog/2020/04/01/ECC/</a></p>
         <footer>
             <a href="https://silence-linhl.github.io/blog">
