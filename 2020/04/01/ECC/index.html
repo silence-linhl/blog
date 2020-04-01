@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>简述椭圆曲线算法（ECC） | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+  
+  <meta name="description" content="本文主要目的是对椭圆曲线做一个形象的介绍，比较通俗的可以理解与传统的基于取模运算的加密算法如RSA的区别。没有涉及过多密码学运算和数论知识。如果感兴趣可以参考Elliptic Curve Cryptography: a gentle introduction，比较容易看懂，其中还配置了一个可视化的椭圆曲线工具，本文的配图都是利用该工具生成的。 可视化工具github项目链接 好了，开始进入主题：">
+<meta name="keywords" content="ECC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简述椭圆曲线算法（ECC）">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2020/04/01/ECC/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="本文主要目的是对椭圆曲线做一个形象的介绍，比较通俗的可以理解与传统的基于取模运算的加密算法如RSA的区别。没有涉及过多密码学运算和数论知识。如果感兴趣可以参考Elliptic Curve Cryptography: a gentle introduction，比较容易看懂，其中还配置了一个可视化的椭圆曲线工具，本文的配图都是利用该工具生成的。 可视化工具github项目链接 好了，开始进入主题：">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/cover2.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/1.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/2.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/3.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/4.png">
+<meta property="og:image" content="https://silence-linhl.github.io/blog/images/ecc/5.png">
+<meta property="og:updated_time" content="2020-04-01T06:59:48.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简述椭圆曲线算法（ECC）">
+<meta name="twitter:description" content="本文主要目的是对椭圆曲线做一个形象的介绍，比较通俗的可以理解与传统的基于取模运算的加密算法如RSA的区别。没有涉及过多密码学运算和数论知识。如果感兴趣可以参考Elliptic Curve Cryptography: a gentle introduction，比较容易看懂，其中还配置了一个可视化的椭圆曲线工具，本文的配图都是利用该工具生成的。 可视化工具github项目链接 好了，开始进入主题：">
+<meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/ecc/cover2.png">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/blog/css/style.css">
+  <script src="/blog/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-ECC" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      简述椭圆曲线算法（ECC）
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/blog/categories/密码算法/">密码算法</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-04-01
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p><img src="/blog/images/ecc/cover2.png" alt="ECC"></p>
+<p>本文主要目的是对椭圆曲线做一个形象的介绍，比较通俗的可以理解与传统的基于取模运算的加密算法如RSA的区别。没有涉及过多密码学运算和数论知识。<br>如果感兴趣可以参考<a href="https://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/" target="_blank" rel="noopener">Elliptic Curve Cryptography: a gentle introduction</a>，比较容易看懂，其中还配置了一个<a href="https://cdn.rawgit.com/andreacorbellini/ecc/920b29a/interactive/reals-mul.html" target="_blank" rel="noopener">可视化的椭圆曲线工具</a>，本文的配图都是利用该工具生成的。</p>
+<p><a href="https://github.com/andreacorbellini/ecc" target="_blank" rel="noopener">可视化工具github项目链接</a></p>
+<h3 id="好了，开始进入主题：Elliptic-Curve-Cryptography-ECC"><a href="#好了，开始进入主题：Elliptic-Curve-Cryptography-ECC" class="headerlink" title="好了，开始进入主题：Elliptic Curve Cryptography (ECC)"></a>好了，开始进入主题：Elliptic Curve Cryptography (ECC)</h3><h2 id="1-简单概念"><a href="#1-简单概念" class="headerlink" title="1. 简单概念"></a>1. 简单概念</h2><p><strong>Elliptic Curve Cryptography</strong> 椭圆加密算法，简称<strong>ECC</strong>，是基于椭圆曲线数学理论的一种非对称加密算法（公钥加密算法）,与RSA这些广为使用的加密算法相比，尽管目前ECC加密算法也应用的很广泛，当其基本的实现原理还是对大多数人来说比较陌生。</p>
+<p>特性：与RSA相比可以使用更短的密钥实现与RSA相当或者更高的安全性。</p>
+<p>一下方程式表示了椭圆曲线，其中a, b, c, d为系数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y^2 = ax^3 + bx^2 + cx + d</span><br></pre></td></tr></table></figure></p>
+<p>当a = 1, b = 0, c = -7, d = 10 时，方程表示如下图所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">y^2 = x^3 - 7x + 10</span><br></pre></td></tr></table></figure></p>
+<p>此时曲线显示如下图蓝线所示：</p>
+<p><img src="/blog/images/ecc/1.png" alt="椭圆曲线"></p>
+<p>可以看出椭圆曲线并不是椭圆形的，形状与名称并没有太大联系。</p>
+<h2 id="2-运算法则"><a href="#2-运算法则" class="headerlink" title="2. 运算法则"></a>2. 运算法则</h2><h3 id="2-1-加法"><a href="#2-1-加法" class="headerlink" title="2.1 加法"></a>2.1 加法</h3><p>在这里我们取最简单的一种方式来解释椭圆曲线中的加法，其它的特殊方式可以参考 <em>Elliptic Curve Cryptography: a gentle introduction</em></p>
+<p>如下图所示，过曲线上两点P和Q画一条直线，与曲线交点关于x轴对称位置的点R，即为P + Q。 R = P + Q</p>
+<p><img src="/blog/images/ecc/2.png" alt="P+Q"></p>
+<h3 id="2-2-二倍运算"><a href="#2-2-二倍运算" class="headerlink" title="2.2 二倍运算"></a>2.2 二倍运算</h3><p>当2.1中Q = P的时候，可以得到R = 2P。但此时无法用上述方法进行解释。因此在这种情况下，两点重叠的时候，将椭圆曲线在P点的切线，与椭圆曲线的交点关于x轴对称位置的点，定义为R，即2P。如下图所示：</p>
+<p><img src="/blog/images/ecc/3.png" alt="2P"></p>
+<h3 id="2-3-无穷远点"><a href="#2-3-无穷远点" class="headerlink" title="2.3 无穷远点"></a>2.3 无穷远点</h3><p>当Q = -P 的时候，此时两点所在直线与x轴垂直，此时不会与曲线有交点，此时定义P + Q = 0 ，其中0称之为无穷远点。</p>
+<p>此种情况如下图所示：</p>
+<p><img src="/blog/images/ecc/4.png" alt="0"></p>
+<p>综上，当给出椭圆曲线上一点G的时候，根据加法和二倍运算，可以求出2G、3G（拆分为G+2G）、… 、nG。</p>
+<h3 id="2-4-乘法"><a href="#2-4-乘法" class="headerlink" title="2.4 乘法"></a>2.4 乘法</h3><p>除了定义完加法和二倍运算，接下来定义乘法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nG = G + G + ... + G</span><br></pre></td></tr></table></figure>
+<p>看成n个G相加。</p>
+<p>如果按照上面方法应该进行n次加法，这样计算量较大。</p>
+<p>另一种较为快速的方法就是先做倍数再做加法，如下面例子所示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">151P = 2^7P + 2^4P +2^2P + 2^1P + 2^0P</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以先拿到P</li>
+<li>在根据二倍运算获取2P</li>
+<li>2P与P相加</li>
+<li>2P取二倍运算得到4P</li>
+<li>以此类推</li>
+</ul>
+<p>这样只是做了简单的倍数运算和加法运算</p>
+<p>但是当给出的是nG 和G 的时候如何求出n，是一个困难的问题，这也就是椭圆曲线加密背后的数学难题，详细过程可以参考<a href="https://andrea.corbellini.name/2015/05/23/elliptic-curve-cryptography-finite-fields-and-discrete-logarithms/" target="_blank" rel="noopener">Elliptic Curve Cryptography: finite fields and discrete logarithms</a>。从一个方向上进行计算十分简单，当逆过来的时候却十分困难，这于大数分解和离散对数问题是一致的。</p>
+<h2 id="3-有限域上的椭圆曲线"><a href="#3-有限域上的椭圆曲线" class="headerlink" title="3. 有限域上的椭圆曲线"></a>3. 有限域上的椭圆曲线</h2><p>在我们上面描述的椭圆曲线中，可以从给出的示例图看出，对应的椭圆曲线都是光滑的曲线，这是基于实数域上的椭圆曲线。但是在实际上的椭圆曲线加密算法当中，用的不是实数域上的椭圆曲线，而是有限域上的椭圆曲线。</p>
+<p>所谓有限域指的就是具有有限数量元素的集合，其中一个有限域的例子就是一个集合的整数模p，此时的p指的是一个素数，该有限与用GF(p)代表。</p>
+<p>原本实数域上的椭圆曲线定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123; (x, y) \in(\mathbb&#123;R_p&#125;)^2 | y^2 = x^3 + ax +b, 4a^3  +27b^2 \neq 0 &#125; \bigcup &#123;0&#125;</span><br><span class="line">(\mathbb&#123;F_p&#125;)^2</span><br></pre></td></tr></table></figure></p>
+<p>有限域上的椭圆曲线定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; (x, y) \in(\mathbb&#123;F_p&#125;)^2 | y^2 \equiv x^3 + ax +b(mod p), 4a^3  +27b^2 !\equiv  0 (mod p)&#125; \bigcup &#123;0&#125;</span><br></pre></td></tr></table></figure>
+<p>其中0代表无穷远点，a和b是<br>此时的椭圆曲线不再是一条光滑的曲线而是一个有限点集。</p>
+<p>当a = 1, b = 1, p = 23的时候，此时有限域上的椭圆曲线如下图所示：</p>
+<p><img src="/blog/images/ecc/5.png" alt="p=23"></p>
+<p>可以看到椭圆曲线不再是“曲线”，而是一堆点集。</p>
+<p>此时有限域中的直线也不同于实数域中的实线。在有限域中直线定义为满足下面等式的点的集合。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ax + by + c \equiv 0(mod p)</span><br></pre></td></tr></table></figure>
+<h2 id="4-有限域上的计算"><a href="#4-有限域上的计算" class="headerlink" title="4.有限域上的计算"></a>4.有限域上的计算</h2><p>在有限域上如何计算 xG：</p>
+<p>在有限域GF(p)中给定椭圆曲线上两点P和Q，计算R = P + Q公式及过程如下： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">P(x_p,y_p),Q(x_q,y_q), R(x_r,y_r)</span><br><span class="line"></span><br><span class="line">x_r = (m^2 -x_p - x_q) mod p</span><br><span class="line"></span><br><span class="line">y_r = (m(x_p - x_r)-y_p) mod p</span><br><span class="line"></span><br><span class="line">m = (y_q - y_p) \cdot (x_q - x_p)^&#123;-1&#125; mod p</span><br></pre></td></tr></table></figure>
+<p>若 P = Q，则有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m = (3x_p^2+a) \cdot (2y_p)^&#123;-1&#125; mod p</span><br></pre></td></tr></table></figure>
+<p>根据以上公式仍然可以跟实数域上一般计算出对应2G、3G、…、nG</p>
+<h2 id="5-椭圆曲线使用原理"><a href="#5-椭圆曲线使用原理" class="headerlink" title="5. 椭圆曲线使用原理"></a>5. 椭圆曲线使用原理</h2><p>椭圆曲线加解密也是属于公钥加密体系的内容，也就是说需要跟RSA这种公钥加密算法一样有对应的公钥和私钥，那这里面的公钥和私钥又是如何得到的？</p>
+<p>椭圆曲线加密中需要找到类似于RSA和DH类似的质因子分解或者离散对数求解的数学难题。在前面已经讲到给定椭圆曲线上一点G，那么求出nG是容易的，但是当拥有G和nG的时候计算出n却是困难的，这就是椭圆曲线上的离散对数问题。</p>
+<p>先设私钥为k，可以计算出公钥为P = kG，其中G为曲线上一点</p>
+<h3 id="5-1-ECC加解密原理"><a href="#5-1-ECC加解密原理" class="headerlink" title="5.1 ECC加解密原理"></a>5.1 ECC加解密原理</h3><h4 id="5-1-1-加密"><a href="#5-1-1-加密" class="headerlink" title="5.1.1 加密"></a>5.1.1 加密</h4><ul>
+<li>选择随机数 r；</li>
+<li>对消息进行加密 ( 所谓对消息进行加密即先对消息进行编码映射到曲线上的一点M，再对M进行计算 )，生成密文C，其中密文为一个点对<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C = &#123;rG, M + rP&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中P为公钥</p>
+<h4 id="5-1-2-解密原理"><a href="#5-1-2-解密原理" class="headerlink" title="5.1.2 解密原理"></a>5.1.2 解密原理</h4><ul>
+<li><p>先计算出M</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">M + rP - k(rG) </span><br><span class="line"></span><br><span class="line">= M + r(kG) - k(rG) = M</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>再对M进行解密获取原始消息。</p>
+</li>
+</ul>
+<p>其中k 为私钥， P为公钥</p>
+<h3 id="5-2-ECC签名原理-ECDSA"><a href="#5-2-ECC签名原理-ECDSA" class="headerlink" title="5.2 ECC签名原理(ECDSA)"></a>5.2 ECC签名原理(ECDSA)</h3><p>假设需要签名消息为M，M对应的hash值为h，一般签名都是对消息的hash值进行操作，而不是对消息本身。公钥加密速度慢，一旦消息过长，对消息本身签名会造成较大的计算和时间开销，一般采用对消息的hash进行签名。</p>
+<h4 id="5-2-1-私钥签名"><a href="#5-2-1-私钥签名" class="headerlink" title="5.2.1 私钥签名"></a>5.2.1 私钥签名</h4><ul>
+<li>取随机数r，计算rG</li>
+<li>根据r ， h， 私钥k，进行以下计算，其中x为G点横坐标</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = (h + kx) / r</span><br></pre></td></tr></table></figure>
+<ul>
+<li>生成签名S = {rG, s}</li>
+<li>将M，签名S发送给接收方</li>
+</ul>
+<h4 id="5-2-2-公钥验签"><a href="#5-2-2-公钥验签" class="headerlink" title="5.2.2 公钥验签"></a>5.2.2 公钥验签</h4><ul>
+<li>接收方收到消息M，签名S = {rG, s}</li>
+<li>根据M计算hash值h</li>
+<li><p>使用发送方公钥P计算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hG / s + xP / s</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将计算结果与rG进行比较，若相当则验证成功。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hG / s + xP /s</span><br><span class="line"></span><br><span class="line">= hG / s + x(kG) / s</span><br><span class="line"></span><br><span class="line">= (h + xk)G / s </span><br><span class="line"></span><br><span class="line">= (h + xk)G r / (h + kx) = rG</span><br></pre></td></tr></table></figure>
+<p>可以注意到由于随机数的存在，所以对于同一条消息，用同一种算法，生成的签名都是不一样的。</p>
+<h2 id="5-3-椭圆曲线密钥交换-ECDH"><a href="#5-3-椭圆曲线密钥交换-ECDH" class="headerlink" title="5.3 椭圆曲线密钥交换( ECDH )"></a>5.3 椭圆曲线密钥交换( ECDH )</h2><p>当通讯双方需要安全地交换信息且即使第三方拿到交换的信息也无法解码。<br>一般ECDH用来实现交换对称密钥。<br>流程如下，设通信双方是Alice和Bob</p>
+<ul>
+<li>Alice 生成私钥和公钥：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private key : k_A</span><br><span class="line"></span><br><span class="line">public key : P_A = k_AG</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Bob 生成私钥和公钥：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private key : k_B</span><br><span class="line"></span><br><span class="line">public key : P_B = k_BG</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Alice和Bob通过非安全通道交换各自的公钥</li>
+<li><p>Alice在收到Bob的公钥后，进行以下计算：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_AP_B</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Bob在收到Alice的公钥后，进行以下计算：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_BP_A</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以看到Alice和Bob计算出来的密钥S是相同的，因为有：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">S = k_AP_B = k_A(k_BG) = k_B(k_AG) = k_BP_A</span><br></pre></td></tr></table></figure>
+<p>此时通信双方拥有共享密钥，就可以通过对称加密来安全交换信息。</p>
+<p>有时候会看到<strong>ECDHE</strong>，其中多出来的“E”主要指“Ephemeral”，即临时，短暂的意思，意味着交换的密钥是作为临时密钥，并非用来做长久密钥的，如<strong>TLS</strong></p>
+<h2 id="5-4-比较"><a href="#5-4-比较" class="headerlink" title="5.4 比较"></a>5.4 比较</h2><p>此处比较主要引自<a href="https://blog.csdn.net/AAA123524457/article/details/103066614" target="_blank" rel="noopener">博客</a></p>
+<h3 id="5-4-1-密码强度比较"><a href="#5-4-1-密码强度比较" class="headerlink" title="5.4.1 密码强度比较"></a>5.4.1 密码强度比较</h3><table>
+<thead>
+<tr>
+<th>对称密钥</th>
+<th>ECC</th>
+<th>RSA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>80</td>
+<td>163</td>
+<td>1024</td>
+</tr>
+<tr>
+<td>112</td>
+<td>233</td>
+<td>2240</td>
+</tr>
+<tr>
+<td>128</td>
+<td>283</td>
+<td>3072</td>
+</tr>
+<tr>
+<td>192</td>
+<td>409</td>
+<td>7680</td>
+</tr>
+</tbody>
+</table>
+<p>拿表中第一行数据来举例，表示1024-bit的RSA密钥强度、163-bit的ECC密钥强度和80-bit的对称密钥强度相当。</p>
+<p>即要达到相同的密钥强度所需要的的密钥长度： 对称 &lt; ECC &lt; RSA</p>
+<h3 id="5-4-1-计算性能比较"><a href="#5-4-1-计算性能比较" class="headerlink" title="5.4.1 计算性能比较"></a>5.4.1 计算性能比较</h3><p>环境：Intel Xeon CPU E5520  @ 2.27GHz</p>
+<p>基础：tommathlib</p>
+<p>结果(单位us）：</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>验证</th>
+<th>签名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RSA-1024</td>
+<td>12</td>
+<td>511</td>
+</tr>
+<tr>
+<td>RSA-2048</td>
+<td>30</td>
+<td>3270</td>
+</tr>
+<tr>
+<td>ECDSA-192</td>
+<td>590</td>
+<td>490</td>
+</tr>
+</tbody>
+</table>
+<p>可以看出对于ECDSA来说生成签名和验证签名开销差不多，对于RSA来说，验证签名比生成签名高效。</p>
+<p>总的来说：</p>
+<p>ECDSA生成签名性能比RSA好；</p>
+<p>RSA验证签名性能比ECDSA好；</p>
+<p>ECDSA签名算法适合用于签名和验证签名频率相近的场景，如P2P通道建立</p>
+<p>RSA签名算法适用于，验证频率高，签名频率低的场景。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年04月01日 14:59</p>
+        <p>原始链接： <a class="post-url" href="/blog/2020/04/01/ECC/" title="简述椭圆曲线算法（ECC）">https://silence-linhl.github.io/blog/2020/04/01/ECC/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2020/04/01/ECC/&title=《简述椭圆曲线算法（ECC）》 — Harlan's Blog&pic=images/ecc/cover1.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2020/04/01/ECC/&title=《简述椭圆曲线算法（ECC）》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2020/04/01/ECC/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《简述椭圆曲线算法（ECC）》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2020/04/01/ECC/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2020/04/01/ECC/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2020/04/01/ECC/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/ECC/" class="color4">ECC</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#好了，开始进入主题：Elliptic-Curve-Cryptography-ECC"><span class="post-toc-text">好了，开始进入主题：Elliptic Curve Cryptography (ECC)</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-简单概念"><span class="post-toc-text">1. 简单概念</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-运算法则"><span class="post-toc-text">2. 运算法则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-加法"><span class="post-toc-text">2.1 加法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-二倍运算"><span class="post-toc-text">2.2 二倍运算</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-3-无穷远点"><span class="post-toc-text">2.3 无穷远点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-4-乘法"><span class="post-toc-text">2.4 乘法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-有限域上的椭圆曲线"><span class="post-toc-text">3. 有限域上的椭圆曲线</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-有限域上的计算"><span class="post-toc-text">4.有限域上的计算</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-椭圆曲线使用原理"><span class="post-toc-text">5. 椭圆曲线使用原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-1-ECC加解密原理"><span class="post-toc-text">5.1 ECC加解密原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1-1-加密"><span class="post-toc-text">5.1.1 加密</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-1-2-解密原理"><span class="post-toc-text">5.1.2 解密原理</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-2-ECC签名原理-ECDSA"><span class="post-toc-text">5.2 ECC签名原理(ECDSA)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2-1-私钥签名"><span class="post-toc-text">5.2.1 私钥签名</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5-2-2-公钥验签"><span class="post-toc-text">5.2.2 公钥验签</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-3-椭圆曲线密钥交换-ECDH"><span class="post-toc-text">5.3 椭圆曲线密钥交换( ECDH )</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-4-比较"><span class="post-toc-text">5.4 比较</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-4-1-密码强度比较"><span class="post-toc-text">5.4.1 密码强度比较</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-4-1-计算性能比较"><span class="post-toc-text">5.4.1 计算性能比较</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/03/27/SGX/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SGX远程认证流程</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/密码算法/">密码算法</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 10px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/blog/js/search.js"></script>
+<script src="/blog/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/blog/js/animate.js"></script>
+
+
+  <script src="/blog/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
