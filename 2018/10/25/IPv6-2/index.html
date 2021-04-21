@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <title>IPv6(2) | Harlan&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain" />
   
-  <meta name="description" content="5.2 组播地址（Multicast Address) 其中 Flags： 0001 （表示permanent)或 0000(表示临时组播组) Scope： 表示组播组范围    范围值 范围 范围值 范围     0 保留 8 组织-本地范围   1 节点-本地范围 9 未分配   2 链路-本地范围 A 未分配   3 未分配 B 未分配   4 未分配 C 未分配   5 站点-本地范围">
-<meta name="keywords" content="IPv6">
+  <meta name="description" content="5.2 组播地址（Multicast Address) 其中 Flags： 0001 （表示permanent)或 0000(表示临时组播组) Scope： 表示组播组范围    范围值 范围 范围值 范围    0 保留 8 组织-本地范围   1 节点-本地范围 9 未分配   2 链路-本地范围 A 未分配   3 未分配 B 未分配   4 未分配 C 未分配   5 站点-本地范围 D">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IPv6(2)">
 <meta property="og:url" content="https://silence-linhl.github.io/blog/2018/10/25/IPv6-2/index.html">
 <meta property="og:site_name" content="Harlan&#39;s Blog">
-<meta property="og:description" content="5.2 组播地址（Multicast Address) 其中 Flags： 0001 （表示permanent)或 0000(表示临时组播组) Scope： 表示组播组范围    范围值 范围 范围值 范围     0 保留 8 组织-本地范围   1 节点-本地范围 9 未分配   2 链路-本地范围 A 未分配   3 未分配 B 未分配   4 未分配 C 未分配   5 站点-本地范围">
-<meta property="og:locale" content="default">
+<meta property="og:description" content="5.2 组播地址（Multicast Address) 其中 Flags： 0001 （表示permanent)或 0000(表示临时组播组) Scope： 表示组播组范围    范围值 范围 范围值 范围    0 保留 8 组织-本地范围   1 节点-本地范围 9 未分配   2 链路-本地范围 A 未分配   3 未分配 B 未分配   4 未分配 C 未分配   5 站点-本地范围 D">
+<meta property="og:locale">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv62.jpg">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv66.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv67.png">
@@ -29,25 +28,30 @@
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv615.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv616.png">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv617.png">
-<meta property="og:updated_time" content="2018-11-09T12:06:08.565Z">
+<meta property="article:published_time" content="2018-10-25T06:35:12.000Z">
+<meta property="article:modified_time" content="2018-11-09T12:06:08.565Z">
+<meta property="article:author" content="Harlan">
+<meta property="article:tag" content="IPv6">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IPv6(2)">
-<meta name="twitter:description" content="5.2 组播地址（Multicast Address) 其中 Flags： 0001 （表示permanent)或 0000(表示临时组播组) Scope： 表示组播组范围    范围值 范围 范围值 范围     0 保留 8 组织-本地范围   1 节点-本地范围 9 未分配   2 链路-本地范围 A 未分配   3 未分配 B 未分配   4 未分配 C 未分配   5 站点-本地范围">
 <meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/ipv6/ipv62.jpg">
   
   
     <link rel="icon" href="favicon.ico">
   
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/blog/css/style.css">
-  <script src="/blog/js/pace.min.js"></script>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+<script src="/blog/js/pace.min.js"></script>
+
   
 
   
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
 <body>
   <div id="container">
       <header id="header">
@@ -168,8 +172,7 @@
 <th>范围</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>0</td>
 <td>保留</td>
 <td>8</td>
@@ -217,8 +220,7 @@
 <td>F</td>
 <td>保留</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <p><strong>Group ID：</strong> 组播组ID</p>
 <h6 id="5-2-1-一些熟知的组播地址"><a href="#5-2-1-一些熟知的组播地址" class="headerlink" title="5.2.1 一些熟知的组播地址"></a>5.2.1 一些熟知的组播地址</h6><p>节点-本地范围</p>
 <p>FF01：:1   所有-节点地址</p>
@@ -228,25 +230,28 @@
 <p>FF02：:2  所有-路由器地址</p>
 <h6 id="5-2-2-特殊的组播地址"><a href="#5-2-2-特殊的组播地址" class="headerlink" title="5.2.2 特殊的组播地址"></a>5.2.2 特殊的组播地址</h6><p><img src="/blog/images/ipv6/ipv67.png" alt="image"></p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> Solicited-node节点地址：被请求节点组播地址，主要用于重复地址检测和获取邻居节点的链路层地址</li>
-<li style="list-style: none"><input type="checkbox"> 地址构成：</li>
-<li>前104位：FF02：:1:FF/104(64个0)</li>
+<li><p><input disabled="" type="checkbox">  Solicited-node节点地址：被请求节点组播地址，主要用于重复地址检测和获取邻居节点的链路层地址</p>
+</li>
+<li><p><input disabled="" type="checkbox">  地址构成：</p>
+</li>
+<li><p>前104位：FF02：:1:FF/104(64个0)</p>
+</li>
 <li><p>后24位：单播地址的后24位</p>
 </li>
-<li><p>[x] 工作范围：在本地链路上有效</p>
+<li><p><input checked="" disabled="" type="checkbox">  工作范围：在本地链路上有效</p>
 </li>
 </ul>
 <p>凡是单播地址后24位相同的接口自动加入相应的请求节点组播组！</p>
 <ul>
-<li style="list-style: none"><input type="checkbox" checked> 作用：</li>
+<li><input checked="" disabled="" type="checkbox"> 作用：</li>
 <li>1、在IPV6中，没有ARP。ICMP代替了ARP的功能，被请求节点的组播地址被节点用来获得相同本地链路上邻居节点的链路层地址</li>
 <li>2、用于重复地址检测DAD，在使用无状态自动配置将某个地址配置为自已的IPV6地址之前，节点利用DAD验证在其本地链路上该地址是否已经被使用。</li>
 </ul>
 <h5 id="5-3-任播地址（Anycast-Address"><a href="#5-3-任播地址（Anycast-Address" class="headerlink" title="5.3 任播地址（Anycast Address)"></a>5.3 任播地址（Anycast Address)</h5><p><strong>IPv6地址新类型：</strong> IPv6中一个任播地址是分配给不同节点的多个接口的，就是说有若干个网络接口可分配同一个任播地址。当有一个数据包传送给这个地址时，路由器只将此数据包转发到其中一个“最近距离”的接口上就结束了，并不是每个接口都收到此数据包。（这一点上也与IPv6多播不同。）　　另外，单从IPv6的地址形式上是无法区分单播与任播地址的</p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 目标地址为任播地址的数据报将发送给最近的一个接口</li>
-<li style="list-style: none"><input type="checkbox"> 适合与One-to-One of Many（一对多之一）的通讯场合</li>
-<li style="list-style: none"><input type="checkbox"> 仅能做目标地址，且仅分配给路由器</li>
+<li><input disabled="" type="checkbox"> 目标地址为任播地址的数据报将发送给最近的一个接口</li>
+<li><input disabled="" type="checkbox"> 适合与One-to-One of Many（一对多之一）的通讯场合</li>
+<li><input disabled="" type="checkbox"> 仅能做目标地址，且仅分配给路由器</li>
 </ul>
 <h4 id="6-一台IPv6主机，一个接口上可以具有的IPv6地址"><a href="#6-一台IPv6主机，一个接口上可以具有的IPv6地址" class="headerlink" title="6.一台IPv6主机，一个接口上可以具有的IPv6地址"></a>6.一台IPv6主机，一个接口上可以具有的IPv6地址</h4><table>
 <thead>
@@ -255,8 +260,7 @@
 <th>地址</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>链路本地地址</td>
 <td>FE80::/10</td>
 </tr>
@@ -280,8 +284,7 @@
 <td>主机所属组的组播地址</td>
 <td>FF00::/8</td>
 </tr>
-</tbody>
-</table>
+</tbody></table>
 <h4 id="7-IPv6地址配置"><a href="#7-IPv6地址配置" class="headerlink" title="7.IPv6地址配置"></a>7.IPv6地址配置</h4><ul>
 <li>手工配置</li>
 <li>无状态地址自动配置（ND协议）</li>
@@ -291,8 +294,8 @@
 <h5 id="7-1-无状态地址自动配置（SLAAC）"><a href="#7-1-无状态地址自动配置（SLAAC）" class="headerlink" title="7.1 无状态地址自动配置（SLAAC）"></a>7.1 无状态地址自动配置（SLAAC）</h5><p>无需任何配置即可与外界通信</p>
 <p>无状态地址自动配置基于对主机使用的IPv6地址的如下结构：由<strong>前缀</strong> 和 <strong>接口ID</strong> 组成</p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 接口ID：EUI-64</li>
-<li style="list-style: none"><input type="checkbox"> 前缀一般是路由器前缀，运行一个无需主机配置的协议即可。</li>
+<li><input disabled="" type="checkbox"> 接口ID：EUI-64</li>
+<li><input disabled="" type="checkbox"> 前缀一般是路由器前缀，运行一个无需主机配置的协议即可。</li>
 </ul>
 <h6 id="无状态地址自动配置用到的消息"><a href="#无状态地址自动配置用到的消息" class="headerlink" title="无状态地址自动配置用到的消息"></a>无状态地址自动配置用到的消息</h6><p>Router Solicitation (RS):促使路由器发送RA消息</p>
 <p>Router Advertisement (RA)：向主机通告前缀等信息</p>
@@ -303,7 +306,7 @@
 <p>参数发现：发现相关参数的过程，如MTU，跳数限制、地址配置方式等</p>
 <p><strong>路由发现实例</strong></p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 主机请求——触发路由器</li>
+<li><input disabled="" type="checkbox"> 主机请求——触发路由器</li>
 </ul>
 <p><img src="/blog/images/ipv6/ipv68.png" alt="image"></p>
 <p>注意要点：</p>
@@ -320,7 +323,7 @@
 <li>在超过Preferred Lifetime 但未超过ValidLifetime周期内的前缀生成的地址， 正在使用该地址的上层应用可继续使用， 但任何新的上层应用不能使用这个地址</li>
 <li>在超过Valid Lifetime周期内的前缀构造的地址，<br>任何上层应用都不能使用该地址</li>
 </ul>
-<p><strong><em>Attention:一个链路本地地址的优先时间和有效时间是无限的，即永不超时</em></strong></p>
+<p><em><strong>Attention:一个链路本地地址的优先时间和有效时间是无限的，即永不超时</strong></em></p>
 <ul>
 <li>RA消息中的M和O选项</li>
 </ul>
@@ -330,9 +333,9 @@
 <p><strong>基本思想</strong></p>
 <p>一个地址在分配给一个接口之后且通过重复地址检测之前称为tentative地址，即试验地址</p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 节点组播发送Neighbor Solicitation</li>
-<li style="list-style: none"><input type="checkbox"> 若接收到Neighbor Advertisment，就证明地址重复</li>
-<li style="list-style: none"><input type="checkbox"> 若尝试若干次请求，没有收到邻居通告，即可启用该地址</li>
+<li><input disabled="" type="checkbox"> 节点组播发送Neighbor Solicitation</li>
+<li><input disabled="" type="checkbox"> 若接收到Neighbor Advertisment，就证明地址重复</li>
+<li><input disabled="" type="checkbox"> 若尝试若干次请求，没有收到邻居通告，即可启用该地址</li>
 </ul>
 <p><strong>实例</strong><br><img src="/blog/images/ipv6/ipv611.png" alt="image"></p>
 <p>若NS接受者发现目标域中地址对它而言是临时的，则主动放弃使用该地址</p>
@@ -341,25 +344,25 @@
 <p>允许从旧前缀平稳过渡到新前缀，提供对用户透明的网络重新编址能力</p>
 <p>当前缀重新编址的时候，路由器会继续通告当前前缀，只是优先时间和有效时间被减到接近0，同时路由器开始通告新的前缀，此时链路中至少有两个前缀共存</p>
 <p>当节点收到这样的RA的时候，会发现当前前缀的生命周期较短，停止使用；同时开始使用新的前缀配置接口，并进行DAD，通过后，获得新的地址使用。</p>
-<p><strong><em>Attention:</em></strong><br><strong><em>在转换期间，节点有两个单播地址使用。旧的地址是基于旧的前缀，用以维持以前已经建立的连接。新的地址是基于新的前缀，用来建立新的连接。当旧的前缀的有效时间递减为0时，旧的前缀完全废止，此时，RA中只包含新的前缀</em></strong></p>
+<p><em><strong>Attention:</strong></em><br><em><strong>在转换期间，节点有两个单播地址使用。旧的地址是基于旧的前缀，用以维持以前已经建立的连接。新的地址是基于新的前缀，用来建立新的连接。当旧的前缀的有效时间递减为0时，旧的前缀完全废止，此时，RA中只包含新的前缀</strong></em></p>
 <p><strong>小结：</strong><br>4中ND协议消息交互</p>
 <p><img src="/blog/images/ipv6/ipv612.png" alt="image"></p>
 <h5 id="7-2-有状态地址自动配置（DHCPv6）"><a href="#7-2-有状态地址自动配置（DHCPv6）" class="headerlink" title="7.2 有状态地址自动配置（DHCPv6）"></a>7.2 有状态地址自动配置（DHCPv6）</h5><p>DHCPv6：Dynamic Host Configuration Protocol for ipv6</p>
 <p>在有无状态地址自动配置的情况下，仍然需要DHCPv6的原因：</p>
 <ul>
-<li style="list-style: none"><input type="checkbox"> 需要动态指定DNS服务</li>
-<li style="list-style: none"><input type="checkbox"> 不想MAC地址成为IPv6地址的一部分</li>
-<li style="list-style: none"><input type="checkbox"> 需要良好扩展性</li>
+<li><input disabled="" type="checkbox"> 需要动态指定DNS服务</li>
+<li><input disabled="" type="checkbox"> 不想MAC地址成为IPv6地址的一部分</li>
+<li><input disabled="" type="checkbox"> 需要良好扩展性</li>
 </ul>
 <p><strong>特点</strong></p>
 <p>使用UDP来交换报文，端口546/547(v4：67/68),使用本地链路地址或其它机制获得的地址来发送和接收DHCPv6报文。没有了广播， 客户机只需发送给保留的链路范<br>围组播地址，取消了DHCPv4中的Discover和Offer消息</p>
 <p><strong>DHCPv6获取地址和参数的典型过程</strong></p>
 <ul>
-<li style="list-style: none"><input type="checkbox" checked> 4步交互地址分配</li>
+<li><input checked="" disabled="" type="checkbox"> 4步交互地址分配</li>
 </ul>
 <p><img src="/blog/images/ipv6/ipv613.png" alt="image"></p>
 <ul>
-<li style="list-style: none"><input type="checkbox" checked> 快速地址配置</li>
+<li><input checked="" disabled="" type="checkbox"> 快速地址配置</li>
 </ul>
 <p>只需要两个信息交互</p>
 <ul>
@@ -494,7 +497,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-2-组播地址（Multicast-Address"><span class="post-toc-text">5.2 组播地址（Multicast Address)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-2-1-一些熟知的组播地址"><span class="post-toc-text">5.2.1 一些熟知的组播地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-2-2-特殊的组播地址"><span class="post-toc-text">5.2.2 特殊的组播地址</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-任播地址（Anycast-Address"><span class="post-toc-text">5.3 任播地址（Anycast Address)</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-一台IPv6主机，一个接口上可以具有的IPv6地址"><span class="post-toc-text">6.一台IPv6主机，一个接口上可以具有的IPv6地址</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7-IPv6地址配置"><span class="post-toc-text">7.IPv6地址配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#7-1-无状态地址自动配置（SLAAC）"><span class="post-toc-text">7.1 无状态地址自动配置（SLAAC）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#无状态地址自动配置用到的消息"><span class="post-toc-text">无状态地址自动配置用到的消息</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#无状态地址自动配置中的3个机制"><span class="post-toc-text">无状态地址自动配置中的3个机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#7-2-有状态地址自动配置（DHCPv6）"><span class="post-toc-text">7.2 有状态地址自动配置（DHCPv6）</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#8-IPv6地址子网规划"><span class="post-toc-text">8.IPv6地址子网规划</span></a>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-2-%E7%BB%84%E6%92%AD%E5%9C%B0%E5%9D%80%EF%BC%88Multicast-Address"><span class="post-toc-text">5.2 组播地址（Multicast Address)</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-2-1-%E4%B8%80%E4%BA%9B%E7%86%9F%E7%9F%A5%E7%9A%84%E7%BB%84%E6%92%AD%E5%9C%B0%E5%9D%80"><span class="post-toc-text">5.2.1 一些熟知的组播地址</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#5-2-2-%E7%89%B9%E6%AE%8A%E7%9A%84%E7%BB%84%E6%92%AD%E5%9C%B0%E5%9D%80"><span class="post-toc-text">5.2.2 特殊的组播地址</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-3-%E4%BB%BB%E6%92%AD%E5%9C%B0%E5%9D%80%EF%BC%88Anycast-Address"><span class="post-toc-text">5.3 任播地址（Anycast Address)</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6-%E4%B8%80%E5%8F%B0IPv6%E4%B8%BB%E6%9C%BA%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%A3%E4%B8%8A%E5%8F%AF%E4%BB%A5%E5%85%B7%E6%9C%89%E7%9A%84IPv6%E5%9C%B0%E5%9D%80"><span class="post-toc-text">6.一台IPv6主机，一个接口上可以具有的IPv6地址</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7-IPv6%E5%9C%B0%E5%9D%80%E9%85%8D%E7%BD%AE"><span class="post-toc-text">7.IPv6地址配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#7-1-%E6%97%A0%E7%8A%B6%E6%80%81%E5%9C%B0%E5%9D%80%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%EF%BC%88SLAAC%EF%BC%89"><span class="post-toc-text">7.1 无状态地址自动配置（SLAAC）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#%E6%97%A0%E7%8A%B6%E6%80%81%E5%9C%B0%E5%9D%80%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E7%94%A8%E5%88%B0%E7%9A%84%E6%B6%88%E6%81%AF"><span class="post-toc-text">无状态地址自动配置用到的消息</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#%E6%97%A0%E7%8A%B6%E6%80%81%E5%9C%B0%E5%9D%80%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E4%B8%AD%E7%9A%843%E4%B8%AA%E6%9C%BA%E5%88%B6"><span class="post-toc-text">无状态地址自动配置中的3个机制</span></a></li></ol></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#7-2-%E6%9C%89%E7%8A%B6%E6%80%81%E5%9C%B0%E5%9D%80%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%EF%BC%88DHCPv6%EF%BC%89"><span class="post-toc-text">7.2 有状态地址自动配置（DHCPv6）</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#8-IPv6%E5%9C%B0%E5%9D%80%E5%AD%90%E7%BD%91%E8%A7%84%E5%88%92"><span class="post-toc-text">8.IPv6地址子网规划</span></a>
         </nav>
     </aside>
     
@@ -532,7 +535,7 @@
                         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
                     })();
                 </script>
-                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             </div>
         </section>
     
@@ -556,7 +559,7 @@
       <p>
         Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
         Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
-      &copy; 2020 Harlan<br>
+      &copy; 2021 Harlan<br>
       </p>
     </div>
   </div>
@@ -589,10 +592,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/密码算法/">密码算法</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a><a class="category-link" href="/blog/categories/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/">密码算法</a><a class="category-link" href="/blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="category-link" href="/blog/categories/%E8%AE%BA%E6%96%87/">论文</a><a class="category-link" href="/blog/categories/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/">超级账本</a><a class="category-link" href="/blog/categories/%E9%97%AE%E9%A2%98/">问题</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -625,7 +628,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
         </div>
     </div>
 </div>
@@ -651,13 +654,18 @@
         </a>
     </li>
 </div>
+
 <script src="/blog/js/search.js"></script>
+
+
 <script src="/blog/js/main.js"></script>
+
 
 
   <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
   <div id="particles"></div>
-  <script src="/blog/js/particles.js"></script>
+  
+<script src="/blog/js/particles.js"></script>
 
 
 
@@ -665,12 +673,19 @@
 
 
 
-  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
-  <script src="/blog/js/animate.js"></script>
+  
+<script src="/blog/js/animate.js"></script>
 
 
-  <script src="/blog/js/pop-img.js"></script>
+
+  
+<script src="/blog/js/pop-img.js"></script>
+
   <script>
      $(".article-entry p img").popImg();
   </script>

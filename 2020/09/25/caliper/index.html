@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>caliper | Harlan&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain" />
+  
+  <meta name="description" content="Caliper安装与使用环境安装123yum install nodejsnpm install nn 8.9.0  一. 安装绑定Caliper全局安装Cliper Cli 1npm install -g --only&#x3D;prod @hyperledger&#x2F;caliper-cli@0.3.2  绑定SDK 1caliper bind --caliper-bind-sut fab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="caliper">
+<meta property="og:url" content="https://silence-linhl.github.io/blog/2020/09/25/caliper/index.html">
+<meta property="og:site_name" content="Harlan&#39;s Blog">
+<meta property="og:description" content="Caliper安装与使用环境安装123yum install nodejsnpm install nn 8.9.0  一. 安装绑定Caliper全局安装Cliper Cli 1npm install -g --only&#x3D;prod @hyperledger&#x2F;caliper-cli@0.3.2  绑定SDK 1caliper bind --caliper-bind-sut fab">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-09-25T13:51:58.000Z">
+<meta property="article:modified_time" content="2020-09-26T07:17:39.539Z">
+<meta property="article:author" content="Harlan">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+<script src="/blog/js/pace.min.js"></script>
+
+  
+
+  
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/blog/" class="left">
+                    <span class="site-title">Harlan&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/blog/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/blog/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/blog/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/blog/">
+                    <img src="/blog/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Harlan&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人记录博客
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Github" target="_blank" href="//github.com/silence-linhl">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Twitter" target="_blank" href="//twitter.com/harlan09678147">
+                            <i class="fa fa-twitter fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-caliper" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      caliper
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-09-25
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="Caliper安装与使用"><a href="#Caliper安装与使用" class="headerlink" title="Caliper安装与使用"></a>Caliper安装与使用</h1><h2 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install nodejs</span><br><span class="line">npm install n</span><br><span class="line">n 8.9.0</span><br></pre></td></tr></table></figure>
+
+<h2 id="一-安装绑定Caliper"><a href="#一-安装绑定Caliper" class="headerlink" title="一. 安装绑定Caliper"></a>一. 安装绑定Caliper</h2><p>全局安装Cliper Cli</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g --only&#x3D;prod @hyperledger&#x2F;caliper-cli@0.3.2</span><br></pre></td></tr></table></figure>
+
+<p>绑定SDK</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">caliper bind --caliper-bind-sut fabric:1.4.8 --caliper-bind-args&#x3D;-g</span><br></pre></td></tr></table></figure>
+
+<h2 id="二-创建文件夹"><a href="#二-创建文件夹" class="headerlink" title="二. 创建文件夹"></a>二. 创建文件夹</h2><p>Caliper需要两个配置文件</p>
+<ul>
+<li>网络配置文件： 描述网络并提供连接要求</li>
+<li>基准文件： 包含回调和用户测试文件引用</li>
+</ul>
+<p>首先创建<strong>caliper-workspace</strong>父文件夹，然后在该文件夹下创建<strong>networks</strong> 和 <strong>benchmarks</strong>两个子文件夹。</p>
+<h2 id="三-网络配置文件"><a href="#三-网络配置文件" class="headerlink" title="三. 网络配置文件"></a>三. 网络配置文件</h2><p>网络配置文件是通用连接配置文件的扩展，并为与网络交互的客户端提供了连接要求。该文件可以是YAML或JSON格式，本教程显示JSON格式。</p>
+<h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p>在<strong>network</strong>文件夹下创建<strong>network_config.json</strong>文件，该文件包含8个部分如下面初始文件所示，后续教程将会逐步补充完整。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;caliper&quot; : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;clients&quot; : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;channels&quot; : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;name&quot;: &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;organization&quot; : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;peers&quot; : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;certificateAuthorities&quot; : &#123;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;version&quot; : &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查找并复制模板"><a href="#查找并复制模板" class="headerlink" title="查找并复制模板"></a>查找并复制模板</h3><p>first-sample-&gt;first-network-&gt;connection-org1.json<br>将该文件所有内容复制到<strong>network_config.json</strong>文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;first-network-org1&quot;,</span><br><span class="line">    &quot;version&quot;: &quot;1.0.0&quot;,</span><br><span class="line">    &quot;client&quot;: &#123;</span><br><span class="line">        &quot;organization&quot;: &quot;Org1&quot;,</span><br><span class="line">        &quot;connection&quot;: &#123;</span><br><span class="line">            &quot;timeout&quot;: &#123;</span><br><span class="line">                &quot;peer&quot;: &#123;</span><br><span class="line">                    &quot;endorser&quot;: &quot;300&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;organizations&quot;: &#123;</span><br><span class="line">        &quot;Org1&quot;: &#123;</span><br><span class="line">            &quot;mspid&quot;: &quot;Org1MSP&quot;,</span><br><span class="line">            &quot;peers&quot;: [</span><br><span class="line">                &quot;peer0.org1.example.com&quot;,</span><br><span class="line">                &quot;peer1.org1.example.com&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;certificateAuthorities&quot;: [</span><br><span class="line">                &quot;ca.org1.example.com&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;peers&quot;: &#123;</span><br><span class="line">        &quot;peer0.org1.example.com&quot;: &#123;</span><br><span class="line">            &quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;localhost:7051&quot;,</span><br><span class="line">            &quot;tlsCACerts&quot;: &#123;</span><br><span class="line">                &quot;pem&quot;: &quot;-----BEGIN CERTIFICATE-----\nMIICVzCCAf2gAwIBAgIQJ4YZaoAxgNFIlMKJnCK8YzAKBggqhkjOPQQDAjB2MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz\nY2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDA5MjQxMzE0MDBaFw0zMDA5MjIxMzE0\nMDBaMHYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH\nEw1TYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMR8wHQYD\nVQQDExZ0bHNjYS5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAEMJdNsNECYe4vnAX1HLFVOlcigcDvW00+pmjxdfpfZZ530ESzzYCOlruO\n9iV&#x2F;BYcrWMC8ZFv1HYPWH4Z7bkiJ16NtMGswDgYDVR0PAQH&#x2F;BAQDAgGmMB0GA1Ud\nJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH&#x2F;MCkGA1Ud\nDgQiBCAbL0P+tBNB1AA0&#x2F;7T7SDBFjlrg3n+7Boc+y0kk5&#x2F;EJRTAKBggqhkjOPQQD\nAgNIADBFAiEAz+K66R5mn31xPcjcWSDmnhA8DmC&#x2F;&#x2F;K7j9hy3tpnNar4CIFqvxAqx\nvEzHuvlsU99KGUhPgpfWjgPDS4NppK&#x2F;zxZse\n-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;grpcOptions&quot;: &#123;</span><br><span class="line">                &quot;ssl-target-name-override&quot;: &quot;peer0.org1.example.com&quot;,</span><br><span class="line">                &quot;hostnameOverride&quot;: &quot;peer0.org1.example.com&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;peer1.org1.example.com&quot;: &#123;</span><br><span class="line">            &quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;localhost:8051&quot;,</span><br><span class="line">            &quot;tlsCACerts&quot;: &#123;</span><br><span class="line">                &quot;pem&quot;: &quot;-----BEGIN CERTIFICATE-----\nMIICVzCCAf2gAwIBAgIQJ4YZaoAxgNFIlMKJnCK8YzAKBggqhkjOPQQDAjB2MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz\nY2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDA5MjQxMzE0MDBaFw0zMDA5MjIxMzE0\nMDBaMHYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH\nEw1TYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMR8wHQYD\nVQQDExZ0bHNjYS5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAEMJdNsNECYe4vnAX1HLFVOlcigcDvW00+pmjxdfpfZZ530ESzzYCOlruO\n9iV&#x2F;BYcrWMC8ZFv1HYPWH4Z7bkiJ16NtMGswDgYDVR0PAQH&#x2F;BAQDAgGmMB0GA1Ud\nJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH&#x2F;MCkGA1Ud\nDgQiBCAbL0P+tBNB1AA0&#x2F;7T7SDBFjlrg3n+7Boc+y0kk5&#x2F;EJRTAKBggqhkjOPQQD\nAgNIADBFAiEAz+K66R5mn31xPcjcWSDmnhA8DmC&#x2F;&#x2F;K7j9hy3tpnNar4CIFqvxAqx\nvEzHuvlsU99KGUhPgpfWjgPDS4NppK&#x2F;zxZse\n-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;grpcOptions&quot;: &#123;</span><br><span class="line">                &quot;ssl-target-name-override&quot;: &quot;peer1.org1.example.com&quot;,</span><br><span class="line">                &quot;hostnameOverride&quot;: &quot;peer1.org1.example.com&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;certificateAuthorities&quot;: &#123;</span><br><span class="line">        &quot;ca.org1.example.com&quot;: &#123;</span><br><span class="line">            &quot;url&quot;: &quot;https:&#x2F;&#x2F;localhost:7054&quot;,</span><br><span class="line">            &quot;caName&quot;: &quot;ca-org1&quot;,</span><br><span class="line">            &quot;tlsCACerts&quot;: &#123;</span><br><span class="line">                &quot;pem&quot;: &quot;-----BEGIN CERTIFICATE-----\nMIICUDCCAfegAwIBAgIQdgnCSGhuhWkNbc6249Ml3zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0yMDA5MjQxMzE0MDBaFw0zMDA5MjIxMzE0MDBa\nMHMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMRwwGgYDVQQD\nExNjYS5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE\na0TCdMmVSOzjTWNimrNe9o22cy5obbyJortbkdZPp663SEX7ZIbb7xD1PrSVOIlV\nlHrxc&#x2F;NJ+rNzCDE37mWT8KNtMGswDgYDVR0PAQH&#x2F;BAQDAgGmMB0GA1UdJQQWMBQG\nCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH&#x2F;MCkGA1UdDgQiBCD6\n2&#x2F;MOGvcQQO6GCyg7fe4x1I3Oqx3TsobGO4PfqjWHwzAKBggqhkjOPQQDAgNHADBE\nAiAysfOd2AL5pkuJutsG02DHNxCjotuBvj1JyH7shfbMUAIgF++Ya9o5uu1QuzD+\n4llvZ+y1mznyLgXjD4H+bwcRaiw&#x3D;\n-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;httpOptions&quot;: &#123;</span><br><span class="line">                &quot;verify&quot;: false</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Caliper对象</strong><br>表示被测试的分布式账本。在文件中添加<strong>Caliper</strong>对象，该对象包含一个<strong>blockchain</strong>属性，值为<strong>fabric</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;caliper&quot;: &#123;</span><br><span class="line">        &quot;blockchain&quot;: &quot;fabric&quot;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p><strong>Client对象</strong></p>
+<p>将Clients对象添加到文件中，并添加以网络中的一个标识命名的属性。在该示例中，使用的身份为<a href="mailto:&#x41;&#x64;&#109;&#105;&#110;&#x40;&#x6f;&#114;&#103;&#x31;&#x2e;&#x65;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#x6f;&#109;">&#x41;&#x64;&#109;&#105;&#110;&#x40;&#x6f;&#114;&#103;&#x31;&#x2e;&#x65;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#x6f;&#109;</a>。然后将现有Client对象嵌套在标识中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&quot;clients&quot;: &#123;</span><br><span class="line">    &quot;Admin@org1.example.com&quot;: &#123;</span><br><span class="line">        &quot;client&quot;: &#123;</span><br><span class="line">            &quot;connection&quot;: &#123;</span><br><span class="line">                &quot;timeout&quot;: &#123;</span><br><span class="line">                    &quot;peer&quot;: &#123;</span><br><span class="line">                        &quot;endorser&quot;: &quot;300&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>在client对象中添加credentialStore属性，在该属性下添加path属性，对应值为指向工作空间中的临时文件的路径<br>tmp/hfc-kvs/org1。同时，仍然是在credentialStore属性下，添加cryptoStore 属性，在添加的属性下再添加一个path属性执行上述相同的文件，即tmp/hfc-kvs/org1。添加到client的内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;credentialStore&quot;: &#123;</span><br><span class="line">    &quot;path&quot;: &quot;tmp&#x2F;hfc-kvs&#x2F;org1&quot;,</span><br><span class="line">    &quot;cryptoStore&quot;: &#123;</span><br><span class="line">        &quot;path&quot;: &quot;tmp&#x2F;hfc-kvs&#x2F;org1&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>在client对象下添加属性clientPrivateKey ，该属性下包含path属性，对应值指向身份标识私钥<br>fabric-samples-&gt;first-network-&gt;crypto-config-&gt;peerOrganizations-&gt;org1.example.com-&gt;users-&gt;<a href="mailto:&#65;&#100;&#109;&#x69;&#x6e;&#64;&#111;&#x72;&#x67;&#x31;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x63;&#111;">&#65;&#100;&#109;&#x69;&#x6e;&#64;&#111;&#x72;&#x67;&#x31;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#x65;&#x2e;&#x63;&#111;</a>m-&gt;msp-&gt;keystore-&gt;priv_sk</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;clientPrivateKey&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;keystore&#x2F;c1967b006168083cade9ddf79932d924a3fa59698b6a5b0e1dc6c087bc79f9a3_sk&quot;</span><br><span class="line">            &#125;,</span><br></pre></td></tr></table></figure>
+<p>仍然是在client对象下添加属性clientSignedCert，该属性下包含path属性，对应值指向身份签名证书。<br>fabric-samples-&gt;first-network-&gt;crypto-config-&gt;peerOrganizations-&gt;org1.example.com-&gt;users-&gt;<a href="mailto:&#65;&#100;&#x6d;&#x69;&#110;&#64;&#x6f;&#x72;&#x67;&#x31;&#x2e;&#x65;&#x78;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#x6f;">&#65;&#100;&#x6d;&#x69;&#110;&#64;&#x6f;&#x72;&#x67;&#x31;&#x2e;&#x65;&#x78;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#x6f;</a>m-&gt;msp-&gt; signedcerts -&gt; <a href="mailto:&#x61;&#x64;&#x6d;&#105;&#110;&#x40;&#x6f;&#x72;&#103;&#x31;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;&#45;&#x63;&#x65;&#114;&#x74;&#x2e;&#x70;&#101;&#109;">&#x61;&#x64;&#x6d;&#105;&#110;&#x40;&#x6f;&#x72;&#103;&#x31;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#101;&#46;&#99;&#x6f;&#x6d;&#45;&#x63;&#x65;&#114;&#x74;&#x2e;&#x70;&#101;&#109;</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;clientSignedCert&quot;:&#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;signcerts&#x2F;Admin@org1.example.com-cert.pem&quot;</span><br><span class="line">                &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>client对象所需要添加的所有属性，最终如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&quot;clients&quot;: &#123;</span><br><span class="line">    &quot;Admin@org1.example.com&quot;: &#123;</span><br><span class="line">        &quot;client&quot;: &#123;</span><br><span class="line">            &quot;credentialStore&quot;: &#123;</span><br><span class="line">                 &quot;path&quot;: &quot;tmp&#x2F;hfc-kvs&#x2F;org1&quot;,</span><br><span class="line">                 &quot;cryptoStore&quot;: &#123;</span><br><span class="line">                     &quot;path&quot;: &quot;tmp&#x2F;hfc-kvs&#x2F;org1&quot;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;,</span><br><span class="line">            &quot;organization&quot;: &quot;Org1&quot;,</span><br><span class="line">            &quot;clientPrivateKey&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;keystore&#x2F;c1967b006168083cade9ddf79932d924a3fa59698b6a5b0e1dc6c087bc79f9a3_sk&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;clientSignedCert&quot;:&#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;signcerts&#x2F;Admin@org1.example.com-cert.pem&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">            &quot;connection&quot;: &#123;</span><br><span class="line">                &quot;timeout&quot;: &#123;</span><br><span class="line">                    &quot;peer&quot;: &#123;</span><br><span class="line">                        &quot;endorser&quot;: &quot;300&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p><strong>channel对象</strong></p>
+<p>在文件中添加一个channels对象，并在channel之后添加一个名称属性。默认频道名称（本教程中使用的名称）为mychannel。根据频道名称，添加两个属性，分别为created和chaincodes。<br>设置created为布尔变量true</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;created&quot;:true,</span><br></pre></td></tr></table></figure>
+<p>chaincodes作为一个数组，带有两个属性，分别为id和version，id代表的是链码id，在本次例子中为mycc，version指明链码版本，在本次例子中为1.0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;chaincodes&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;id&quot;:&quot;mycc&quot;,</span><br><span class="line">                    &quot;version&quot;:&quot;1.0&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br></pre></td></tr></table></figure>
+
+<p>最终channels对象如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&quot;channels&quot;: &#123;</span><br><span class="line">        &quot;mychannel&quot;: &#123;</span><br><span class="line">            &quot;created&quot; : true,</span><br><span class="line">            &quot;chaincodes&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;id&quot;:&quot;mycc&quot;,</span><br><span class="line">                    &quot;version&quot;:&quot;1.0&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p><strong>Organizations 对象</strong></p>
+<p>在Organizations 对象中的Org1中添加两个属性：</p>
+<ul>
+<li>adminPrivateKey ：管理员用户私钥路径</li>
+<li>signedCert ：管理员用户签名证书</li>
+</ul>
+<p>在本次示例中使用的身份是管理员用户，所以对应路径与上述client对象相同。如果使用不同的身份，对应管理员用户密钥和证书可以在以下路径中查找：<br>fabric-samples-&gt;first-network-&gt;crypto-config-&gt;peerOrganizations-&gt;org1.example.com-&gt;users-&gt;<a href="mailto:&#65;&#x64;&#109;&#x69;&#110;&#64;&#111;&#x72;&#x67;&#49;&#x2e;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#99;&#111;">&#65;&#x64;&#109;&#x69;&#110;&#64;&#111;&#x72;&#x67;&#49;&#x2e;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#46;&#99;&#111;</a>m-&gt;msp</p>
+<p>下面内容应该添加到org1中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&quot;adminPrivateKey&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;keystore&#x2F;c1967b006168083cade9ddf79932d924a3fa59698b6a5b0e1dc6c087bc79f9a3_sk&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;signedCert&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;signcerts&#x2F;Admin@org1.example.com-cert.pem&quot;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+
+<p>Organizations对象最后应该包括以下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&quot;organizations&quot;:&#123;</span><br><span class="line">        &quot;Org1&quot;: &#123;</span><br><span class="line">            &quot;mspid&quot;: &quot;Org1MSP&quot;,</span><br><span class="line">            &quot;peers&quot;: [</span><br><span class="line">                &quot;peer0.org1.example.com&quot;,</span><br><span class="line">                &quot;peer1.org1.example.com&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;certificateAuthorities&quot;: [</span><br><span class="line">                &quot;ca.org1.example.com&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;adminPrivateKey&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;keystore&#x2F;c1967b006168083cade9ddf79932d924a3fa59698b6a5b0e1dc6c087bc79f9a3_sk&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;signedCert&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;signcerts&#x2F;Admin@org1.example.com-cert.pem&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p><strong>网络配置文件</strong><br>最终网络配置文件在补充完整之后，需要仔细确认确保对应密钥和证书的路径是否正确，整个完整文件如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;caliper&quot;: &#123;</span><br><span class="line">        &quot;blockchain&quot;: &quot;fabric&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;clients&quot;: &#123;</span><br><span class="line">    &quot;Admin@org1.example.com&quot;: &#123;</span><br><span class="line">        &quot;client&quot;: &#123;</span><br><span class="line">            &quot;credentialStore&quot;: &#123;</span><br><span class="line">                 &quot;path&quot;: &quot;tmp&#x2F;hfc-kvs&#x2F;org1&quot;,</span><br><span class="line">                 &quot;cryptoStore&quot;: &#123;</span><br><span class="line">                     &quot;path&quot;: &quot;tmp&#x2F;hfc-kvs&#x2F;org1&quot;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;,</span><br><span class="line">            &quot;organization&quot;: &quot;Org1&quot;,</span><br><span class="line">            &quot;clientPrivateKey&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;keystore&#x2F;c1967b006168083cade9ddf79932d924a3fa59698b6a5b0e1dc6c087bc79f9a3_sk&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;clientSignedCert&quot;:&#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;signcerts&#x2F;Admin@org1.example.com-cert.pem&quot;</span><br><span class="line">                &#125;,</span><br><span class="line">            &quot;connection&quot;: &#123;</span><br><span class="line">                &quot;timeout&quot;: &#123;</span><br><span class="line">                    &quot;peer&quot;: &#123;</span><br><span class="line">                        &quot;endorser&quot;: &quot;300&quot;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;channels&quot;: &#123;</span><br><span class="line">        &quot;mychannel&quot;: &#123;</span><br><span class="line">            &quot;created&quot; : true,</span><br><span class="line">            &quot;chaincodes&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;id&quot;:&quot;mycc&quot;,</span><br><span class="line">                    &quot;version&quot;:&quot;1.0&quot;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;name&quot;: &quot;test-network-org1&quot;,</span><br><span class="line">    &quot;organizations&quot;:&#123;</span><br><span class="line">        &quot;Org1&quot;: &#123;</span><br><span class="line">            &quot;mspid&quot;: &quot;Org1MSP&quot;,</span><br><span class="line">            &quot;peers&quot;: [</span><br><span class="line">                &quot;peer0.org1.example.com&quot;,</span><br><span class="line">                &quot;peer1.org1.example.com&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;certificateAuthorities&quot;: [</span><br><span class="line">                &quot;ca.org1.example.com&quot;</span><br><span class="line">            ],</span><br><span class="line">            &quot;adminPrivateKey&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;keystore&#x2F;c1967b006168083cade9ddf79932d924a3fa59698b6a5b0e1dc6c087bc79f9a3_sk&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;signedCert&quot;: &#123;</span><br><span class="line">                &quot;path&quot;: &quot;..&#x2F;fabric-samples&#x2F;first-network&#x2F;crypto-config&#x2F;peerOrganizations&#x2F;org1.example.com&#x2F;users&#x2F;Admin@org1.example.com&#x2F;msp&#x2F;signcerts&#x2F;Admin@org1.example.com-cert.pem&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;peers&quot;: &#123;</span><br><span class="line">        &quot;peer0.org1.example.com&quot;: &#123;</span><br><span class="line">            &quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;localhost:7051&quot;,</span><br><span class="line">            &quot;tlsCACerts&quot;: &#123;</span><br><span class="line">                &quot;pem&quot;: &quot;-----BEGIN CERTIFICATE-----\nMIICVzCCAf2gAwIBAgIQJ4YZaoAxgNFIlMKJnCK8YzAKBggqhkjOPQQDAjB2MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz\nY2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDA5MjQxMzE0MDBaFw0zMDA5MjIxMzE0\nMDBaMHYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH\nEw1TYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMR8wHQYD\nVQQDExZ0bHNjYS5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAEMJdNsNECYe4vnAX1HLFVOlcigcDvW00+pmjxdfpfZZ530ESzzYCOlruO\n9iV&#x2F;BYcrWMC8ZFv1HYPWH4Z7bkiJ16NtMGswDgYDVR0PAQH&#x2F;BAQDAgGmMB0GA1Ud\nJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH&#x2F;MCkGA1Ud\nDgQiBCAbL0P+tBNB1AA0&#x2F;7T7SDBFjlrg3n+7Boc+y0kk5&#x2F;EJRTAKBggqhkjOPQQD\nAgNIADBFAiEAz+K66R5mn31xPcjcWSDmnhA8DmC&#x2F;&#x2F;K7j9hy3tpnNar4CIFqvxAqx\nvEzHuvlsU99KGUhPgpfWjgPDS4NppK&#x2F;zxZse\n-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;grpcOptions&quot;: &#123;</span><br><span class="line">                &quot;ssl-target-name-override&quot;: &quot;peer0.org1.example.com&quot;,</span><br><span class="line">                &quot;hostnameOverride&quot;: &quot;peer0.org1.example.com&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;peer1.org1.example.com&quot;: &#123;</span><br><span class="line">            &quot;url&quot;: &quot;grpcs:&#x2F;&#x2F;localhost:8051&quot;,</span><br><span class="line">            &quot;tlsCACerts&quot;: &#123;</span><br><span class="line">                &quot;pem&quot;: &quot;-----BEGIN CERTIFICATE-----\nMIICVzCCAf2gAwIBAgIQJ4YZaoAxgNFIlMKJnCK8YzAKBggqhkjOPQQDAjB2MQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEfMB0GA1UEAxMWdGxz\nY2Eub3JnMS5leGFtcGxlLmNvbTAeFw0yMDA5MjQxMzE0MDBaFw0zMDA5MjIxMzE0\nMDBaMHYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQH\nEw1TYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMR8wHQYD\nVQQDExZ0bHNjYS5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0D\nAQcDQgAEMJdNsNECYe4vnAX1HLFVOlcigcDvW00+pmjxdfpfZZ530ESzzYCOlruO\n9iV&#x2F;BYcrWMC8ZFv1HYPWH4Z7bkiJ16NtMGswDgYDVR0PAQH&#x2F;BAQDAgGmMB0GA1Ud\nJQQWMBQGCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH&#x2F;MCkGA1Ud\nDgQiBCAbL0P+tBNB1AA0&#x2F;7T7SDBFjlrg3n+7Boc+y0kk5&#x2F;EJRTAKBggqhkjOPQQD\nAgNIADBFAiEAz+K66R5mn31xPcjcWSDmnhA8DmC&#x2F;&#x2F;K7j9hy3tpnNar4CIFqvxAqx\nvEzHuvlsU99KGUhPgpfWjgPDS4NppK&#x2F;zxZse\n-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;grpcOptions&quot;: &#123;</span><br><span class="line">                &quot;ssl-target-name-override&quot;: &quot;peer1.org1.example.com&quot;,</span><br><span class="line">                &quot;hostnameOverride&quot;: &quot;peer1.org1.example.com&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;certificateAuthorities&quot;: &#123;</span><br><span class="line">        &quot;ca.org1.example.com&quot;: &#123;</span><br><span class="line">            &quot;url&quot;: &quot;https:&#x2F;&#x2F;localhost:7054&quot;,</span><br><span class="line">            &quot;caName&quot;: &quot;ca-org1&quot;,</span><br><span class="line">            &quot;tlsCACerts&quot;: &#123;</span><br><span class="line">                &quot;pem&quot;: &quot;-----BEGIN CERTIFICATE-----\nMIICUDCCAfegAwIBAgIQdgnCSGhuhWkNbc6249Ml3zAKBggqhkjOPQQDAjBzMQsw\nCQYDVQQGEwJVUzETMBEGA1UECBMKQ2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZy\nYW5jaXNjbzEZMBcGA1UEChMQb3JnMS5leGFtcGxlLmNvbTEcMBoGA1UEAxMTY2Eu\nb3JnMS5leGFtcGxlLmNvbTAeFw0yMDA5MjQxMzE0MDBaFw0zMDA5MjIxMzE0MDBa\nMHMxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBvcmcxLmV4YW1wbGUuY29tMRwwGgYDVQQD\nExNjYS5vcmcxLmV4YW1wbGUuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE\na0TCdMmVSOzjTWNimrNe9o22cy5obbyJortbkdZPp663SEX7ZIbb7xD1PrSVOIlV\nlHrxc&#x2F;NJ+rNzCDE37mWT8KNtMGswDgYDVR0PAQH&#x2F;BAQDAgGmMB0GA1UdJQQWMBQG\nCCsGAQUFBwMCBggrBgEFBQcDATAPBgNVHRMBAf8EBTADAQH&#x2F;MCkGA1UdDgQiBCD6\n2&#x2F;MOGvcQQO6GCyg7fe4x1I3Oqx3TsobGO4PfqjWHwzAKBggqhkjOPQQDAgNHADBE\nAiAysfOd2AL5pkuJutsG02DHNxCjotuBvj1JyH7shfbMUAIgF++Ya9o5uu1QuzD+\n4llvZ+y1mznyLgXjD4H+bwcRaiw&#x3D;\n-----END CERTIFICATE-----\n&quot;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;httpOptions&quot;: &#123;</span><br><span class="line">                &quot;verify&quot;: false</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四-测试回调文件"><a href="#四-测试回调文件" class="headerlink" title="四. 测试回调文件"></a>四. 测试回调文件</h2><p>测试回调文件与部署的智能合约在基准测试期间交互，每个测试回调函数必须包含3个函数：</p>
+<ul>
+<li>init - 用于初始化账本以运行会话</li>
+<li>run - 在基准测试监控阶段用于与智能合约进行交互</li>
+<li>end - 在run阶段完成之后结束并清理。</li>
+</ul>
+<h3 id="创建文件-1"><a href="#创建文件-1" class="headerlink" title="创建文件"></a>创建文件</h3><p>在<strong>benchmarks</strong>文件夹中创建<strong>callbacks</strong>子文件夹，在该文件夹中创建文件<strong>query.js</strong>，后面将对该文件进行补充。</p>
+<p>由于本次部署链码为 chaincode_example02 ,可在fabric-samples-&gt;chaincode-&gt;chaincode_example02中查找</p>
+<h3 id="文件设置"><a href="#文件设置" class="headerlink" title="文件设置"></a>文件设置</h3><p>Caliper使用以下两个方法与部署的智能合约进行交互：</p>
+<p><strong>invokeSmartContract (ctx, contractId, contractVersion, args)</strong><br><strong>querySmartContract (ctx, contractId, contractVersion, args)</strong></p>
+<p>其中：</p>
+<ul>
+<li>ctx 指用户上下文</li>
+<li>contractId 为智能合约名称，本示例中为mycc</li>
+<li>contractVersion 为智能合约版本，本示例中为1.0</li>
+<li>args 为一个对象，主要包括<ul>
+<li>chaincodeFunction 调用的智能合约函数名称</li>
+<li>invokerIdentity 调用函数时的用户身份，本示例中为  <a href="mailto:&#x41;&#100;&#x6d;&#105;&#x6e;&#x40;&#111;&#114;&#x67;&#49;&#x2e;&#x65;&#120;&#97;&#x6d;&#112;&#x6c;&#x65;&#46;&#99;&#x6f;&#109;">&#x41;&#100;&#x6d;&#105;&#x6e;&#x40;&#111;&#114;&#x67;&#49;&#x2e;&#x65;&#120;&#97;&#x6d;&#112;&#x6c;&#x65;&#46;&#99;&#x6f;&#109;</a></li>
+<li>chaincodeArguments 函数调用时传递给函数的参数列表</li>
+</ul>
+</li>
+</ul>
+<p>下面是文件基本模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">module.exports.info  &#x3D; &#39;Template callback&#39;;</span><br><span class="line"></span><br><span class="line">const contractID &#x3D; &#39;mycc&#39;;</span><br><span class="line">const version &#x3D; &#39;1.0&#39;;</span><br><span class="line"></span><br><span class="line">let bc, ctx, clientArgs, clientIdx;</span><br><span class="line"></span><br><span class="line">module.exports.init &#x3D; async function(blockchain, context, args) &#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports.run &#x3D; function() &#123;</span><br><span class="line">    return Promise.resolve();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports.end &#x3D; async function() &#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Init-函数"><a href="#Init-函数" class="headerlink" title="Init 函数"></a>Init 函数</h3><p>初始化传递run函数中需要使用到的内容，参数。</p>
+<p>本示例中，通过等待invokeSmartContract调用完成。通过区块链对象将上下文，合约名称，合约版本以及包含以下内容的对象：chaincodeFunction设置为query; invokeIdentity设为<a href="mailto:&#x61;&#x64;&#109;&#105;&#110;&#x40;&#111;&#114;&#103;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;">&#x61;&#x64;&#109;&#105;&#110;&#x40;&#111;&#114;&#103;&#46;&#x65;&#120;&#x61;&#x6d;&#112;&#108;&#x65;&#x2e;&#99;&#111;&#x6d;</a>; chaincodeArguments设置为包含的数组a，需要将参数传递给query。</p>
+<p>该函数应如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">module.exports.init &#x3D; async function(blockchain, context, args) &#123;</span><br><span class="line">    bc &#x3D; blockchain;</span><br><span class="line">    ctx &#x3D; context;</span><br><span class="line">    clientArgs &#x3D; args;</span><br><span class="line">    clientIdx &#x3D; context.clientIdx.toString();</span><br><span class="line">        try &#123;</span><br><span class="line">            const myArgs &#x3D; &#123;</span><br><span class="line">                chaincodeFunction: &#39;query&#39;,</span><br><span class="line">                invokerIdentity: &#39;Admin@org1.example.com&#39;,</span><br><span class="line">                chaincodeArguments: [&#39;a&#39;]</span><br><span class="line">            &#125;;</span><br><span class="line">            return bc.bcObj.querySmartContract(ctx, contractID, version, myArgs);</span><br><span class="line">        &#125; catch (error) &#123;</span><br><span class="line">            console.log(&#96;Smart Contract threw with error: $&#123;error&#125;&#96; );</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Run-函数"><a href="#Run-函数" class="headerlink" title="Run 函数"></a>Run 函数</h3><p>本次只测试query函数，所以函数内容与Init函数相同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports.run &#x3D; async function() &#123;</span><br><span class="line">    const myArgs &#x3D; &#123;</span><br><span class="line">        chaincodeFunction: &#39;query&#39;,</span><br><span class="line">        invokerIdentity: &#39;Admin@org1.example.com&#39;&#39;,</span><br><span class="line">        chaincodeArguments: [&#39;a&#39;]</span><br><span class="line">    &#125;;</span><br><span class="line">    return bc.bcObj.invokeSmartContract(ctx, contractID, version, myArgs);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="End-函数"><a href="#End-函数" class="headerlink" title="End 函数"></a>End 函数</h3><p>此功能用于在测试后清除，因为它会删除该init功能中创建的数据。<br>如果测试的智能合约没有删除功能，则不使用此功能，此功能将保持为空。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">module.exports.end &#x3D; async function() &#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最终文件"><a href="#最终文件" class="headerlink" title="最终文件"></a>最终文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#39;use strict&#39;;</span><br><span class="line"></span><br><span class="line">module.exports.info  &#x3D; &#39;Template callback&#39;;</span><br><span class="line"></span><br><span class="line">const contractID &#x3D; &#39;mycc&#39;;</span><br><span class="line">const version &#x3D; &#39;1.0&#39;;</span><br><span class="line"></span><br><span class="line">let bc, ctx, clientArgs, clientIdx;</span><br><span class="line"></span><br><span class="line">module.exports.init &#x3D; async function(blockchain, context, args) &#123;</span><br><span class="line">    bc &#x3D; blockchain;</span><br><span class="line">    ctx &#x3D; context;</span><br><span class="line">    clientArgs &#x3D; args;</span><br><span class="line">    clientIdx &#x3D; context.clientIdx.toString();</span><br><span class="line">        try &#123;</span><br><span class="line">            const myArgs &#x3D; &#123;</span><br><span class="line">                chaincodeFunction: &#39;query&#39;,</span><br><span class="line">                invokerIdentity: &#39;Admin@org1.example.com&#39;,</span><br><span class="line">                chaincodeArguments: [&#39;a&#39;]</span><br><span class="line">            &#125;;</span><br><span class="line">            return bc.bcObj.querySmartContract(ctx, contractID, version, myArgs);</span><br><span class="line">        &#125; catch (error) &#123;</span><br><span class="line">            console.log(&#96;Smart Contract threw with error: $&#123;error&#125;&#96; );</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports.run &#x3D; async function() &#123;</span><br><span class="line">    const myArgs &#x3D; &#123;</span><br><span class="line">        chaincodeFunction: &#39;query&#39;,</span><br><span class="line">        invokerIdentity: &#39;Admin@org1.example.com&#39;,</span><br><span class="line">        chaincodeArguments: [&#39;a&#39;]</span><br><span class="line">    &#125;;</span><br><span class="line">    return bc.bcObj.invokeSmartContract(ctx, contractID, version, myArgs);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">module.exports.end &#x3D; async function() &#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五-基准配置文件"><a href="#五-基准配置文件" class="headerlink" title="五. 基准配置文件"></a>五. 基准配置文件</h2><p>基准测试配置文件定义基准测试轮数并引用已定义的回调。它将指定生成负载时要使用的测试<strong>客户端的数量</strong>，测试的轮数，每一轮的持续时间，每一轮中的负载生成方法以及每一轮中要使用的回调。</p>
+<p>该文件是YAML文件。YAML文件区分大小写，所有标签均小写。</p>
+<p>该文件将具有三个需要填充的根块。如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test:</span><br><span class="line"></span><br><span class="line">monitor:</span><br><span class="line"></span><br><span class="line">observer:</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建文件-2"><a href="#创建文件-2" class="headerlink" title="创建文件"></a>创建文件</h3><p>在<strong>benchmarks</strong>文件夹下创建一个<strong>myAssetBenchmark.yaml</strong>文件，后续进行补充。</p>
+<h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><p>首先添加一个名为test的根块。在此块中添加：</p>
+<ul>
+<li>name：对应值为my-asset-benchmark</li>
+<li>description ：带有简短描述作为值的键，在此示例中为test benchmark</li>
+<li>workers具有以下键和值：<ul>
+<li>type: local</li>
+<li>number: 2</li>
+</ul>
+</li>
+</ul>
+<p>到目前为止看起来应该像这样：</p>
+<p>还添加一个名为rounds的块。该块包含每个测试回合，每个回合均以唯一的回合标签为首。回合可用于基准化不同的智能合约方法或以不同的方式对同一方法进行基准测试。</p>
+<p>该round块包含以下内容：</p>
+<ul>
+<li>label -用于回合的唯一标头标签。</li>
+<li>description -对正在运行的回合的描述。</li>
+<li>chaincodeId -正在测试的链码ID。</li>
+<li>txDuration -通过持续时间长度。</li>
+<li>rateControl -带有选项和类型的速率控制方法。</li>
+<li>callback -被测试的回调文件的路径，在这种情况下，这是queryAssetBenchmark.js文件。</li>
+<li>arguments -调用时将传递给回调文件的可选参数数组。</li>
+</ul>
+<p>示例如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rounds:</span><br><span class="line">     - label: open</span><br><span class="line">       description: Query benchmark</span><br><span class="line">       chaincodeId: mycc</span><br><span class="line">       txDuration: 30</span><br><span class="line">       rateControl: </span><br><span class="line">         type: fixed-backlog</span><br><span class="line">         opts:</span><br><span class="line">           unfinished_per_client: 2</span><br><span class="line">       callback: benchmarks&#x2F;callbacks&#x2F;query.js</span><br></pre></td></tr></table></figure>
+
+<h3 id="monitor"><a href="#monitor" class="headerlink" title="monitor"></a>monitor</h3><p>添加名为monitor的根块，其中单个键type的值为none， 因为在本次测试中不进行任何资源监控</p>
+<p>示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">monitor:</span><br><span class="line">  type:</span><br><span class="line">  - none</span><br></pre></td></tr></table></figure>
+
+<h3 id="observer"><a href="#observer" class="headerlink" title="observer"></a>observer</h3><p>添加名为observer的根块，其中包含两个键<strong>type</strong> 和 <strong>interval</strong>，对应的值设置为<strong>local</strong>和<strong>5</strong>，代表着使用本地统计信息每五秒钟观察一次测试进度。</p>
+<p>示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">observer:</span><br><span class="line">  type: local</span><br><span class="line">  interval: 5</span><br></pre></td></tr></table></figure>
+
+<h3 id="最终文件-1"><a href="#最终文件-1" class="headerlink" title="最终文件"></a>最终文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">test:</span><br><span class="line">    name: simple</span><br><span class="line">    description: This is an example benchmark for caliper, to test the backend DLT&#39;s performance with simple account opening &amp; querying transactions</span><br><span class="line">    workers:</span><br><span class="line">      type: local</span><br><span class="line">      number: 2</span><br><span class="line">    rounds:</span><br><span class="line">      - label: open</span><br><span class="line">        description: Query benchmark</span><br><span class="line">        chaincodeId: mycc</span><br><span class="line">        txDuration: 30</span><br><span class="line">        rateControl: </span><br><span class="line">          type: fixed-backlog</span><br><span class="line">          opts:</span><br><span class="line">            unfinished_per_client: 2</span><br><span class="line">        callback: benchmarks&#x2F;callbacks&#x2F;query.js</span><br><span class="line">  </span><br><span class="line">monitor:</span><br><span class="line">  type:</span><br><span class="line">  - none</span><br><span class="line">  </span><br><span class="line">observer:</span><br><span class="line">  type: local</span><br><span class="line">  interval: 5</span><br></pre></td></tr></table></figure>
+
+<h2 id="六-运行并获取结果"><a href="#六-运行并获取结果" class="headerlink" title="六. 运行并获取结果"></a>六. 运行并获取结果</h2><p>使用上述步骤准备的材料使用Caliper Cli运行性能测试，设置网络配置文件，测试配置文件以及工作空间的路径。如下所示</p>
+<ul>
+<li>caliper-networkconfig： <strong>networks/network_config.json</strong></li>
+<li>caliper-benchconfig： <strong>benchmarks/myAssetBenchmark.yaml</strong></li>
+<li>caliper-workspace： <strong>./</strong></li>
+</ul>
+<p>因为已经安装且实例化链码，因此Caliper唯一需要的操作就是在测试阶段使用启用了发现功能的fabric gateway，因此需要在命令中指明以下标志：</p>
+<ul>
+<li>caliper-flow-only-test</li>
+<li>caliper-fabric-gateway-usegateway</li>
+<li>caliper-fabric-gateway-discovery</li>
+</ul>
+<h4 id="运行命令"><a href="#运行命令" class="headerlink" title="运行命令"></a>运行命令</h4><p>确认处于caliper-workspace目录</p>
+<p>在终端运行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">caliper launch master --caliper-benchconfig benchmarks&#x2F;myAssetBenchmark.yaml --caliper-networkconfig networks&#x2F;network_config.json --caliper-workspace .&#x2F; --caliper-flow-only-test --caliper-fabric-gateway-usegateway --caliper-fabric-gateway-discovery</span><br></pre></td></tr></table></figure>
+
+<p>问题：</p>
+<p>开始命令运行后出现gRPC未安装错误：<br>进入 /usr/local/lib/node_modules/fabric-network<br>执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm rebuild</span><br></pre></td></tr></table></figure>
+
+<p>回到caliper-workspace目录，再次执行命令,结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">+------+------+------+-----------------+-----------------+-----------------+-----------------+------------------+</span><br><span class="line">| Name | Succ | Fail | Send Rate (TPS) | Max Latency (s) | Min Latency (s) | Avg Latency (s) | Throughput (TPS) |</span><br><span class="line">|------|------|------|-----------------|-----------------|-----------------|-----------------|------------------|</span><br><span class="line">| open | 42   | 0    | 1.5             | 2.62            | 0.59            | 2.28            | 1.4              |</span><br><span class="line">+------+------+------+-----------------+-----------------+-----------------+-----------------+------------------+</span><br><span class="line"></span><br><span class="line">2020.09.26-14:10:07.479 info  [caliper] [round-orchestrator]    Finished round 1 (open) in 30.324 seconds</span><br><span class="line">2020.09.26-14:10:07.479 info  [caliper] [report-builder]        ### All test results ###</span><br><span class="line">2020.09.26-14:10:07.481 info  [caliper] [report-builder] </span><br><span class="line">+------+------+------+-----------------+-----------------+-----------------+-----------------+------------------+</span><br><span class="line">| Name | Succ | Fail | Send Rate (TPS) | Max Latency (s) | Min Latency (s) | Avg Latency (s) | Throughput (TPS) |</span><br><span class="line">|------|------|------|-----------------|-----------------|-----------------|-----------------|------------------|</span><br><span class="line">| open | 42   | 0    | 1.5             | 2.62            | 0.59            | 2.28            | 1.4              |</span><br><span class="line">+------+------+------+-----------------+-----------------+-----------------+-----------------+------------------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2020.09.26-14:10:07.498 info  [caliper] [report-builder]        Generated report with path &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F;caliper-workspace&#x2F;report.html</span><br><span class="line">2020.09.26-14:10:07.498 info  [caliper] [monitor.js]    Stopping all monitors</span><br><span class="line">2020.09.26-14:10:07.499 info  [caliper] [worker-orchestrator]   Sending exit message to connected workers</span><br><span class="line">2020.09.26-14:10:07.500 info  [caliper] [message-handler]       Handling &quot;exit&quot; message</span><br><span class="line">2020.09.26-14:10:07.500 info  [caliper] [message-handler]       Handling &quot;exit&quot; message</span><br><span class="line">2020.09.26-14:10:07.500 info  [caliper] [message-handler]       Handled &quot;exit&quot; message for worker 1, exiting process</span><br><span class="line">2020.09.26-14:10:07.500 info  [caliper] [message-handler]       Handled &quot;exit&quot; message for worker 0, exiting process</span><br><span class="line">2020.09.26-14:10:07.501 info  [caliper] [round-orchestrator]    Benchmark finished in 49.014 seconds. Total rounds: 1. Successful rounds: 1. Failed rounds: 0.</span><br><span class="line">2020.09.26-14:10:07.501 info  [caliper] [caliper-engine]        Skipping end command due to benchmark flow conditioning</span><br><span class="line">2020.09.26-14:10:07.501 info  [caliper] [cli-launch-master]     Benchmark successfully finished</span><br></pre></td></tr></table></figure>
+
+<p>在当前目录中可以看到生成一个新的report.html文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost caliper-workspace]# ll</span><br><span class="line">total 112</span><br><span class="line">drwxr-xr-x. 3 root root     50 Sep 26 14:08 benchmarks</span><br><span class="line">-rw-r--r--. 1 root root 103725 Sep 26 14:10 caliper.log</span><br><span class="line">drwxr-xr-x. 2 root root     32 Sep 26 14:07 networks</span><br><span class="line">-rw-r--r--. 1 root root   7290 Sep 26 14:10 report.html</span><br><span class="line">drwxr-xr-x. 3 root root     20 Sep 26 14:00 tmp</span><br></pre></td></tr></table></figure>
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年09月26日 15:17</p>
+        <p>原始链接： <a class="post-url" href="/blog/2020/09/25/caliper/" title="caliper">https://silence-linhl.github.io/blog/2020/09/25/caliper/</a></p>
+        <footer>
+            <a href="https://silence-linhl.github.io/blog">
+                <img src="/blog/images/logo.png" alt="Harlan">
+                Harlan
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/blog/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/blog/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/blog/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/blog/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/blog/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://silence-linhl.github.io/blog/2020/09/25/caliper/&title=《caliper》 — Harlan's Blog&pic=https://silence-linhl.github.io/blogimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://silence-linhl.github.io/blog/2020/09/25/caliper/&title=《caliper》 — Harlan's Blog&source=个人记录博客" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://silence-linhl.github.io/blog/2020/09/25/caliper/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《caliper》 — Harlan's Blog&url=https://silence-linhl.github.io/blog/2020/09/25/caliper/&via=https://silence-linhl.github.io/blog" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://silence-linhl.github.io/blog/2020/09/25/caliper/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://silence-linhl.github.io/blog/2020/09/25/caliper/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Caliper%E5%AE%89%E8%A3%85%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="post-toc-text">Caliper安装与使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85"><span class="post-toc-text">环境安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%80-%E5%AE%89%E8%A3%85%E7%BB%91%E5%AE%9ACaliper"><span class="post-toc-text">一. 安装绑定Caliper</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%8C-%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="post-toc-text">二. 创建文件夹</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%B8%89-%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="post-toc-text">三. 网络配置文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="post-toc-text">创建文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%9F%A5%E6%89%BE%E5%B9%B6%E5%A4%8D%E5%88%B6%E6%A8%A1%E6%9D%BF"><span class="post-toc-text">查找并复制模板</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%9B%9B-%E6%B5%8B%E8%AF%95%E5%9B%9E%E8%B0%83%E6%96%87%E4%BB%B6"><span class="post-toc-text">四. 测试回调文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6-1"><span class="post-toc-text">创建文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE"><span class="post-toc-text">文件设置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Init-%E5%87%BD%E6%95%B0"><span class="post-toc-text">Init 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Run-%E5%87%BD%E6%95%B0"><span class="post-toc-text">Run 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#End-%E5%87%BD%E6%95%B0"><span class="post-toc-text">End 函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%9C%80%E7%BB%88%E6%96%87%E4%BB%B6"><span class="post-toc-text">最终文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E4%BA%94-%E5%9F%BA%E5%87%86%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="post-toc-text">五. 基准配置文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6-2"><span class="post-toc-text">创建文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#test"><span class="post-toc-text">test</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#monitor"><span class="post-toc-text">monitor</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#observer"><span class="post-toc-text">observer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%9C%80%E7%BB%88%E6%96%87%E4%BB%B6-1"><span class="post-toc-text">最终文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#%E5%85%AD-%E8%BF%90%E8%A1%8C%E5%B9%B6%E8%8E%B7%E5%8F%96%E7%BB%93%E6%9E%9C"><span class="post-toc-text">六. 运行并获取结果</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="post-toc-text">运行命令</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2020/09/21/helloblog/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">博客迁移</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+        <section id="comments">
+            <div id="disqus_thread">
+                <script type="text/javascript">
+                    var disqus_shortname = 'harlanblog';
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </section>
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2021 Harlan<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://silence-linhl.github.io/blog",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a><a class="category-link" href="/blog/categories/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/">密码算法</a><a class="category-link" href="/blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="category-link" href="/blog/categories/%E8%AE%BA%E6%96%87/">论文</a><a class="category-link" href="/blog/categories/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/">超级账本</a><a class="category-link" href="/blog/categories/%E9%97%AE%E9%A2%98/">问题</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/blog/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/blog/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+
+<script src="/blog/js/search.js"></script>
+
+
+<script src="/blog/js/main.js"></script>
+
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  
+<script src="/blog/js/particles.js"></script>
+
+
+
+
+
+
+
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  
+<script src="/blog/js/animate.js"></script>
+
+
+
+  
+<script src="/blog/js/pop-img.js"></script>
+
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

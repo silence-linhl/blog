@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <title>fabric1.4 新特性 | Harlan&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain" />
   
   <meta name="description" content="fabric v1.4版本是Fabric的第一个长期支持版本（LTS）  新特性1. 新增Raft排序服务Raft是一个基于etcd协议实现的崩溃容错的排序服务。Raft 遵循“leader 和 followers”模型，当一个领导者被选择的时候，它的决定会复制给所有的跟随者。Raft排序服务比起基于Kafka的排序服务更加容易启动和管理，同时，Raft的设计模式允许世界上的所有组织为去中心化">
-<meta name="keywords" content="Hyperledger,超级账本,Fabric">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fabric1.4 新特性">
 <meta property="og:url" content="https://silence-linhl.github.io/blog/2019/11/03/fabric-newfeature/index.html">
 <meta property="og:site_name" content="Harlan&#39;s Blog">
 <meta property="og:description" content="fabric v1.4版本是Fabric的第一个长期支持版本（LTS）  新特性1. 新增Raft排序服务Raft是一个基于etcd协议实现的崩溃容错的排序服务。Raft 遵循“leader 和 followers”模型，当一个领导者被选择的时候，它的决定会复制给所有的跟随者。Raft排序服务比起基于Kafka的排序服务更加容易启动和管理，同时，Raft的设计模式允许世界上的所有组织为去中心化">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
 <meta property="og:image" content="https://silence-linhl.github.io/blog/images/fabric1.4/SideDB-org1.png">
-<meta property="og:updated_time" content="2019-11-03T10:28:55.086Z">
+<meta property="article:published_time" content="2019-11-03T10:21:35.000Z">
+<meta property="article:modified_time" content="2019-11-03T10:28:55.086Z">
+<meta property="article:author" content="Harlan">
+<meta property="article:tag" content="Hyperledger">
+<meta property="article:tag" content="超级账本">
+<meta property="article:tag" content="Fabric">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fabric1.4 新特性">
-<meta name="twitter:description" content="fabric v1.4版本是Fabric的第一个长期支持版本（LTS）  新特性1. 新增Raft排序服务Raft是一个基于etcd协议实现的崩溃容错的排序服务。Raft 遵循“leader 和 followers”模型，当一个领导者被选择的时候，它的决定会复制给所有的跟随者。Raft排序服务比起基于Kafka的排序服务更加容易启动和管理，同时，Raft的设计模式允许世界上的所有组织为去中心化">
 <meta name="twitter:image" content="https://silence-linhl.github.io/blog/images/fabric1.4/SideDB-org1.png">
   
   
     <link rel="icon" href="favicon.ico">
   
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/blog/css/style.css">
-  <script src="/blog/js/pace.min.js"></script>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+<script src="/blog/js/pace.min.js"></script>
+
   
 
   
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
 <body>
   <div id="container">
       <header id="header">
@@ -146,39 +152,41 @@
 <hr>
 <p>fabric v1.4版本是Fabric的第一个长期支持版本（LTS）</p>
 <hr>
-<h3 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h3><h4 id="1-新增Raft排序服务"><a href="#1-新增Raft排序服务" class="headerlink" title="1. 新增Raft排序服务"></a>1. 新增Raft排序服务</h4><p><code>Raft</code>是一个基于<a href="https://etcd.io/" target="_blank" rel="noopener">etcd</a>协议实现的崩溃容错的排序服务。<code>Raft</code> 遵循“leader 和 followers”模型，当一个领导者被选择的时候，它的决定会复制给所有的跟随者。<code>Raft</code>排序服务比起基于<code>Kafka</code>的排序服务更加容易启动和管理，同时，<code>Raft</code>的设计模式允许世界上的所有组织为去中心化的排序服务贡献自己的节点。</p>
+<h3 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h3><h4 id="1-新增Raft排序服务"><a href="#1-新增Raft排序服务" class="headerlink" title="1. 新增Raft排序服务"></a>1. 新增Raft排序服务</h4><p><code>Raft</code>是一个基于<a target="_blank" rel="noopener" href="https://etcd.io/">etcd</a>协议实现的崩溃容错的排序服务。<code>Raft</code> 遵循“leader 和 followers”模型，当一个领导者被选择的时候，它的决定会复制给所有的跟随者。<code>Raft</code>排序服务比起基于<code>Kafka</code>的排序服务更加容易启动和管理，同时，<code>Raft</code>的设计模式允许世界上的所有组织为去中心化的排序服务贡献自己的节点。</p>
 <h4 id="2-可维护性和运营的改进"><a href="#2-可维护性和运营的改进" class="headerlink" title="2. 可维护性和运营的改进"></a>2. 可维护性和运营的改进</h4><p>目前越来越多的fabric联盟网络被用在了生产环境中，因此fabric的可维护性和可操作性变得更加重要，因此在1.4版本中对日志记录、运行状态检查和操作指标方面都做了对应改进。所以，1.4版本也是推荐在生产环境中使用的fabric发行版本。</p>
 <p>操作服务：新的RESTful操作服务为操作者提供了三个服务，用于监控和管理peer节点和orderer节点操作：</p>
 <h5 id="2-1-日志相关-logspec"><a href="#2-1-日志相关-logspec" class="headerlink" title="2.1 日志相关/logspec"></a>2.1 日志相关<code>/logspec</code></h5><p><code>/logspec</code>端点允许操作者动态获取或者设置peer和orderer节点的日志等级，该端点就是传统的<code>REST</code>资源支持<code>GET</code>和<code>PUT</code>;</p>
-<p>当操作服务接收到<code>Get /logspec</code>请求的时候，服务会响应一个包含当前日志说明的<code>JSON</code>内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;spec&quot;:&quot;info&quot;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>当操作服务接收到<code>Put /logspec</code>请求的时候，服务将会读取请求主体作为<code>JSON</code>内容。该内容必须包含一个名为<code>spec</code>的单一属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;spec&quot;:&quot;chaincode=debug:info&quot;&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果<code>spec</code>被成功激活，服务将会响应 204 “No Content”。如果出错，服务响应 400 “Bad Request”和错误内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;error&quot;:&quot;error message&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当操作服务接收到<code>Get /logspec</code>请求的时候，服务会响应一个包含当前日志说明的<code>JSON</code>内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;spec&quot;:&quot;info&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>当操作服务接收到<code>Put /logspec</code>请求的时候，服务将会读取请求主体作为<code>JSON</code>内容。该内容必须包含一个名为<code>spec</code>的单一属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;spec&quot;:&quot;chaincode&#x3D;debug:info&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>如果<code>spec</code>被成功激活，服务将会响应 204 “No Content”。如果出错，服务响应 400 “Bad Request”和错误内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;error&quot;:&quot;error message&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+
 <h5 id="2-2-健康监控-healthz"><a href="#2-2-健康监控-healthz" class="headerlink" title="2.2 健康监控 /healthz"></a>2.2 健康监控 <code>/healthz</code></h5><p><code>/healthz</code>端点允许操作者和容器编排服务检查peer和orderer节点的存活和健康状态，该端点就是传统的<code>REST</code>资源支持<code>GET</code>请求。该实现主要为了与<code>Kubernetes</code>的存活探测模型所兼容，但可以在其它场景中使用。</p>
-<p>当接收到一个<code>Get /healthz</code>请求的时候，操作服务会调用所有为该流程注册过的检查器(checker)，当所有检查器成功返回，操作服务才会响应 200 “OK” 和一个<code>JSON</code>主体：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;status&quot;: &quot;OK&quot;,</span><br><span class="line">&quot;time&quot;: &quot;2009-11-10T23:00:00Z&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如果存在一个或者多个健康检查器返回错误，则操作服务将响应 503 “Service Unavailable”和一个包含具体哪些健康检查器出错信息的<code>JSON</code>主体<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;status&quot;: &quot;Service Unavailable&quot;,</span><br><span class="line">&quot;time&quot;: &quot;2009-11-10T23:00:00Z&quot;,</span><br><span class="line">&quot;failed_checks&quot;: [</span><br><span class="line">&#123;</span><br><span class="line">&quot;component&quot;: &quot;docker&quot;,</span><br><span class="line">&quot;reason&quot;: &quot;failed to connect to Docker daemon: invalid endpoint&quot;</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当接收到一个<code>Get /healthz</code>请求的时候，操作服务会调用所有为该流程注册过的检查器(checker)，当所有检查器成功返回，操作服务才会响应 200 “OK” 和一个<code>JSON</code>主体：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;status&quot;: &quot;OK&quot;,</span><br><span class="line">&quot;time&quot;: &quot;2009-11-10T23:00:00Z&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果存在一个或者多个健康检查器返回错误，则操作服务将响应 503 “Service Unavailable”和一个包含具体哪些健康检查器出错信息的<code>JSON</code>主体</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;status&quot;: &quot;Service Unavailable&quot;,</span><br><span class="line">&quot;time&quot;: &quot;2009-11-10T23:00:00Z&quot;,</span><br><span class="line">&quot;failed_checks&quot;: [</span><br><span class="line">&#123;</span><br><span class="line">&quot;component&quot;: &quot;docker&quot;,</span><br><span class="line">&quot;reason&quot;: &quot;failed to connect to Docker daemon: invalid endpoint&quot;</span><br><span class="line">&#125;</span><br><span class="line">]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在当前版本，注册的健康检查只是针对<code>Docker</code>，其它健康检查会在后续版本增强。</p>
-<h5 id="2-3-指标-metrics"><a href="#2-3-指标-metrics" class="headerlink" title="2.3 指标  metrics"></a>2.3 指标  <code>metrics</code></h5><p><code>metrics</code>端点允许操作者利用<code>Prometheus</code>从<code>peer</code>节点和<code>orderer</code>节点拉取操作指标。指标也可以被推送到<code>StatsD</code>。</p>
+<h5 id="2-3-指标-metrics"><a href="#2-3-指标-metrics" class="headerlink" title="2.3 指标  metrics"></a>2.3 指标  <code>metrics</code></h5><p><code>metrics</code>端点允许操作者利用<code>Prometheus </code>从<code>peer</code>节点和<code>orderer</code>节点拉取操作指标。指标也可以被推送到<code>StatsD</code>。</p>
 <p><code>peer</code>和<code>orderer</code>中的一些构件会公开一些指标来帮助观察系统的行为。使得操作者和管理员可以更好了解系统是如何随着时间推移而执行的。</p>
 <p>Fabric提供两种公开指标的方式： 基于”Prometheus”的拉取(<code>pull</code>)模型和基于”StatsD”的推送(<code>push</code>)模型</p>
 <h6 id="2-3-1-Prometheus"><a href="#2-3-1-Prometheus" class="headerlink" title="2.3.1 Prometheus"></a>2.3.1 Prometheus</h6><p>典型的Prometheus部署通过从由检测目标公开的HTTP端点请求它们来获取指标。由于Prometheus负责请求度量指标，因此它被认为是一个拉取系统。</p>
 <ul>
 <li><p><code>peer</code>节点通过配置公开 <code>/metrics</code>端点。通过在<code>core.yaml</code>中的<code>metrics</code>部分设置<code>metrics provider</code>为<code>prometheus</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">metrics:</span><br><span class="line">  provider: prometheus</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">metrics:</span><br><span class="line">  provider: prometheus</span><br></pre></td></tr></table></figure></li>
 <li><p><code>orderer</code>节点通过配置公开 <code>/metrics</code>端点。通过在<code>orderer.yaml</code>中的<code>Metrics</code>部分设置<code>metrics provider</code>为<code>prometheus</code>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Metrics:</span><br><span class="line">  Provider: prometheus</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 <h6 id="2-3-2-StatsD"><a href="#2-3-2-StatsD" class="headerlink" title="2.3.2 StatsD"></a>2.3.2 StatsD</h6><p>StatsD是一个简单的统计数据聚合守护进程。指标被发送到statsd守护进程，在那里它们被收集、聚合并推送到后端以进行可视化和警报。由于该模型要求被检测的进程将指标数据发送到StatsD，因此这被认为是一个推送系统。</p>
-<ul>
+</li>
 <li><p><code>peer</code>通过在<code>core.yaml</code>文件中的<code>metrics</code>部分将<code>metrics provider</code>设置为<code>statsd</code>,将指标发送给<code>StatsD</code>。<code>statsd</code>子部分必须配置<code>StatsD</code>进程的地址，使用的网络类型<code>tcp</code>或者<code>udp</code>，发送指标的频率。可以指定一个可选前缀，以帮助区分指标的来源–例如，区分来自独立peer节点的指标–这些指标将被添加到所有生成的指标中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">metrics:</span><br><span class="line">  provider: statsd</span><br><span class="line">  statsd:</span><br><span class="line">    network: udp</span><br><span class="line">    address: 127.0.0.1:8125</span><br><span class="line">    writeInterval: 10s</span><br><span class="line">    prefix: peer-0</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">metrics:</span><br><span class="line">  provider: statsd</span><br><span class="line">  statsd:</span><br><span class="line">    network: udp</span><br><span class="line">    address: 127.0.0.1:8125</span><br><span class="line">    writeInterval: 10s</span><br><span class="line">    prefix: peer-0</span><br></pre></td></tr></table></figure></li>
 <li><p><code>orderer</code>通过在<code>orderer.yaml</code>文件中的<code>Metrics</code>部分将<code>metrics provider</code>设置为<code>statsd</code>,将指标发送给<code>StatsD</code>。<code>Statsd</code>子部分必须配置<code>StatsD</code>进程的地址，使用的网络类型<code>tcp</code>或者<code>udp</code>，发送指标的频率。可以指定一个可选前缀，以帮助区分指标的来源。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Metrics:</span><br><span class="line">    Provider: statsd</span><br><span class="line">    Statsd:</span><br><span class="line">      Network: udp</span><br><span class="line">      Address: 127.0.0.1:8125</span><br><span class="line">      WriteInterval: 30s</span><br><span class="line">      Prefix: org-orderer</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Metrics:</span><br><span class="line">    Provider: statsd</span><br><span class="line">    Statsd:</span><br><span class="line">      Network: udp</span><br><span class="line">      Address: 127.0.0.1:8125</span><br><span class="line">      WriteInterval: 30s</span><br><span class="line">      Prefix: org-orderer</span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>现有可以获取的指标以及含义可以参考<a href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/metrics_reference.html" target="_blank" rel="noopener">指标附录</a></p>
+<p>现有可以获取的指标以及含义可以参考<a target="_blank" rel="noopener" href="https://hyperledger-fabric.readthedocs.io/en/release-1.4/metrics_reference.html">指标附录</a></p>
 <h4 id="3-私有数据加强"><a href="#3-私有数据加强" class="headerlink" title="3. 私有数据加强"></a>3. 私有数据加强</h4><p>私有数据特性是从Fabric1.2版本开始出现的，1.4版本首次出现2个新特性：</p>
 <p><code>Reconciliation</code>(这个不知道用中文要怎么翻译，原本意思是“和解”，但放这里不太对的样子)：允许添加到私有数据集的组织成员获取他们现在有权获得的以前交易的私有数据。</p>
 <p><code>客户端访问控制</code>可以根据客户端组织集合成员资格自动在链码中强制执行访问控制，而不必编写特定的链码逻辑。</p>
@@ -308,7 +316,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#新特性"><span class="post-toc-text">新特性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-新增Raft排序服务"><span class="post-toc-text">1. 新增Raft排序服务</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-可维护性和运营的改进"><span class="post-toc-text">2. 可维护性和运营的改进</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1-日志相关-logspec"><span class="post-toc-text">2.1 日志相关/logspec</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-健康监控-healthz"><span class="post-toc-text">2.2 健康监控 /healthz</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-3-指标-metrics"><span class="post-toc-text">2.3 指标  metrics</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-3-1-Prometheus"><span class="post-toc-text">2.3.1 Prometheus</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-3-2-StatsD"><span class="post-toc-text">2.3.2 StatsD</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-私有数据加强"><span class="post-toc-text">3. 私有数据加强</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-节点组织单元（Node-OU）支持"><span class="post-toc-text">4. 节点组织单元（Node OU）支持</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#%E6%96%B0%E7%89%B9%E6%80%A7"><span class="post-toc-text">新特性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-%E6%96%B0%E5%A2%9ERaft%E6%8E%92%E5%BA%8F%E6%9C%8D%E5%8A%A1"><span class="post-toc-text">1. 新增Raft排序服务</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E5%92%8C%E8%BF%90%E8%90%A5%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="post-toc-text">2. 可维护性和运营的改进</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-1-%E6%97%A5%E5%BF%97%E7%9B%B8%E5%85%B3-logspec"><span class="post-toc-text">2.1 日志相关&#x2F;logspec</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-2-%E5%81%A5%E5%BA%B7%E7%9B%91%E6%8E%A7-healthz"><span class="post-toc-text">2.2 健康监控 &#x2F;healthz</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-3-%E6%8C%87%E6%A0%87-metrics"><span class="post-toc-text">2.3 指标  metrics</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-3-1-Prometheus"><span class="post-toc-text">2.3.1 Prometheus</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#2-3-2-StatsD"><span class="post-toc-text">2.3.2 StatsD</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3-%E7%A7%81%E6%9C%89%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%BC%BA"><span class="post-toc-text">3. 私有数据加强</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4-%E8%8A%82%E7%82%B9%E7%BB%84%E7%BB%87%E5%8D%95%E5%85%83%EF%BC%88Node-OU%EF%BC%89%E6%94%AF%E6%8C%81"><span class="post-toc-text">4. 节点组织单元（Node OU）支持</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -346,7 +354,7 @@
                         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
                     })();
                 </script>
-                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
             </div>
         </section>
     
@@ -370,7 +378,7 @@
       <p>
         Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
         Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
-      &copy; 2020 Harlan<br>
+      &copy; 2021 Harlan<br>
       </p>
     </div>
   </div>
@@ -403,10 +411,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/密码算法/">密码算法</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a><a class="category-link" href="/blog/categories/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/">密码算法</a><a class="category-link" href="/blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="category-link" href="/blog/categories/%E8%AE%BA%E6%96%87/">论文</a><a class="category-link" href="/blog/categories/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/">超级账本</a><a class="category-link" href="/blog/categories/%E9%97%AE%E9%A2%98/">问题</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -439,7 +447,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
         </div>
     </div>
 </div>
@@ -465,13 +473,18 @@
         </a>
     </li>
 </div>
+
 <script src="/blog/js/search.js"></script>
+
+
 <script src="/blog/js/main.js"></script>
+
 
 
   <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
   <div id="particles"></div>
-  <script src="/blog/js/particles.js"></script>
+  
+<script src="/blog/js/particles.js"></script>
 
 
 
@@ -479,12 +492,19 @@
 
 
 
-  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
-  <script src="/blog/js/animate.js"></script>
+  
+<script src="/blog/js/animate.js"></script>
 
 
-  <script src="/blog/js/pop-img.js"></script>
+
+  
+<script src="/blog/js/pop-img.js"></script>
+
   <script>
      $(".article-entry p img").popImg();
   </script>

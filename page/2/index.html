@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-<head><meta name="generator" content="Hexo 3.9.0">
+<head>
   <meta charset="utf-8">
   
   <title>Harlan&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain">
+    <meta name="keywords" content="Harlan,Harlan's Blog,Blockchain" />
   
   <meta name="description" content="个人记录博客">
 <meta property="og:type" content="website">
@@ -14,24 +14,27 @@
 <meta property="og:url" content="https://silence-linhl.github.io/blog/page/2/index.html">
 <meta property="og:site_name" content="Harlan&#39;s Blog">
 <meta property="og:description" content="个人记录博客">
-<meta property="og:locale" content="default">
+<meta property="og:locale">
+<meta property="article:author" content="Harlan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Harlan&#39;s Blog">
-<meta name="twitter:description" content="个人记录博客">
   
   
     <link rel="icon" href="favicon.ico">
   
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/blog/css/style.css">
-  <script src="/blog/js/pace.min.js"></script>
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+<script src="/blog/js/pace.min.js"></script>
+
   
 
   
   
 
-</head>
-</html>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
 <body>
   <div id="container">
       <header id="header">
@@ -103,6 +106,75 @@
 </header>
       <div class="outer">
         <section id="main" class="body-wrap">
+  
+    <article id="post-couchdb" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/10/22/couchdb/"  >couchdb</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/blog/categories/超级账本/">超级账本</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/blog/2019/10/22/couchdb/" >
+                
+                <img src="https://silence-linhl.github.io/blog/images/fabric1.4/couchdb.jpg" alt="couchdb" title="couchdb">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                
+Fabric默认使用LevelDB，在对链码数据建模为JSON之后，CouchDB具有针对状态数据库数据内容执行丰富和复杂查询的附加功能。
+1. 关闭已经启动的fabric网络1.&#x2F;byfn.sh down
+2. 生成启动first-network步骤生成网络启动所需要材料123456cryptogen generate --config&#x3D;.&#x2...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-10-22</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/blog/tags/Hyperledger/" class="color2">Hyperledger</a>
+      
+    <a href="/blog/tags/Fabric1.4/" class="color5">Fabric1.4</a>
+      
+    <a href="/blog/tags/超级账本/" class="color5">超级账本</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/blog/2019/10/22/couchdb/#more" class="article-more-link" >more&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
   
     <article id="post-byfn2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -279,7 +351,7 @@ byfn.sh 中执行了什么命令，如何使整个fabric网络启动。这就是
 
 我们在fabric1.4的下载安装的时候，下载了bootstrap.sh,并利用它来拉取镜像和下载并二进制可执行文件。但是在这个过程bootstrap.sh做了啥？这就是下面要分析的内容
 一. 命令分析执行bootstrap.sh 时使用了以下命令
-1curl -sSL https://raw.githubusercontent.com/hyperledger/fab...
+1curl -sSL https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;...
             </p>
         </div>
       
@@ -346,8 +418,8 @@ byfn.sh 中执行了什么命令，如何使整个fabric网络启动。这就是
         <div class="article-feed">
             <p>
                 
-一. 通过脚本安装1. 创建安装目录1mkdir -p /opt/gopath/src/github.com/hyperledger/ &amp;&amp; cd /opt/gopath/src/github.com/hyperledger
-2. 克隆fabric-sample项目1git clone -b v1.4.3 https://github.com/hyper...
+一. 通过脚本安装1. 创建安装目录1mkdir -p &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger&#x2F; &amp;&amp; cd &#x2F;opt&#x2F;gopath&#x2F;src&#x2F;github.com&#x2F;hyperledger
+2. 克隆fabri...
             </p>
         </div>
       
@@ -415,7 +487,7 @@ byfn.sh 中执行了什么命令，如何使整个fabric网络启动。这就是
             <p>
                 
 curl默认安装完后是只支持http协议而不支持https协议的。
-1、可以先用curl -V查看当前curl支持哪些协议：12345[root@localhost ~]# curl -Vcurl 7.66.0 (x86_64-pc-linux-gnu) libcurl/7.66.0 OpenSSL/1.0.2k zlib/1.2.7Release-Date: 2019...
+1、可以先用curl -V查看当前curl支持哪些协议：12345[root@localhost ~]# curl -Vcurl 7.66.0 (x86_64-pc-linux-gnu) libcurl&#x2F;7.66.0 OpenSSL&#x2F;1.0.2k zlib&#x2F;1.2.7Rel...
             </p>
         </div>
       
@@ -480,7 +552,7 @@ curl默认安装完后是只支持http协议而不支持https协议的。
         <div class="article-feed">
             <p>
                 
-1.安装curl最新版本1234567wget https://curl.haxx.se/download/curl-7.66.0.tar.gztar -zxvf curl-7.66.0.tar.gzcd curl-7.66.0 yum install gcc gcc-c++ -y./configure make -j8 &amp;&amp; make install ...
+1.安装curl最新版本1234567wget https:&#x2F;&#x2F;curl.haxx.se&#x2F;download&#x2F;curl-7.66.0.tar.gztar -zxvf curl-7.66.0.tar.gzcd curl-7.66.0 yum install gcc gcc-c++ -y.&#x2F;configure make -j8...
             </p>
         </div>
       
@@ -556,7 +628,6 @@ curl默认安装完后是只支持http协议而不支持https协议的。
 
 
 
-
 hyperledger/fabric-ca（镜像）
 1.2.0
 
@@ -570,7 +641,7 @@ hyperledger/fabric-peer（镜像）
 
 
 hyperledger/fabric-zookeeper（镜像）
-1.2....
+1.2.0...
             </p>
         </div>
       
@@ -647,7 +718,6 @@ IP
 
 
 
-
 192.168.15.33
 node1
 docker+etcd+calicoctl
@@ -660,11 +730,11 @@ docker+etcd+calicoctl
 CentOS 7
 
 
-
 步骤1）环境准备
 修改主机名称
 
-node112[root@localhost ~]# hostnamectl --...
+node1
+12[root@localhost ~]# hostnamectl --s...
             </p>
         </div>
       
@@ -774,93 +844,10 @@ node112[root@localhost ~]# hostnamectl --...
 
 
   
-    <article id="post-IPv6-packet" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/11/09/IPv6-packet/"  >IPv6-packet</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/blog/categories/计算机网络/">计算机网络</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/blog/2018/11/09/IPv6-packet/" >
-                
-                <img src="https://5b0988e595225.cdn.sohucs.com/images/20171201/32688b6d97914591927aff2c54a424e7.jpeg" alt="IPv6-packet" title="IPv6-packet">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                
-1、IPv6报文一般格式
-1.1 IPv6与IPv4报文比较
-报头变化：
-IPv4最小报头：20字节
-IPv6固定报头：40字节
-
- 修改项
-地址：32位——&gt; 128位
-TTL ——&gt; 跳数限制
-协议 ——&gt; 下一报头
-服务质量 ——&gt; 流量类型
- 删除的项
-分片域
-IP选项
-校验和
-HL
-数据报长度
- 增加的项
-流标签
-
-1.2 IPv6扩展...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2018-11-09</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/blog/tags/IPv6/" class="color5">IPv6</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/blog/2018/11/09/IPv6-packet/#more" class="article-more-link" >more&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/blog/"><< Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/3/">Next >></a>
+    <a class="extend prev" rel="prev" href="/blog/">&lt;&lt; Prev</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/3/">Next &gt;&gt;</a>
   </nav>
 </section>
         
@@ -882,7 +869,7 @@ HL
       <p>
         Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
         Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
-      &copy; 2020 Harlan<br>
+      &copy; 2021 Harlan<br>
       </p>
     </div>
   </div>
@@ -915,10 +902,10 @@ HL
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/以太坊/">以太坊</a><a class="category-link" href="/blog/categories/密码算法/">密码算法</a><a class="category-link" href="/blog/categories/计算机网络/">计算机网络</a><a class="category-link" href="/blog/categories/论文/">论文</a><a class="category-link" href="/blog/categories/超级账本/">超级账本</a><a class="category-link" href="/blog/categories/问题/">问题</a>
+            <a class="category-link" href="/blog/categories/Other/">Other</a><a class="category-link" href="/blog/categories/TEE/">TEE</a><a class="category-link" href="/blog/categories/VPN/">VPN</a><a class="category-link" href="/blog/categories/%E4%BB%A5%E5%A4%AA%E5%9D%8A/">以太坊</a><a class="category-link" href="/blog/categories/%E5%AF%86%E7%A0%81%E7%AE%97%E6%B3%95/">密码算法</a><a class="category-link" href="/blog/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a><a class="category-link" href="/blog/categories/%E8%AE%BA%E6%96%87/">论文</a><a class="category-link" href="/blog/categories/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/">超级账本</a><a class="category-link" href="/blog/categories/%E9%97%AE%E9%A2%98/">问题</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -951,7 +938,7 @@ HL
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/以太坊/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/区块链/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/认证/" style="font-size: 10px;">认证</a> <a href="/blog/tags/超级账本/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/车联网/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/问题/" style="font-size: 10px;">问题</a>
+            <a href="/blog/tags/CentOS/" style="font-size: 10px;">CentOS</a> <a href="/blog/tags/ECC/" style="font-size: 10px;">ECC</a> <a href="/blog/tags/Fabric/" style="font-size: 11.67px;">Fabric</a> <a href="/blog/tags/Fabric1-4/" style="font-size: 16.67px;">Fabric1.4</a> <a href="/blog/tags/Hyperledger/" style="font-size: 18.33px;">Hyperledger</a> <a href="/blog/tags/IPv6/" style="font-size: 15px;">IPv6</a> <a href="/blog/tags/SGX/" style="font-size: 10px;">SGX</a> <a href="/blog/tags/TEE/" style="font-size: 10px;">TEE</a> <a href="/blog/tags/Ubuntu/" style="font-size: 10px;">Ubuntu</a> <a href="/blog/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/blog/tags/calico/" style="font-size: 10px;">calico</a> <a href="/blog/tags/curl/" style="font-size: 10px;">curl</a> <a href="/blog/tags/docker/" style="font-size: 10px;">docker</a> <a href="/blog/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/blog/tags/life/" style="font-size: 11.67px;">life</a> <a href="/blog/tags/softEther/" style="font-size: 10px;">softEther</a> <a href="/blog/tags/%E4%BB%A5%E5%A4%AA%E5%9D%8A/" style="font-size: 11.67px;">以太坊</a> <a href="/blog/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/" style="font-size: 13.33px;">区块链</a> <a href="/blog/tags/%E8%AE%A4%E8%AF%81/" style="font-size: 10px;">认证</a> <a href="/blog/tags/%E8%B6%85%E7%BA%A7%E8%B4%A6%E6%9C%AC/" style="font-size: 20px;">超级账本</a> <a href="/blog/tags/%E8%BD%A6%E8%81%94%E7%BD%91/" style="font-size: 10px;">车联网</a> <a href="/blog/tags/%E9%97%AE%E9%A2%98/" style="font-size: 10px;">问题</a>
         </div>
     </div>
 </div>
@@ -977,13 +964,18 @@ HL
         </a>
     </li>
 </div>
+
 <script src="/blog/js/search.js"></script>
+
+
 <script src="/blog/js/main.js"></script>
+
 
 
   <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
   <div id="particles"></div>
-  <script src="/blog/js/particles.js"></script>
+  
+<script src="/blog/js/particles.js"></script>
 
 
 
@@ -991,9 +983,14 @@ HL
 
 
 
-  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
-  <script src="/blog/js/animate.js"></script>
+  
+<script src="/blog/js/animate.js"></script>
+
 
 
   </div>
